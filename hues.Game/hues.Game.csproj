@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\hues.Game.Resources\hues.Game.Resources.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ppy.osu.Framework" Version="2021.611.0" />
+  </ItemGroup>
+
+</Project>
