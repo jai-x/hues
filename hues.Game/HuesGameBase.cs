@@ -29,6 +29,8 @@ namespace hues.Game
         private void load()
         {
             Resources.AddStore(new DllResourceStore(HuesResources.ResourceAssembly));
+
+            AddFont(Resources, "Fonts/PetMe64/PetMe64");
         }
     }
 }
