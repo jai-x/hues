@@ -1,3 +1,4 @@
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -9,8 +10,11 @@ namespace hues.Game
 {
     public class HuesContainer : CompositeDrawable
     {
+        [Resolved]
+        private HuesColourManager hcm { get; set; }
+
         private Box box;
-        private ColourBox cbox;
+        private SpriteText colourText;
 
         public HuesContainer()
         {
@@ -23,13 +27,21 @@ namespace hues.Game
 
             InternalChildren = new Drawable[]
             {
-                cbox = new ColourBox(),
+                new HuesColourBox(),
                 new SpriteText
                 {
                     Y = 20,
                     Text = "0x40 Hues",
                     Anchor = Anchor.TopCentre,
                     Origin = Anchor.TopCentre,
+                    Font = FontUsage.Default.With(size: 40),
+                },
+                colourText = new SpriteText
+                {
+                    Y = -20,
+                    Text = hcm.Current.Value.Name,
+                    Anchor = Anchor.BottomCentre,
+                    Origin = Anchor.BottomCentre,
                     Font = FontUsage.Default.With(size: 40),
                 },
                 box = new Box
@@ -41,8 +53,11 @@ namespace hues.Game
                 },
             };
 
+            hcm.Current.ValueChanged += (hc) => colourText.Text = hc.NewValue.Name;
+
             box.Loop(b => b.RotateTo(0).RotateTo(360, 2500));
-            Scheduler.AddDelayed(cbox.NextColour, 500, true);
+
+            Scheduler.AddDelayed(hcm.Next, 500, true);
         }
     }
 }
