@@ -15,16 +15,16 @@ namespace hues.Game
             Name = name;
         }
 
-        public static HuesColour Black => HuesColourAllWithBlack.First();
+        public static HuesColour Black => AllWithBlack.First();
 
-        public static HuesColour[] HuesColourAll => HuesColourAllWithBlack.Skip(1).ToArray();
+        public static HuesColour[] All => AllWithBlack.Skip(1).ToArray();
 
         // List of hues corresponding to "default" colorset in the flash.
         // These colours are a 4x4x4 (=0x40...) color cube, probably generated
         // programatically in the original. The names were chosen by
         // Anonymous D for the 0x40 hues of megumi edit.
         // This list was compiled by kepstin for their 0x40hues-html5 project.
-        public static HuesColour[] HuesColourAllWithBlack = new HuesColour[]
+        public static HuesColour[] AllWithBlack = new HuesColour[]
         {
             new HuesColour("#000000", "Black"),
             new HuesColour("#550000", "Brick"),

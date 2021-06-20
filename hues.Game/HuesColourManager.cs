@@ -19,23 +19,23 @@ namespace hues.Game
 
         public void Next()
         {
-            if (position == HuesColour.HuesColourAll.Length - 1)
+            if (position == HuesColour.All.Length - 1)
                 position = 0;
             else
                 position++;
 
-            Current.Value = HuesColour.HuesColourAll[position];
+            Current.Value = HuesColour.All[position];
 
         }
 
         public void Previous()
         {
             if (position == 0)
-                position = HuesColour.HuesColourAll.Length - 1;
+                position = HuesColour.All.Length - 1;
             else
                 position--;
 
-            Current.Value = HuesColour.HuesColourAll[position];
+            Current.Value = HuesColour.All[position];
         }
 
         public void SetBlack()
