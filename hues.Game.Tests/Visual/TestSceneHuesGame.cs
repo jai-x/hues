@@ -5,15 +5,16 @@ namespace hues.Game.Tests.Visual
 {
     public class TestSceneHuesGame : HuesTestScene
     {
-        private HuesGame game;
+        [Resolved]
+        private GameHost host { get; set; }
 
-        [BackgroundDependencyLoader]
-        private void load(GameHost host)
+        protected override void LoadComplete()
         {
-            game = new HuesGame();
+            base.LoadComplete();
+            var game = new HuesGame();
             game.SetHost(host);
 
-            Add(game);
+            Child = game;
         }
     }
 }

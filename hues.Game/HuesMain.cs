@@ -8,15 +8,15 @@ using osuTK;
 
 namespace hues.Game
 {
-    public class HuesContainer : CompositeDrawable
+    public class HuesMain : CompositeDrawable
     {
-        [Resolved]
-        private HuesColourManager hcm { get; set; }
+        [Cached]
+        protected readonly HuesColourManager hcm = new HuesColourManager();
 
         private Box box;
         private SpriteText colourText;
 
-        public HuesContainer()
+        public HuesMain()
         {
             RelativeSizeAxes = Axes.Both;
         }
