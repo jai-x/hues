@@ -1,6 +1,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osuTK;
 
@@ -25,12 +26,25 @@ namespace hues.Game
             });
         }
 
+        // Create local dependencies
+        private DependencyContainer dependencies;
+
+        // Ensure our local dependencies also contain parent dependencies
+        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent) =>
+            dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+
         [BackgroundDependencyLoader]
         private void load()
         {
+            // Load the hues.Game.Resources assembly
             Resources.AddStore(new DllResourceStore(HuesResources.ResourceAssembly));
 
             AddFont(Resources, "Fonts/PetMe64/PetMe64");
+
+            // Cache the LargeTextureStore
+            var textureNamespace = new NamespacedResourceStore<byte[]>(Resources, @"Textures");
+            var largeTextureStore = new LargeTextureStore(Host.CreateTextureLoaderStore(textureNamespace));
+            dependencies.Cache(largeTextureStore);
         }
     }
 }
