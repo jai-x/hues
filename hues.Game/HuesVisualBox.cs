@@ -25,6 +25,7 @@ namespace hues.Game
                     Colour = Colour4.White,
                 },
                 new HuesImageBox(),
+                // TODO: Figure out a better way to overlay the colour (maybe blending?)
                 new HuesColourBox
                 {
                     Alpha = 0.7f,
