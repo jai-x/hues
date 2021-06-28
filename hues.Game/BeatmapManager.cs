@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 using osu.Framework.Allocation;
@@ -25,9 +24,9 @@ namespace hues.Game
         private Beatmap[] beatmaps;
         private int position;
 
-        public BeatmapManager(ReadOnlyCollection<Beatmap> beatmaps)
+        public BeatmapManager(Beatmap[] beatmaps)
         {
-            this.beatmaps = beatmaps.ToArray();
+            this.beatmaps = beatmaps;
             position = 0;
         }
 

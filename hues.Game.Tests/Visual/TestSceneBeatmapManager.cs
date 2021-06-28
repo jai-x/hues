@@ -33,7 +33,7 @@ namespace hues.Game.Tests.Visual
 
             Children = new Drawable[]
             {
-                manager = new BeatmapManager(Array.AsReadOnly(Beatmap.All)),
+                manager = new BeatmapManager(Beatmap.All),
                 title = new SpriteText
                 {
                     Anchor = Anchor.Centre,
