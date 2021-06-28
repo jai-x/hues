@@ -1,6 +1,7 @@
 using System;
 
 using osu.Framework.Allocation;
+using osu.Framework.Audio;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
@@ -17,7 +18,10 @@ namespace hues.Game.Tests.Visual
         [Cached]
         protected readonly Bindable<WorkingBeatmap> workingBeatmap = new Bindable<WorkingBeatmap>();
 
-        private BeatmapManager manager;
+        [Resolved]
+        private AudioManager audioManager { get; set; }
+
+        private WorkingBeatmap testBeatmap;
 
         public TestSceneBeatSyncedCompositeDrawable()
         {
@@ -28,19 +32,18 @@ namespace hues.Game.Tests.Visual
         {
             base.LoadComplete();
 
-            Children = new Drawable[]
-            {
-                manager = new BeatmapManager(Beatmap.All),
-                new TestBeatDrawable(),
-            };
+            Child = new TestBeatDrawable();
 
-            AddStep("Next", manager.Next);
-            AddStep("Previous", manager.Previous);
+            testBeatmap = new WorkingBeatmap(Beatmap.All[0], audioManager);
+
+            testBeatmap.Load();
+            workingBeatmap.Value = testBeatmap;
+            testBeatmap.Start();
         }
 
         protected override void Dispose(bool isDisposing)
         {
-            manager?.Dispose();
+            testBeatmap?.Dispose();
             base.Dispose(isDisposing);
         }
 
@@ -107,6 +110,7 @@ namespace hues.Game.Tests.Visual
                         Origin = Anchor.Centre,
                         Font = FontUsage.Default.With(size: 60),
                         Y = 150,
+                        Alpha = 0f,
                     },
                 };
 
@@ -127,7 +131,7 @@ namespace hues.Game.Tests.Visual
                     return;
 
                 beatchar.Text = beatChar.ToString();
-                beatchar.FadeOutFromOne(beatLength);
+                beatchar.FadeIn().Then().Delay(beatLength).Then().FadeOut();
 
                 if (beatChar == 'o')
                     flashRed.FadeOutFromOne(beatLength);
