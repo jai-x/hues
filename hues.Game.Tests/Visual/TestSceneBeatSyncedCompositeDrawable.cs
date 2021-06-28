@@ -85,7 +85,6 @@ namespace hues.Game.Tests.Visual
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        Font = FontUsage.Default.With(size: 40),
                         Y = -150,
                     },
                     section = new SpriteText
@@ -110,13 +109,17 @@ namespace hues.Game.Tests.Visual
                         Y = 150,
                     },
                 };
+
+                updateName(workingBeatmap.Value);
+                workingBeatmap.ValueChanged += (change) => updateName(change.NewValue);
             }
+
+            private void updateName(WorkingBeatmap b) => name.Text = b?.Beatmap.Name ?? "none";
 
             protected override void OnNewBeat(int beatIndex, Section beatSection, char beatChar, double beatLength)
             {
                 base.OnNewBeat(beatIndex, beatSection, beatChar, beatLength);
 
-                name.Text = workingBeatmap.Value?.Beatmap.Name ?? "none";
                 index.Text = beatIndex.ToString();
                 section.Text = beatSection.ToString();
 
@@ -124,13 +127,13 @@ namespace hues.Game.Tests.Visual
                     return;
 
                 beatchar.Text = beatChar.ToString();
-                beatchar.FadeOutFromOne(400);
+                beatchar.FadeOutFromOne(beatLength);
 
                 if (beatChar == 'o')
-                    flashRed.FadeOutFromOne(200);
+                    flashRed.FadeOutFromOne(beatLength);
 
                 if (beatChar == 'x')
-                    flashBlue.FadeOutFromOne(200);
+                    flashBlue.FadeOutFromOne(beatLength);
             }
         }
     }

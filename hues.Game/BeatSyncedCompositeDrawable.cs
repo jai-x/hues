@@ -5,7 +5,6 @@ using osu.Framework.Audio.Track;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Logging;
 
 namespace hues.Game
 {
@@ -13,7 +12,6 @@ namespace hues.Game
     {
         public enum Section
         {
-            Reset,
             Buildup,
             Loop,
         }
@@ -21,16 +19,8 @@ namespace hues.Game
         [Resolved]
         private Bindable<WorkingBeatmap> workingBeatmap { get; set; }
 
-        protected Section CurrentBeatSection { get; private set; }
-
-        protected int CurrentBeatIndex { get; private set; }
-
-        protected char CurrentBeatChar { get; private set; }
-
-        private int lastIndex = -1;
-        private Section lastSection = Section.Reset;
-
-        private Logger logger = Logger.GetLogger();
+        private Section lastSection;
+        private int lastBeatIndex = -1;
 
         protected override void Update()
         {
@@ -49,47 +39,37 @@ namespace hues.Game
             // get track and section
             if (current.Buildup != null && current.Buildup.IsRunning)
             {
-                updateSection(Section.Buildup);
-                updateBeat(current.Buildup, current.Beatmap.BuildupBeatchars);
+                update(current.Buildup, current.Beatmap.BuildupBeatchars, Section.Buildup);
             }
             else if (current.Loop.IsRunning)
             {
-                updateSection(Section.Loop);
-                updateBeat(current.Loop, current.Beatmap.LoopBeatchars);
-            }
-            else
-                return;
-        }
-
-        private void updateSection(Section s)
-        {
-            CurrentBeatSection = s;
-
-            if (CurrentBeatSection != lastSection)
-            {
-                lastIndex = -1;
-                lastSection = CurrentBeatSection;
+                update(current.Loop, current.Beatmap.LoopBeatchars, Section.Loop);
             }
         }
 
-        private void updateBeat(ITrack track, string beatchars)
+        private void update(ITrack track, string beatchars, Section currentSection)
         {
-            if (beatchars == null || beatchars.Length == 0)
+            if (String.IsNullOrEmpty(beatchars))
                 return;
+
+            if (currentSection != lastSection)
+                lastBeatIndex = -1;
 
             var beatLength = track.Length / beatchars.Length;
 
             // TODO: Find out why this sometimes creates an index that is 1 larger than number of beatchars
-            CurrentBeatIndex = Math.Min((int)(track.CurrentTime / beatLength), beatchars.Length - 1);
+            var currentBeatIndex = Math.Min((int)(track.CurrentTime / beatLength), beatchars.Length - 1);
 
-            if (lastIndex == CurrentBeatIndex)
+            if (lastBeatIndex == currentBeatIndex)
                 return;
 
-            CurrentBeatChar = beatchars[CurrentBeatIndex];
+            var beatChar = beatchars[currentBeatIndex];
 
-            OnNewBeat(CurrentBeatIndex, CurrentBeatSection, CurrentBeatChar, beatLength);
+            // TODO: Find out is this needs to be Scheduled or put under a transform
+            OnNewBeat(currentBeatIndex, currentSection, beatChar, beatLength);
 
-            lastIndex = CurrentBeatIndex;
+            lastSection = currentSection;
+            lastBeatIndex = currentBeatIndex;
         }
 
         protected virtual void OnNewBeat(int beatIndex, Section beatSection, char beatChar, double beatLength)

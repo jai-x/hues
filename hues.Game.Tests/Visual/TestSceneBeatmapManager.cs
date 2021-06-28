@@ -27,6 +27,12 @@ namespace hues.Game.Tests.Visual
             RelativeSizeAxes = Axes.Both;
         }
 
+        protected override void Dispose(bool isDisposing)
+        {
+            base.Dispose(isDisposing);
+            manager?.Dispose();
+        }
+
         protected override void LoadComplete()
         {
             base.LoadComplete();
