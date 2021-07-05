@@ -38,7 +38,9 @@ namespace hues.Game.Tests.Visual
 
             testBeatmap.Load();
             workingBeatmap.Value = testBeatmap;
-            testBeatmap.Start();
+
+            AddStep("Reset", testBeatmap.Reset);
+            AddStep("Start", testBeatmap.Start);
         }
 
         protected override void Dispose(bool isDisposing)
@@ -124,7 +126,7 @@ namespace hues.Game.Tests.Visual
             {
                 base.OnNewBeat(beatIndex, beatSection, beatChar, beatLength);
 
-                index.Text = beatIndex.ToString();
+                index.Text = "0x" + beatIndex.ToString("X2");
                 section.Text = beatSection.ToString();
 
                 if (beatChar == '.')
