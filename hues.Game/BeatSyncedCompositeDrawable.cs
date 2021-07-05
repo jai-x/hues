@@ -16,6 +16,9 @@ namespace hues.Game
             Loop,
         }
 
+        protected string BuildupBeatchars => workingBeatmap.Value?.Beatmap.BuildupBeatchars ?? String.Empty;
+        protected string LoopBeatchars => workingBeatmap.Value?.Beatmap.LoopBeatchars ?? String.Empty;
+
         [Resolved]
         private Bindable<WorkingBeatmap> workingBeatmap { get; set; }
 
