@@ -1,3 +1,8 @@
+using System;
+using System.Text;
+
+using hues.Game.Extensions;
+
 namespace hues.Game
 {
     public struct Beatmap
@@ -9,6 +14,18 @@ namespace hues.Game
 
         public string LoopSource { get; init; }
         public string LoopBeatchars { get; init; }
+
+        public bool IndependantBuild { get; init; }
+
+        public Respack Respack { get; init; }
+
+        public override string ToString() =>
+            $"<{nameof(Beatmap)}> " +
+            $"Name: {Name}, " +
+            $"BuildupSource: {BuildupSource ?? "[null]"}, " +
+            $"BuildupBeatchars: {BuildupBeatchars?.Truncate(5) ?? "[null]"}, " +
+            $"LoopSource: {LoopSource}, " +
+            $"LoopBeatchars: {LoopBeatchars.Truncate(5)}";
 
         public static Beatmap[] All = new Beatmap[]
         {
