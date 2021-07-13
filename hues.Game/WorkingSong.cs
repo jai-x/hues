@@ -7,11 +7,11 @@ using osu.Framework.Logging;
 
 namespace hues.Game
 {
-    public class WorkingBeatmap : Component
+    public class WorkingSong : Component
     {
         private Logger logger = Logger.GetLogger();
 
-        private Beatmap beatmap;
+        private Song song;
         private AudioManager manager;
 
         public Track Buildup { get; private set; }
@@ -20,20 +20,20 @@ namespace hues.Game
         public double BuildupBeatlength { get; private set; }
         public double LoopBeatlength { get; private set; }
 
-        public Beatmap Beatmap => beatmap;
+        public Song Song => song;
 
         public bool TrackLoaded => (Buildup?.IsLoaded ?? true) && (Loop?.IsLoaded ?? false);
 
-        public WorkingBeatmap(Beatmap b, AudioManager a)
+        public WorkingSong(Song s, AudioManager a)
         {
-            beatmap = b;
+            song = s;
             manager = a;
         }
 
         public void Load()
         {
-            Buildup = manager.Tracks.Get(beatmap.BuildupSource);
-            Loop = manager.Tracks.Get(beatmap.LoopSource);
+            Buildup = manager.Tracks.Get(song.BuildupSource);
+            Loop = manager.Tracks.Get(song.LoopSource);
 
             if (Loop == null)
                 throw new Exception();

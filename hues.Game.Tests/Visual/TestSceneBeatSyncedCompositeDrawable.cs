@@ -16,12 +16,12 @@ namespace hues.Game.Tests.Visual
     public class TestSceneBeatSyncedCompositeDrawable : HuesTestScene
     {
         [Cached]
-        protected readonly Bindable<WorkingBeatmap> workingBeatmap = new Bindable<WorkingBeatmap>();
+        protected readonly Bindable<WorkingSong> workingSong = new Bindable<WorkingSong>();
 
         [Resolved]
         private AudioManager audioManager { get; set; }
 
-        private WorkingBeatmap testBeatmap;
+        private WorkingSong testSong;
 
         public TestSceneBeatSyncedCompositeDrawable()
         {
@@ -34,18 +34,18 @@ namespace hues.Game.Tests.Visual
 
             Child = new TestBeatDrawable();
 
-            testBeatmap = new WorkingBeatmap(Beatmap.All[0], audioManager);
+            testSong = new WorkingSong(Song.All[0], audioManager);
 
-            testBeatmap.Load();
-            workingBeatmap.Value = testBeatmap;
+            testSong.Load();
+            workingSong.Value = testSong;
 
-            AddStep("Reset", testBeatmap.Reset);
-            AddStep("Start", testBeatmap.Start);
+            AddStep("Reset", testSong.Reset);
+            AddStep("Start", testSong.Start);
         }
 
         protected override void Dispose(bool isDisposing)
         {
-            testBeatmap?.Dispose();
+            testSong?.Dispose();
             base.Dispose(isDisposing);
         }
 
@@ -59,7 +59,7 @@ namespace hues.Game.Tests.Visual
             private Box flashBlue;
 
             [Resolved]
-            private Bindable<WorkingBeatmap> workingBeatmap { get; set; }
+            private Bindable<WorkingSong> workingSong { get; set; }
 
             public TestBeatDrawable()
             {
@@ -116,11 +116,11 @@ namespace hues.Game.Tests.Visual
                     },
                 };
 
-                updateName(workingBeatmap.Value);
-                workingBeatmap.ValueChanged += (change) => updateName(change.NewValue);
+                updateName(workingSong.Value);
+                workingSong.ValueChanged += (change) => updateName(change.NewValue);
             }
 
-            private void updateName(WorkingBeatmap b) => name.Text = b?.Beatmap.Name ?? "none";
+            private void updateName(WorkingSong b) => name.Text = b?.Song.Name ?? "none";
 
             protected override void OnNewBeat(int beatIndex, Section beatSection, char beatChar, double beatLength)
             {

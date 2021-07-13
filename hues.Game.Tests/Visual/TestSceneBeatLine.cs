@@ -17,9 +17,9 @@ namespace hues.Game.Tests.Visual
         private AudioManager audioManager { get; set; }
 
         [Cached]
-        protected readonly Bindable<WorkingBeatmap> workingBeatmap = new Bindable<WorkingBeatmap>();
+        protected readonly Bindable<WorkingSong> workingSong = new Bindable<WorkingSong>();
 
-        private WorkingBeatmap testBeatmap;
+        private WorkingSong testSong;
 
         private BeatLine beatLine;
 
@@ -50,21 +50,21 @@ namespace hues.Game.Tests.Visual
                 },
             };
 
-            testBeatmap = new WorkingBeatmap(Beatmap.All[13], audioManager);
+            testSong = new WorkingSong(Song.All[13], audioManager);
 
-            testBeatmap.Load();
-            workingBeatmap.Value = testBeatmap;
+            testSong.Load();
+            workingSong.Value = testSong;
 
             AddStep("Reset", () => {
-                testBeatmap.Reset();
+                testSong.Reset();
                 beatLine.Reset();
             });
-            AddStep("Start", testBeatmap.Start);
+            AddStep("Start", testSong.Start);
         }
 
         protected override void Dispose(bool isDisposing)
         {
-            testBeatmap?.Dispose();
+            testSong?.Dispose();
             base.Dispose(isDisposing);
         }
     }

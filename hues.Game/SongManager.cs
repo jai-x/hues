@@ -5,36 +5,31 @@ using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Framework.Logging;
 
 namespace hues.Game
 {
-    public class BeatmapManager : Component
+    public class SongManager : Component
     {
         [Resolved]
         private AudioManager audioManager { get; set; }
 
         [Resolved]
-        private Bindable<WorkingBeatmap> workingBeatmap { get; set; }
+        private Bindable<WorkingSong> workingSong { get; set; }
 
-        private Logger logger = Logger.GetLogger();
+        private WorkingSong current;
 
-        private WorkingBeatmap current;
-
-        private Beatmap[] beatmaps;
+        private Song[] songs;
         private int position;
 
-        public BeatmapManager(Beatmap[] beatmaps)
+        public SongManager(Song[] songs)
         {
-            this.beatmaps = beatmaps;
+            this.songs = songs;
             position = 0;
         }
 
         public void Next()
         {
-            logger.Debug($"{nameof(BeatmapManager)} Next");
-
-            if (position == beatmaps.Length - 1)
+            if (position == songs.Length - 1)
                 position = 0;
             else
                 position++;
@@ -44,10 +39,8 @@ namespace hues.Game
 
         public void Previous()
         {
-            logger.Debug($"{nameof(BeatmapManager)} Previous");
-
             if (position == 0)
-                position = beatmaps.Length - 1;
+                position = songs.Length - 1;
             else
                 position--;
 
@@ -57,16 +50,18 @@ namespace hues.Game
         private void update()
         {
             var oldWorking = current;
-            var newWorking = new WorkingBeatmap(beatmaps[position], audioManager);
+            var newWorking = new WorkingSong(songs[position], audioManager);
 
             newWorking.Load();
             oldWorking?.Stop();
 
-            workingBeatmap.Value = newWorking;
+            workingSong.Value = newWorking;
             current = newWorking;
 
             newWorking.Start();
             oldWorking?.Dispose();
+
+            oldWorking = null;
         }
 
         protected override void LoadComplete()
@@ -76,8 +71,8 @@ namespace hues.Game
 
         protected override void Dispose(bool isDisposing)
         {
-            workingBeatmap.Value = null;
-            workingBeatmap.UnbindAll();
+            workingSong.Value = null;
+            workingSong.UnbindAll();
 
             current?.Dispose();
             base.Dispose(isDisposing);

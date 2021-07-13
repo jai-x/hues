@@ -16,11 +16,11 @@ namespace hues.Game
             Loop,
         }
 
-        protected string BuildupBeatchars => workingBeatmap.Value?.Beatmap.BuildupBeatchars ?? String.Empty;
-        protected string LoopBeatchars => workingBeatmap.Value?.Beatmap.LoopBeatchars ?? String.Empty;
+        protected string BuildupBeatchars => workingSong.Value?.Song.BuildupBeatchars ?? String.Empty;
+        protected string LoopBeatchars => workingSong.Value?.Song.LoopBeatchars ?? String.Empty;
 
         [Resolved]
-        private Bindable<WorkingBeatmap> workingBeatmap { get; set; }
+        private Bindable<WorkingSong> workingSong { get; set; }
 
         private Section lastSection;
         private int lastBeatIndex = -1;
@@ -29,7 +29,7 @@ namespace hues.Game
         {
             base.Update();
 
-            var current = workingBeatmap.Value;
+            var current = workingSong.Value;
 
             // sanity
             if (current == null)
@@ -42,11 +42,11 @@ namespace hues.Game
             // get track and section
             if (current.Buildup != null && current.Buildup.IsRunning)
             {
-                update(current.Buildup, current.Beatmap.BuildupBeatchars, Section.Buildup);
+                update(current.Buildup, current.Song.BuildupBeatchars, Section.Buildup);
             }
             else if (current.Loop.IsRunning)
             {
-                update(current.Loop, current.Beatmap.LoopBeatchars, Section.Loop);
+                update(current.Loop, current.Song.LoopBeatchars, Section.Loop);
             }
         }
 

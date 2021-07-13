@@ -9,12 +9,12 @@ using osu.Framework.Logging;
 
 namespace hues.Game.Tests.Visual
 {
-    public class TestSceneBeatmapManager : HuesTestScene
+    public class TestSceneSongManager : HuesTestScene
     {
         [Cached]
-        protected readonly Bindable<WorkingBeatmap> workingBeatmap = new Bindable<WorkingBeatmap>();
+        protected readonly Bindable<WorkingSong> workingSong = new Bindable<WorkingSong>();
 
-        private BeatmapManager manager;
+        private SongManager manager;
 
         private SpriteText title;
         private SpriteText buildupSource;
@@ -22,7 +22,7 @@ namespace hues.Game.Tests.Visual
         private SpriteText loopSource;
         private SpriteText loopChars;
 
-        public TestSceneBeatmapManager()
+        public TestSceneSongManager()
         {
             RelativeSizeAxes = Axes.Both;
         }
@@ -39,7 +39,7 @@ namespace hues.Game.Tests.Visual
 
             Children = new Drawable[]
             {
-                manager = new BeatmapManager(Beatmap.All),
+                manager = new SongManager(Song.All),
                 title = new SpriteText
                 {
                     Anchor = Anchor.Centre,
@@ -72,20 +72,20 @@ namespace hues.Game.Tests.Visual
                 },
             };
 
-            update(workingBeatmap.Value);
-            workingBeatmap.ValueChanged += (change) => { update(change.NewValue); };
+            update(workingSong.Value);
+            workingSong.ValueChanged += (change) => { update(change.NewValue); };
 
-            AddStep("Next Beatmap", manager.Next);
-            AddStep("Previous Beatmap", manager.Previous);
+            AddStep("Next Song", manager.Next);
+            AddStep("Previous Song", manager.Previous);
         }
 
-        private void update(WorkingBeatmap b)
+        private void update(WorkingSong s)
         {
-            title.Text = b?.Beatmap.Name ?? "none";
-            buildupSource.Text = b?.Beatmap.BuildupSource ?? "none";
-            buildupChars.Text = b?.Beatmap.BuildupBeatchars ?? "none";
-            loopSource.Text = b?.Beatmap.LoopSource ?? "none";
-            loopChars.Text = b?.Beatmap.LoopBeatchars ?? "none";
+            title.Text = s?.Song.Name ?? "none";
+            buildupSource.Text = s?.Song.BuildupSource ?? "none";
+            buildupChars.Text = s?.Song.BuildupBeatchars ?? "none";
+            loopSource.Text = s?.Song.LoopSource ?? "none";
+            loopChars.Text = s?.Song.LoopBeatchars ?? "none";
         }
     }
 }

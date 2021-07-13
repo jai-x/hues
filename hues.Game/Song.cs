@@ -5,7 +5,7 @@ using hues.Game.Extensions;
 
 namespace hues.Game
 {
-    public struct Beatmap
+    public struct Song
     {
         public string Name { get; init; }
 
@@ -20,35 +20,35 @@ namespace hues.Game
         public Respack Respack { get; init; }
 
         public override string ToString() =>
-            $"<{nameof(Beatmap)}> " +
+            $"<{nameof(Song)}> " +
             $"Name: {Name}, " +
             $"BuildupSource: {BuildupSource ?? "[null]"}, " +
             $"BuildupBeatchars: {BuildupBeatchars?.Truncate(5) ?? "[null]"}, " +
             $"LoopSource: {LoopSource}, " +
             $"LoopBeatchars: {LoopBeatchars.Truncate(5)}";
 
-        public static Beatmap[] All = new Beatmap[]
+        public static Song[] All = new Song[]
         {
-            new Beatmap
+            new Song
             {
                 Name = "Madeon - Finale",
                 BuildupSource = "build_Finale",
                 LoopSource = "loop_Finale",
                 LoopBeatchars = "x..xo...x...o...x..xo...x...o...x..xo...x...o...x..xo...x...oxoox..xo...x...o...x..xo...x...o...x..xo...x...o...x...o...x...oooo",
             },
-            new Beatmap
+            new Song
             {
                 Name = "Imagine Dragons - Radioactive",
                 LoopSource ="loop_Radioactive",
                 LoopBeatchars = "o...x.o.o...x.o.o...x...o...x.o.o...x.o.o...x.......x.......x...",
             },
-            new Beatmap
+            new Song
             {
                 Name = "Row Row Fight the Powah (RAGEFOXX & SLUTTT MIX)",
                 LoopSource ="loop_RowRow",
                 LoopBeatchars = "o...x...o...x...o...x...o...x...o...x...o...x...o...x...o...xxx.x...x...o...x...o...x...o...x...o...x...o...x...o...o...o...o...",
             },
-            new Beatmap
+            new Song
             {
                 Name = "Outlaw Star OST - Desire",
                 BuildupSource = "build_Desire",
@@ -56,13 +56,13 @@ namespace hues.Game
                 LoopSource ="loop_Desire",
                 LoopBeatchars = "o...x...o.o.x.x...o.x...o.o.x...o...x...o.o.x.x...o.x...oo..x.x.o...x...o.o.x.x...o.x...oo..x.x.o...x...o.o.x.x...o.x...x...x.xx",
             },
-            new Beatmap
+            new Song
             {
                 Name = "The Bloody Beetroots - Out of Sight",
                 LoopSource ="loop_OutOfSight",
                 LoopBeatchars = "o.....oox.......o.o....ox.......o.....oox...o...o.o....ox.......o......ox.......o.o....ox.......o.....oox...o...o.o.....+.......",
             },
-            new Beatmap
+            new Song
             {
                 Name = "Buckethead - Smile Without a Face",
                 BuildupSource = "build_SmileWithoutAFace",
@@ -70,13 +70,13 @@ namespace hues.Game
                 LoopSource ="loop_SmileWithoutAFace",
                 LoopBeatchars = "o......ox.....o.o.......x.......o......ox.....o.o.....o.x.ooooooo......ox.....o.o.......x.......o......ox.....o.o.....o.x.oooooo",
             },
-            new Beatmap
+            new Song
             {
                 Name = "Crystal Castles - Courtship Dating",
                 LoopSource ="loop_CourtshipDate",
                 LoopBeatchars = "o...x.....o.x...o...x.....o.x...o...x.....o.x...o...x.....o.+...",
             },
-            new Beatmap
+            new Song
             {
                 Name = "Aphex Twin - Vordhosbn",
                 BuildupSource = "build_Vordhosbn",
@@ -84,37 +84,37 @@ namespace hues.Game
                 LoopSource ="loop_Vordhosbn",
                 LoopBeatchars = "o...x..---o.x...-.o.x------.x..-o.-.x.o..-.ox-.-----x-o-------o-o...x..---o.x...-.o.x------.x..-o.-.x.o..-.ox-.-----x-o-------o-o...x..---o.x...-.o.x------.x..-o.-.x.o..-.ox-.-----x-o-------o-o...x..---o.x...-.o.x------.x..-o.-.x.o..-.ox-.-----x-o-------o-o...x..---o.x...-.o.x------.x..-o.-.x.o..-.ox-.-----x-o-------o-o...x..---o.x...-.o.x------.x..-o.-.x.o..-.ox-.-----x-o-------o-",
             },
-            new Beatmap
+            new Song
             {
                 Name = "Culprate - Orange Sunrise, Sunset",
                 LoopSource ="loop_Orange",
                 LoopBeatchars = "o.o.x..o.x.x....o..ox......x....o...x....o.x....o...x....o.xx...o.o.x..o.x.x....o..ox......x....o...x....o.x...xo...x....o.xx...",
             },
-            new Beatmap
+            new Song
             {
                 Name = "Hyper - Spoiler",
                 LoopSource ="loop_Spoiler",
                 LoopBeatchars = "o+......x+......o+......x+......o+......x+......o+......x+......o+......x+......o+......x+......o+......x+......o+..............o+......x+......o+......x+......o+......x+......o+......x+......o+......x+......o+......x+......o---------------o+......x.......",
             },
-            new Beatmap
+            new Song
             {
                 Name = "DJ Fresh - Kryptonite",
                 LoopSource ="loop_Kryptonite",
                 LoopBeatchars = "o.x..ox.o.x..ox.o.x..ox.o.x..ox.o.x..xx.o.x..xx.o.x..xx.o.x..xx.o.x..ox.o.x..ox.o.x..ox.o.x..ox.o.x..xx.o.x..xx.o.xx.xx.o.x..xx.",
             },
-            new Beatmap
+            new Song
             {
                 Name = "STS9 - Beyond Right Now (Glitch Mob Remix)",
                 LoopSource ="loop_BeyondRightNow",
                 LoopBeatchars = "o.......x...o.......o...xxxxx...o.o.....x...o.......o...xxxxx...o.......x...o.......o...xxxxx...o.......x...o...o.......+.......o.......x...o.......o...xxxxx...o.o.....x...o...-.-.o.-.xxx+x+x+o.......x...o.......o...xxxxx...o.......x...o...o...o.o.+.......",
             },
-            new Beatmap
+            new Song
             {
                 Name = "Kanye West - Hold My Liquor",
                 LoopSource ="loop_HoldMyLiquor",
                 LoopBeatchars = "o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...o...............+...",
             },
-            new Beatmap
+            new Song
             {
                 Name = "Savant - Heart",
                 BuildupSource = "build_Heart",
@@ -122,31 +122,31 @@ namespace hues.Game
                 LoopSource ="loop_Heart",
                 LoopBeatchars = "o...x...o...x...o...x...o...x...o...x...o...x...o...x...o...x.-.o...x...o...x...o...x...o...x...o...x...o...x...o...x...o...xx-.",
             },
-            new Beatmap
+            new Song
             {
                 Name = "SynSUN - Future People (Sonic Elysium Remix)",
                 LoopSource ="loop_FuturePeople",
                 LoopBeatchars = "o...x...o...x...o...x...o...x...o...x...o...x...o...x...o...x...o...x...o...x...o...x...o...x...o...x...o...x...o---o---o-------o...x...o...x...o...x...o...x...o...x...o...x...o...x...o...x...o...x...o...x...o...x...o...x...o...x...o...x...:.:.:.:.:.:.:.+.....x+..x+..x+..",
             },
-            new Beatmap
+            new Song
             {
                 Name = "Singularity - Nanox",
                 LoopSource ="loop_Nanox",
                 LoopBeatchars = "o.....o.x...o.......o...x.......o.....o.x...o.......o...x.......|x|x|x|.x...|x|x|x|xo...x.......|x|x|x|.x...|x|x|x|xo...x.......o.....o.x...o.......o...x.......o.....o.x...o.......o...x.......|x|x|x|.x...|x|x|x|xo...x.......|x|x|x|.x...|x|x|x|xo...x.......",
             },
-            new Beatmap
+            new Song
             {
                 Name = "Dayseeker - Black Earth",
                 LoopSource ="loop_BlackEarth",
                 LoopBeatchars = "--------o.....o.....o...+...............................x.......x.x.x.x.o.....o.....o...+...........................x...x.......--------o.....o.....o...+...............................x.......x.x.x.x.o.....o.....o...+...........................x...x.......",
             },
-            new Beatmap
+            new Song
             {
                 Name = "Ronald Jenkees - Early Morning May",
                 LoopSource ="loop_EarlyMorningMay",
                 LoopBeatchars = "o.......x.......o.......x.....o.o.......o.......o...o...o...o...o.......x.......o.......x.....o.o.......x.......o.......x.....o.",
             },
-            new Beatmap
+            new Song
             {
                 Name = "deadmau5 - Raise Your Weapon (Madeon Remix)",
                 LoopSource ="loop_Weapon",
@@ -154,7 +154,7 @@ namespace hues.Game
                 BuildupSource = "build_Weapon",
                 BuildupBeatchars = "----",
             },
-            new Beatmap
+            new Song
             {
                 Name = "BT - Love On Haight Street ",
                 LoopSource ="loop_LoveOnHaightStreet",
@@ -162,7 +162,7 @@ namespace hues.Game
                 BuildupSource = "build_LoveOnHaightStreet",
                 BuildupBeatchars = "x......:......:.....:......:.....:.....:......:.....",
             },
-            new Beatmap
+            new Song
             {
                 Name = "Vexare - The Clockmaker",
                 LoopSource ="loop_TheClockmaker",

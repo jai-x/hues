@@ -14,7 +14,7 @@ namespace hues.Game
     public class Respack
     {
         public readonly RespackInfo Info;
-        public readonly IReadOnlyCollection<Beatmap> Beatmaps;
+        public readonly IReadOnlyCollection<Song> Songs;
 
         private readonly Logger logger = Logger.GetLogger();
 
@@ -28,16 +28,16 @@ namespace hues.Game
                 Info = parseInfoEntry(infoEntry);
 
                 var songsEntry = findEntry(archive, "songs.xml");
-                Beatmaps = parseSongsEntry(songsEntry);
+                Songs = parseSongsEntry(songsEntry);
             }
         }
 
-        private IReadOnlyCollection<Beatmap> parseSongsEntry(ZipArchiveEntry songsEntry)
+        private IReadOnlyCollection<Song> parseSongsEntry(ZipArchiveEntry songsEntry)
         {
             return XDocument.Load(songsEntry.Open())
                             .Element("songs")
                             .Elements()
-                            .Select(song => new Beatmap
+                            .Select(song => new Song
                             {
                                 Name = song.Element("title").Value,
                                 BuildupSource = song.Element("buildup")?.Value,
