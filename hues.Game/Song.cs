@@ -21,6 +21,7 @@ namespace hues.Game
         public override string ToString() =>
             $"<{nameof(Song)}> " +
             $"Title: {Title}, " +
+            $"Source: {Source}, " +
             $"BuildupSource: {BuildupSource ?? "[null]"}, " +
             $"BuildupBeatchars: {BuildupBeatchars?.Truncate(5) ?? "[null]"}, " +
             $"LoopSource: {LoopSource}, " +

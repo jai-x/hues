@@ -36,6 +36,7 @@ namespace hues.Game
                             .Select(song => new Song
                             {
                                 Title = song.Element("title").Value,
+                                Source = song.Element("source")?.Value,
                                 BuildupSource = song.Element("buildup")?.Value,
                                 BuildupBeatchars = song.Element("buildupRhythm")?.Value,
                                 LoopSource = song.Attribute("name").Value,
