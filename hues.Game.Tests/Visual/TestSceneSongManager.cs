@@ -81,7 +81,7 @@ namespace hues.Game.Tests.Visual
 
         private void update(WorkingSong s)
         {
-            title.Text = s?.Song.Name ?? "none";
+            title.Text = s?.Song.Title ?? "none";
             buildupSource.Text = s?.Song.BuildupSource ?? "none";
             buildupChars.Text = s?.Song.BuildupBeatchars ?? "none";
             loopSource.Text = s?.Song.LoopSource ?? "none";

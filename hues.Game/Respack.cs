@@ -16,10 +16,6 @@ namespace hues.Game
         public readonly RespackInfo Info;
         public readonly IReadOnlyCollection<Song> Songs;
 
-        private readonly Logger logger = Logger.GetLogger();
-
-        private void l(string log) => logger.Debug(log);
-
         public Respack(string path)
         {
             using (var archive = ZipFile.OpenRead(path))
@@ -39,12 +35,11 @@ namespace hues.Game
                             .Elements()
                             .Select(song => new Song
                             {
-                                Name = song.Element("title").Value,
+                                Title = song.Element("title").Value,
                                 BuildupSource = song.Element("buildup")?.Value,
                                 BuildupBeatchars = song.Element("buildupRhythm")?.Value,
                                 LoopSource = song.Attribute("name").Value,
                                 LoopBeatchars = song.Element("rhythm").Value,
-                                IndependantBuild = song.Element("independentBuild")?.Value.ToBoolean() ?? false,
                                 Respack = this,
                             })
                             .ToList()

@@ -53,7 +53,7 @@ namespace hues.Game.Tests.Visual
         {
             private SpriteText section;
             private SpriteText index;
-            private SpriteText name;
+            private SpriteText title;
             private SpriteText beatchar;
             private Box flashRed;
             private Box flashBlue;
@@ -86,7 +86,7 @@ namespace hues.Game.Tests.Visual
                         Colour = Colour4.Crimson,
                         Alpha = 0f,
                     },
-                    name = new SpriteText
+                    title = new SpriteText
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
@@ -120,7 +120,7 @@ namespace hues.Game.Tests.Visual
                 workingSong.ValueChanged += (change) => updateName(change.NewValue);
             }
 
-            private void updateName(WorkingSong b) => name.Text = b?.Song.Name ?? "none";
+            private void updateName(WorkingSong b) => title.Text = b?.Song.Title ?? "none";
 
             protected override void OnNewBeat(int beatIndex, Section beatSection, char beatChar, double beatLength)
             {
