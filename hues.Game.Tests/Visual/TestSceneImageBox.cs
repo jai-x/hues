@@ -4,12 +4,12 @@ using osu.Framework.Graphics.Shapes;
 
 namespace hues.Game.Tests.Visual
 {
-    public class TestSceneHuesImageBox : HuesTestScene
+    public class TestSceneImageBox : HuesTestScene
     {
         [Cached]
-        protected readonly HuesImageManager him = new HuesImageManager();
+        protected readonly ImageManager him = new ImageManager();
 
-        public TestSceneHuesImageBox()
+        public TestSceneImageBox()
         {
             Children = new Drawable[]
             {
@@ -18,7 +18,7 @@ namespace hues.Game.Tests.Visual
                     RelativeSizeAxes = Axes.Both,
                     Colour = Colour4.White,
                 },
-                new HuesImageBox(),
+                new ImageBox(),
             };
 
             AddStep("Previous Image", him.Previous);

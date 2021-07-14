@@ -9,7 +9,7 @@ namespace hues.Game.Tests.Visual
         protected readonly HuesColourManager hcm = new HuesColourManager();
 
         [Cached]
-        protected readonly HuesImageManager him = new HuesImageManager();
+        protected readonly ImageManager him = new ImageManager();
 
         public TestSceneHuesVisualBox()
         {

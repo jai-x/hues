@@ -24,7 +24,7 @@ namespace hues.Game
                     RelativeSizeAxes = Axes.Both,
                     Colour = Colour4.White,
                 },
-                new HuesImageBox(),
+                new ImageBox(),
                 // TODO: Figure out a better way to overlay the colour (maybe blending?)
                 new HuesColourBox
                 {

@@ -9,18 +9,18 @@ using osu.Framework.Graphics.Textures;
 
 namespace hues.Game
 {
-    public class HuesImageBox : CompositeDrawable
+    public class ImageBox : CompositeDrawable
     {
         [Resolved]
         private LargeTextureStore textures { get; set; }
 
         [Resolved]
-        private HuesImageManager him { get; set; }
+        private ImageManager him { get; set; }
 
-        private Dictionary<HuesImage, Sprite> sprites = new Dictionary<HuesImage, Sprite>();
+        private Dictionary<Image, Sprite> sprites = new Dictionary<Image, Sprite>();
         private Sprite shown;
 
-        public HuesImageBox()
+        public ImageBox()
         {
             RelativeSizeAxes = Axes.Both;
         }
@@ -29,7 +29,7 @@ namespace hues.Game
         {
             base.LoadComplete();
 
-            InternalChildren = HuesImage.All.Select(img => {
+            InternalChildren = Image.All.Select(img => {
                 var sprite = new Sprite
                 {
                     RelativeSizeAxes = Axes.Both,
@@ -47,7 +47,7 @@ namespace hues.Game
             him.Current.ValueChanged += (img) => showImage(img.NewValue);
         }
 
-        protected void showImage(HuesImage img)
+        protected void showImage(Image img)
         {
             shown?.Hide();
             shown = sprites[img];
