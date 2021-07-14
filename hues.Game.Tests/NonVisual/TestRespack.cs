@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -11,8 +12,6 @@ namespace hues.Game.Tests.NonVisual
     [TestFixture]
     public class TestRespack
     {
-        private string respackPath;
-
         private const string infoXml = @"
         <info>
             <name>Test Name</name>
@@ -34,33 +33,77 @@ namespace hues.Game.Tests.NonVisual
         </songs>
         ";
 
-        [SetUp]
-        public void Init()
+        private const string imagesXml = @"
+        <images>
+          <image name=""image_path_1"">
+            <source>https://image.link/1</source>
+            <fullname>Test Image Name 1</fullname>
+          </image>
+        </images>
+        ";
+
+        private readonly List<string> testFiles = new List<string>();
+
+        private string makeRespack(string info, string songs, string images)
         {
-            respackPath = Path.GetTempFileName();
+            var path = Path.GetTempFileName();
 
-            using (var archive = ZipFile.Open(respackPath, ZipArchiveMode.Update))
+            using (var archive = ZipFile.Open(path, ZipArchiveMode.Update))
             {
-                var infoEntry = archive.CreateEntry("info.xml");
-                using (var infoWriter = new StreamWriter(infoEntry.Open(), Encoding.UTF8))
-                    infoWriter.Write(infoXml);
+                if (info != null)
+                {
+                    var infoEntry = archive.CreateEntry("info.xml");
+                    using (var infoWriter = new StreamWriter(infoEntry.Open(), Encoding.UTF8))
+                        infoWriter.Write(info);
+                }
 
-                var songsEntry = archive.CreateEntry("songs.xml");
-                using (var songsWriter = new StreamWriter(songsEntry.Open(), Encoding.UTF8))
-                    songsWriter.Write(songsXml);
+                if (songs != null)
+                {
+                    var songsEntry = archive.CreateEntry("songs.xml");
+                    using (var songsWriter = new StreamWriter(songsEntry.Open(), Encoding.UTF8))
+                        songsWriter.Write(songs);
+                }
+
+                if (images != null)
+                {
+                    var imagesEntry = archive.CreateEntry("images.xml");
+                    using (var imagesWriter = new StreamWriter(imagesEntry.Open(), Encoding.UTF8))
+                        imagesWriter.Write(images);
+                }
             }
+
+            testFiles.Add(path);
+
+            return path;
         }
 
         [TearDown]
         public void Cleanup()
         {
-            File.Delete(respackPath);
+            foreach (var file in testFiles)
+                File.Delete(file);
+        }
+
+        [Test]
+        public void TestRespackNoInfo()
+        {
+            var path = makeRespack(null, null, null);
+            Assert.Throws(typeof(RespackNoInfoException), () => { new Respack(path); });
+        }
+
+        [Test]
+        public void TestRespackEmpty()
+        {
+            var path = makeRespack(infoXml, null, null);
+            Assert.Throws(typeof(RespackEmptyException), () => { new Respack(path); });
         }
 
         [Test]
         public void TestRespackInfo()
         {
-            var respack = new Respack(respackPath);
+            var path = makeRespack(infoXml, songsXml, null);
+
+            var respack = new Respack(path);
             var info = respack.Info;
 
             Assert.AreEqual(info.Name, "Test Name");
@@ -72,12 +115,13 @@ namespace hues.Game.Tests.NonVisual
         [Test]
         public void TestRespackSongs()
         {
-            var respack = new Respack(respackPath);
-            var songs = respack.Songs;
+            var path = makeRespack(infoXml, songsXml, null);
 
-            Assert.AreEqual(songs.Count, 1);
+            var respack = new Respack(path);
 
-            var firstSong = songs.First();
+            Assert.AreEqual(respack.Songs.Count, 1);
+
+            var firstSong = respack.Songs.First();
 
             Assert.AreEqual(firstSong.Respack, respack);
 
@@ -87,6 +131,23 @@ namespace hues.Game.Tests.NonVisual
             Assert.AreEqual(firstSong.BuildupBeatchars, "oxox1");
             Assert.AreEqual(firstSong.LoopSource, "loop_test_1");
             Assert.AreEqual(firstSong.LoopBeatchars, "xoxo1");
+        }
+
+        public void TestRespackImages()
+        {
+            var path = makeRespack(infoXml, null, imagesXml);
+
+            var respack = new Respack(path);
+
+            Assert.AreEqual(respack.Images.Count, 1);
+
+            var firstImage = respack.Images.First();
+
+            Assert.AreEqual(firstImage.Respack, respack);
+
+            Assert.AreEqual(firstImage.Name, "Test Image Name 1");
+            Assert.AreEqual(firstImage.Source, "https://image.link/1");
+            Assert.AreEqual(firstImage.TexturePath, "image_path_1");
         }
     }
 }

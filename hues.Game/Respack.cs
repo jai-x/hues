@@ -15,6 +15,7 @@ namespace hues.Game
     {
         public readonly RespackInfo Info;
         public readonly IReadOnlyCollection<Song> Songs;
+        public readonly IReadOnlyCollection<Image> Images;
 
         public Respack(string path)
         {
@@ -25,7 +26,33 @@ namespace hues.Game
 
                 var songsEntry = findEntry(archive, "songs.xml");
                 Songs = parseSongsEntry(songsEntry);
+
+                var imagesEntry = findEntry(archive, "images.xml");
+                Images = parseImagesEntry(imagesEntry);
+
+                if (Songs.Count == 0 && Images.Count == 0)
+                    throw new RespackEmptyException();
             }
+        }
+
+        private IReadOnlyCollection<Image> parseImagesEntry(ZipArchiveEntry imagesEntry)
+        {
+            if (imagesEntry == null)
+                return new List<Image>().AsReadOnly();
+
+            return XDocument.Load(imagesEntry.Open())
+                            .Element("images")
+                            .Elements()
+                            .Where(imageElement => imageElement.Element("frameDuration") == null) // filter out animations for now
+                            .Select(imageElement => new Image
+                            {
+                                Name = imageElement.Element("fullname").Value,
+                                Source = imageElement.Element("source").Value,
+                                TexturePath = imageElement.Attribute("name").Value,
+                                Respack = this,
+                            })
+                            .ToList()
+                            .AsReadOnly();
         }
 
         private IReadOnlyCollection<Song> parseSongsEntry(ZipArchiveEntry songsEntry)
@@ -36,14 +63,14 @@ namespace hues.Game
             return XDocument.Load(songsEntry.Open())
                             .Element("songs")
                             .Elements()
-                            .Select(song => new Song
+                            .Select(songElement => new Song
                             {
-                                Title = song.Element("title").Value,
-                                Source = song.Element("source")?.Value,
-                                BuildupSource = song.Element("buildup")?.Value,
-                                BuildupBeatchars = song.Element("buildupRhythm")?.Value,
-                                LoopSource = song.Attribute("name").Value,
-                                LoopBeatchars = song.Element("rhythm").Value,
+                                Title = songElement.Element("title").Value,
+                                Source = songElement.Element("source")?.Value,
+                                BuildupSource = songElement.Element("buildup")?.Value,
+                                BuildupBeatchars = songElement.Element("buildupRhythm")?.Value,
+                                LoopSource = songElement.Attribute("name").Value,
+                                LoopBeatchars = songElement.Element("rhythm").Value,
                                 Respack = this,
                             })
                             .ToList()
@@ -53,7 +80,7 @@ namespace hues.Game
         private RespackInfo parseInfoEntry(ZipArchiveEntry infoEntry)
         {
             if (infoEntry == null)
-                throw new ArgumentException($"Unable to find info.xml file in respack archive");
+                throw new RespackNoInfoException();
 
             return XDocument.Load(infoEntry.Open())
                             .Element("info")
@@ -96,5 +123,15 @@ namespace hues.Game
             $"Author: {Author}, " +
             $"Description: {Description}, " +
             $"Link: {Link}";
+    }
+
+    public class RespackEmptyException : Exception
+    {
+        public override string Message => "No songs or images found in respack archive";
+    }
+
+    public class RespackNoInfoException : Exception
+    {
+        public override string Message => "Unable to find info.xml file in respack archive";
     }
 }

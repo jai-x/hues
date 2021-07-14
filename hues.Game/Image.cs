@@ -2,13 +2,19 @@ namespace hues.Game
 {
     public struct Image
     {
-        public readonly string TexturePath;
-        public readonly string Name;
+        public string Name { get; init; }
+        public string Source { get; init; }
+
+        public string TexturePath { get; init; }
+
+        public Respack Respack { get; init; }
 
         public Image(string path, string name)
         {
             TexturePath = path;
             Name = name;
+            Source = null;
+            Respack = null;
         }
 
         public static Image[] All = new Image[]
