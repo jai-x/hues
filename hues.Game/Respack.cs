@@ -30,6 +30,9 @@ namespace hues.Game
 
         private IReadOnlyCollection<Song> parseSongsEntry(ZipArchiveEntry songsEntry)
         {
+            if (songsEntry == null)
+                return new List<Song>().AsReadOnly();
+
             return XDocument.Load(songsEntry.Open())
                             .Element("songs")
                             .Elements()
@@ -49,6 +52,9 @@ namespace hues.Game
 
         private RespackInfo parseInfoEntry(ZipArchiveEntry infoEntry)
         {
+            if (infoEntry == null)
+                throw new ArgumentException($"Unable to find info.xml file in respack archive");
+
             return XDocument.Load(infoEntry.Open())
                             .Element("info")
                             .Transform(info => new RespackInfo
@@ -67,7 +73,7 @@ namespace hues.Game
                 if (entry.Name == name)
                     return entry;
 
-            throw new ArgumentException($"Unable to find {name} file in respack archive");
+            return null;
         }
 
         private string readEntry(ZipArchiveEntry entry)
