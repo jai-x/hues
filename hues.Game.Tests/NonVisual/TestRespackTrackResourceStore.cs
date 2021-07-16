@@ -26,10 +26,10 @@ namespace hues.Game.Tests.NonVisual
         {
             var respackTracks = audioManager.GetTrackStore(respackTrackResourceStore);
 
-            using (var source = TestResources.OpenResource("deepnote.mp3"))
-                respackTrackResourceStore.Add("deepnote", source);
+            using (var source = TestResources.OpenResource("Tracks/sample.mp3"))
+                respackTrackResourceStore.Add("sample_track", source);
 
-            var addedTrack = respackTracks.Get("deepnote");
+            var addedTrack = respackTracks.Get("sample_track");
 
             Assert.NotNull(addedTrack);
         }
