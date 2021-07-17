@@ -42,68 +42,20 @@ namespace hues.Game.Tests.NonVisual
         </images>
         ";
 
-        private readonly List<string> testFiles = new List<string>();
-
-        private string makeRespack(string info, string songs, string images)
-        {
-            var path = Path.GetTempFileName();
-
-            using (var archive = ZipFile.Open(path, ZipArchiveMode.Update))
-            {
-                if (info != null)
-                {
-                    var infoEntry = archive.CreateEntry("info.xml");
-                    using (var infoWriter = new StreamWriter(infoEntry.Open(), Encoding.UTF8))
-                        infoWriter.Write(info);
-                }
-
-                if (songs != null)
-                {
-                    var songsEntry = archive.CreateEntry("songs.xml");
-                    using (var songsWriter = new StreamWriter(songsEntry.Open(), Encoding.UTF8))
-                        songsWriter.Write(songs);
-                }
-
-                if (images != null)
-                {
-                    var imagesEntry = archive.CreateEntry("images.xml");
-                    using (var imagesWriter = new StreamWriter(imagesEntry.Open(), Encoding.UTF8))
-                        imagesWriter.Write(images);
-                }
-            }
-
-            testFiles.Add(path);
-
-            return path;
-        }
-
-        [TearDown]
-        public void Cleanup()
-        {
-            foreach (var file in testFiles)
-                File.Delete(file);
-        }
-
         [Test]
         public void TestRespackNoInfo()
         {
-            var path = makeRespack(null, null, null);
-            Assert.Throws(typeof(RespackNoInfoException), () => { new Respack(path); });
-        }
-
-        [Test]
-        public void TestRespackEmpty()
-        {
-            var path = makeRespack(infoXml, null, null);
-            Assert.Throws(typeof(RespackEmptyException), () => { new Respack(path); });
+            Assert.Throws(typeof(RespackNoInfoException), () => { new Respack(null, null, null); });
         }
 
         [Test]
         public void TestRespackInfo()
         {
-            var path = makeRespack(infoXml, songsXml, null);
+            var respack = new Respack(infoXml, null, null);
 
-            var respack = new Respack(path);
+            Assert.AreEqual(respack.Songs.Count, 0);
+            Assert.AreEqual(respack.Images.Count, 0);
+
             var info = respack.Info;
 
             Assert.AreEqual(info.Name, "Test Name");
@@ -115,15 +67,11 @@ namespace hues.Game.Tests.NonVisual
         [Test]
         public void TestRespackSongs()
         {
-            var path = makeRespack(infoXml, songsXml, null);
-
-            var respack = new Respack(path);
+            var respack = new Respack(infoXml, songsXml, null);
 
             Assert.AreEqual(respack.Songs.Count, 1);
 
             var firstSong = respack.Songs.First();
-
-            Assert.AreEqual(firstSong.Respack, respack);
 
             Assert.AreEqual(firstSong.Title, "Test Song Title 1");
             Assert.AreEqual(firstSong.Source, "https://song.link/1");
@@ -131,23 +79,21 @@ namespace hues.Game.Tests.NonVisual
             Assert.AreEqual(firstSong.BuildupBeatchars, "oxox1");
             Assert.AreEqual(firstSong.LoopSource, "loop_test_1");
             Assert.AreEqual(firstSong.LoopBeatchars, "xoxo1");
+            Assert.AreEqual(firstSong.Respack, respack);
         }
 
         public void TestRespackImages()
         {
-            var path = makeRespack(infoXml, null, imagesXml);
-
-            var respack = new Respack(path);
+            var respack = new Respack(infoXml, null, imagesXml);
 
             Assert.AreEqual(respack.Images.Count, 1);
 
             var firstImage = respack.Images.First();
 
-            Assert.AreEqual(firstImage.Respack, respack);
-
             Assert.AreEqual(firstImage.Name, "Test Image Name 1");
             Assert.AreEqual(firstImage.Source, "https://image.link/1");
             Assert.AreEqual(firstImage.TexturePath, "image_path_1");
+            Assert.AreEqual(firstImage.Respack, respack);
         }
     }
 }
