@@ -29,7 +29,7 @@ namespace hues.Game
         private RespackInfo parseInfo(string infoXml)
         {
             if (infoXml == null)
-                throw new RespackNoInfoException();
+                throw new ArgumentException("Parameter `infoXml` must not be null");
 
             return XDocument.Parse(infoXml)
                             .Element("info")
@@ -98,10 +98,5 @@ namespace hues.Game
             $"Author: {Author}, " +
             $"Description: {Description}, " +
             $"Link: {Link}";
-    }
-
-    public class RespackNoInfoException : Exception
-    {
-        public override string Message => "Unable to find info.xml file in respack archive";
     }
 }

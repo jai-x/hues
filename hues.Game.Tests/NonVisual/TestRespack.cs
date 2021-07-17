@@ -14,10 +14,10 @@ namespace hues.Game.Tests.NonVisual
     {
         private const string infoXml = @"
         <info>
-            <name>Test Name</name>
-            <author>Test Author</author>
-            <description>Test Description</description>
-            <link>https://test.link</link>
+          <name>Test Name</name>
+          <author>Test Author</author>
+          <description>Test Description</description>
+          <link>https://test.link</link>
         </info>
         ";
 
@@ -45,7 +45,7 @@ namespace hues.Game.Tests.NonVisual
         [Test]
         public void TestRespackNoInfo()
         {
-            Assert.Throws(typeof(RespackNoInfoException), () => { new Respack(null, null, null); });
+            Assert.Throws(typeof(ArgumentException), () => { new Respack(null, null, null); });
         }
 
         [Test]
@@ -53,15 +53,21 @@ namespace hues.Game.Tests.NonVisual
         {
             var respack = new Respack(infoXml, null, null);
 
-            Assert.AreEqual(respack.Songs.Count, 0);
-            Assert.AreEqual(respack.Images.Count, 0);
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(respack.Songs.Count, 0);
+                Assert.AreEqual(respack.Images.Count, 0);
+            });
 
             var info = respack.Info;
 
-            Assert.AreEqual(info.Name, "Test Name");
-            Assert.AreEqual(info.Author, "Test Author");
-            Assert.AreEqual(info.Description, "Test Description");
-            Assert.AreEqual(info.Link, "https://test.link");
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(info.Name, "Test Name");
+                Assert.AreEqual(info.Author, "Test Author");
+                Assert.AreEqual(info.Description, "Test Description");
+                Assert.AreEqual(info.Link, "https://test.link");
+            });
         }
 
         [Test]
@@ -73,13 +79,16 @@ namespace hues.Game.Tests.NonVisual
 
             var firstSong = respack.Songs.First();
 
-            Assert.AreEqual(firstSong.Title, "Test Song Title 1");
-            Assert.AreEqual(firstSong.Source, "https://song.link/1");
-            Assert.AreEqual(firstSong.BuildupSource, "build_test_1");
-            Assert.AreEqual(firstSong.BuildupBeatchars, "oxox1");
-            Assert.AreEqual(firstSong.LoopSource, "loop_test_1");
-            Assert.AreEqual(firstSong.LoopBeatchars, "xoxo1");
-            Assert.AreEqual(firstSong.Respack, respack);
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(firstSong.Title, "Test Song Title 1");
+                Assert.AreEqual(firstSong.Source, "https://song.link/1");
+                Assert.AreEqual(firstSong.BuildupSource, "build_test_1");
+                Assert.AreEqual(firstSong.BuildupBeatchars, "oxox1");
+                Assert.AreEqual(firstSong.LoopSource, "loop_test_1");
+                Assert.AreEqual(firstSong.LoopBeatchars, "xoxo1");
+                Assert.AreEqual(firstSong.Respack, respack);
+            });
         }
 
         public void TestRespackImages()
@@ -90,10 +99,13 @@ namespace hues.Game.Tests.NonVisual
 
             var firstImage = respack.Images.First();
 
-            Assert.AreEqual(firstImage.Name, "Test Image Name 1");
-            Assert.AreEqual(firstImage.Source, "https://image.link/1");
-            Assert.AreEqual(firstImage.TexturePath, "image_path_1");
-            Assert.AreEqual(firstImage.Respack, respack);
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(firstImage.Name, "Test Image Name 1");
+                Assert.AreEqual(firstImage.Source, "https://image.link/1");
+                Assert.AreEqual(firstImage.TexturePath, "image_path_1");
+                Assert.AreEqual(firstImage.Respack, respack);
+            });
         }
     }
 }
