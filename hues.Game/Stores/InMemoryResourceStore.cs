@@ -12,6 +12,16 @@ namespace hues.Game.Stores
         protected readonly Dictionary<string, MemoryStream> store = new Dictionary<string, MemoryStream>();
         protected readonly object storeLock = new object();
 
+        public void Add(string name, Stream stream)
+        {
+            lock (storeLock)
+            {
+                var dest = new MemoryStream();
+                stream.CopyTo(dest);
+                store[name] = dest;
+            }
+        }
+
         public byte[] Get(string name)
         {
             lock (storeLock)
@@ -27,11 +37,13 @@ namespace hues.Game.Stores
             }
         }
 
-        public Task<byte[]> GetAsync(string name)
+        public Task<byte[]> GetAsync(string name) => Task.Run(() => Get(name));
+        /*
         {
             // TODO: Find out how C# async works and why this is cursed
             return new Task<byte[]>(() => Get(name));
         }
+        */
 
         public Stream GetStream(string name)
         {
