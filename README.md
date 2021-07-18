@@ -1,5 +1,10 @@
 # hues
 
+A desktop implementation of 0x40 Hues.
+
+https://0x40hues.blogspot.com/
+https://0x40.mon.im/
+
 ## respack
 
 This is the specification for which this hues will interpret respack files.
