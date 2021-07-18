@@ -50,12 +50,24 @@ namespace hues.Game.Test.NonVisual
         [Test]
         public void TestNoSongFile()
         {
-            AddStep("Add respack with missing song files", () =>
+            AddStep("Add respack with missing song file", () =>
             {
                 var noSongRespack = TestResources.OpenResource("Respacks/noSongRespack.zip");
 
                 var ex = Assert.Throws(typeof(RespackMissingFileException), () => { manager.Add(noSongRespack); });
                 Assert.AreEqual(ex.Message, "Unable to find file `loop_file_not_exist` in respack archive");
+            });
+        }
+
+        [Test]
+        public void TestNoImageFile()
+        {
+            AddStep("Add respack with missing image file", () =>
+            {
+                var noSongRespack = TestResources.OpenResource("Respacks/noImageRespack.zip");
+
+                var ex = Assert.Throws(typeof(RespackMissingFileException), () => { manager.Add(noSongRespack); });
+                Assert.AreEqual(ex.Message, "Unable to find file `image_file_not_exist` in respack archive");
             });
         }
 
