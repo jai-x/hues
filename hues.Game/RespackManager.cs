@@ -4,22 +4,29 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 
+using osu.Framework.Allocation;
+using osu.Framework.Graphics;
+using osu.Framework.Platform;
+
 using hues.Game.Extensions;
 using hues.Game.Stores;
 
 namespace hues.Game
 {
-    public class RespackManager
+    public class RespackManager : Component
     {
-        private readonly RespackTrackResourceStore trackResources;
+        [Resolved]
+        private RespackTrackResourceStore trackResources { get; set; }
+
+        [Resolved]
+        private RespackTextureResourceStore textureResources { get; set; }
+
+        [Resolved]
+        private GameHost host { get; set; }
+
         private readonly List<Respack> respacks = new List<Respack>();
 
         public IReadOnlyCollection<Respack> Respacks => respacks;
-
-        public RespackManager(RespackTrackResourceStore trackResources)
-        {
-            this.trackResources = trackResources;
-        }
 
         public void Add(string path)
         {
@@ -77,7 +84,17 @@ namespace hues.Game
 
         private void addImagesToResourceStore(ZipArchive archive, IReadOnlyCollection<Image> images)
         {
-            // TODO: Implement this after implementing an inmemory texture resource store
+            foreach (var image in images)
+            {
+                var imageEntry = findEntry(archive, image.TexturePath, true);
+
+                if (imageEntry == null)
+                    throw new RespackMissingFileException(image.TexturePath);
+
+                using (var stream = imageEntry.Open())
+                    textureResources.Add(image.TexturePath, stream);
+
+            }
         }
 
         private ZipArchiveEntry findEntry(ZipArchive archive, string name, bool ignoreExtension = false)
