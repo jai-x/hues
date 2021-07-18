@@ -5,6 +5,7 @@ using NUnit.Framework;
 
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
+using osu.Framework.Audio.Track;
 using osu.Framework.Logging;
 using osu.Framework.Testing;
 
@@ -19,19 +20,33 @@ namespace hues.Game.Tests.NonVisual
         [Resolved]
         private AudioManager audioManager { get; set; }
 
-        private readonly RespackTrackResourceStore respackTrackResourceStore = new RespackTrackResourceStore();
+        private readonly RespackTrackResourceStore trackResources = new RespackTrackResourceStore();
+
+        private ITrackStore trackStore;
 
         [Test]
         public void TestAddTrack()
         {
-            var respackTracks = audioManager.GetTrackStore(respackTrackResourceStore);
+            AddStep("Create a tracks store from the tracks resources", () =>
+            {
+                trackStore = audioManager.GetTrackStore(trackResources);
+            });
 
-            using (var source = TestResources.OpenResource("Tracks/sample.mp3"))
-                respackTrackResourceStore.Add("sample_track", source);
+            AddStep("Add track file to resources", () =>
+            {
+                using (var source = TestResources.OpenResource("Tracks/sample.mp3"))
+                    trackResources.Add("sample_track", source);
+            });
 
-            var addedTrack = respackTracks.Get("sample_track");
+            AddStep("Assert track file has beed added to resources", () =>
+            {
+                Assert.NotNull(trackResources.Get("sample_track"));
+            });
 
-            Assert.NotNull(addedTrack);
+            AddStep("Assert track can be fetched from the track store", () =>
+            {
+                Assert.NotNull(trackStore.Get("sample_track"));
+            });
         }
     }
 }

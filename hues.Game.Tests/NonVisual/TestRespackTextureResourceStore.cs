@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Textures;
+using osu.Framework.IO.Stores;
 using osu.Framework.Logging;
 using osu.Framework.Testing;
 using osu.Framework.Platform;
@@ -26,22 +27,36 @@ namespace hues.Game.Tests.NonVisual
 
         private readonly RespackTextureResourceStore textureResources = new RespackTextureResourceStore();
 
+        private IResourceStore<TextureUpload> textureStore;
+
         [Test]
         public void TestAddTexture()
         {
-            using (var source = TestResources.OpenResource("Textures/sample-texture.png"))
-                textureResources.Add("sample-texture.png", source);
+            AddStep("Create texture store from resources", () =>
+            {
+                textureStore = gameHost.CreateTextureLoaderStore(textureResources);
+            });
 
-            Assert.NotNull(textureResources.Get("sample-texture.png"));
+            AddStep("Add textureStore to global texture store", () =>
+            {
+                globalTextures.AddStore(textureStore);
+            });
 
-            var textureStore = gameHost.CreateTextureLoaderStore(textureResources);
+            AddStep("Add texture file to resources", () =>
+            {
+                using (var source = TestResources.OpenResource("Textures/sample-texture.png"))
+                    textureResources.Add("sample-texture.png", source);
+            });
 
-            globalTextures.AddStore(textureStore);
+            AddStep("Assert texture file has been added", () =>
+            {
+                Assert.NotNull(textureResources.Get("sample-texture.png"));
+            });
 
-            var addedTexture = globalTextures.Get("sample-texture");
-
-            // FIXME: Find out why this works sometimes?
-            Assert.NotNull(addedTexture);
+            AddStep("Assert texture can be fetched from global texture store", () =>
+            {
+                Assert.NotNull(globalTextures.Get("sample-texture"));
+            });
         }
     }
 }
