@@ -11,7 +11,7 @@ using osu.Framework.Platform;
 using hues.Game.Extensions;
 using hues.Game.Stores;
 
-namespace hues.Game
+namespace hues.Game.Managers
 {
     public class RespackManager : Component
     {
@@ -25,6 +25,7 @@ namespace hues.Game
         private GameHost host { get; set; }
 
         private readonly List<Respack> respacks = new List<Respack>();
+        private readonly object respackLock = new object();
 
         public IReadOnlyCollection<Respack> Respacks => respacks;
 
@@ -54,7 +55,8 @@ namespace hues.Game
                 addImagesToResourceStore(archive, respack.Images);
             }
 
-            respacks.Add(respack);
+            lock (respackLock)
+                respacks.Add(respack);
         }
 
         private void addSongsToResourceStore(ZipArchive archive, IReadOnlyCollection<Song> songs)

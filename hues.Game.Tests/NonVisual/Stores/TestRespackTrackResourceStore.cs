@@ -12,7 +12,7 @@ using osu.Framework.Testing;
 using hues.Game.Stores;
 using hues.Game.Tests.Resources;
 
-namespace hues.Game.Tests.NonVisual
+namespace hues.Game.Tests.NonVisual.Stores
 {
     [HeadlessTest]
     public class TestRespackTrackResourceStore : HuesTestScene
