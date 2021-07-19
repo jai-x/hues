@@ -6,6 +6,7 @@ namespace hues.Game.Tests.Visual
 {
     public class TestSceneImageBox : HuesTestScene
     {
+        /*
         [Cached]
         protected readonly ImageManager him = new ImageManager();
 
@@ -24,5 +25,6 @@ namespace hues.Game.Tests.Visual
             AddStep("Previous Image", him.Previous);
             AddStep("Next Image", him.Next);
         }
+        */
     }
 }

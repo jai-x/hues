@@ -11,6 +11,7 @@ namespace hues.Game
 {
     public class ImageBox : CompositeDrawable
     {
+    /*
         [Resolved]
         private LargeTextureStore textures { get; set; }
 
@@ -59,5 +60,6 @@ namespace hues.Game
             base.Dispose(isDisposing);
             sprites.Clear();
         }
+    */
     }
 }

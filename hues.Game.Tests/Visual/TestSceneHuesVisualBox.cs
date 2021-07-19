@@ -5,6 +5,7 @@ namespace hues.Game.Tests.Visual
 {
     public class TestSceneHuesVisualBox : HuesTestScene
     {
+        /*
         [Cached]
         protected readonly HuesColourManager hcm = new HuesColourManager();
 
@@ -15,5 +16,6 @@ namespace hues.Game.Tests.Visual
         {
             Child = new HuesVisualBox();
         }
+        */
     }
 }
