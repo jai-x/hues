@@ -52,11 +52,8 @@ namespace hues.Game.Test.NonVisual.Managers
 
             AddStep("Reset", () => { reset(); });
             AddStep("Add single image", () => { manager.Add(firstImage); });
-            AddAssert("Image is added", () =>
-            {
-                return manager.Images.Count == 1 &&
-                       manager.Images.First() == firstImage;
-            });
+            AddAssert("Image is added", () => manager.Images.Count == 1);
+            AddAssert("Image has correct value", () => manager.Images.First() == firstImage);
         }
 
         [Test]
@@ -70,12 +67,9 @@ namespace hues.Game.Test.NonVisual.Managers
 
             AddStep("Reset", () => { reset(); });
             AddStep("Add multiple images", () => { manager.Add(newImages); });
-            AddAssert("Images are added", () =>
-            {
-                return manager.Images.Count == 2 &&
-                       manager.Images.First() == newImages[0] &&
-                       manager.Images.Skip(1).First() == newImages[1];
-            });
+            AddAssert("Images are added", () => manager.Images.Count == 2);
+            AddAssert("First image has correct value", () => manager.Images.First() == newImages[0]);
+            AddAssert("Second image has correct value", () => manager.Images.Last() == newImages[1]);
         }
 
         [Test]

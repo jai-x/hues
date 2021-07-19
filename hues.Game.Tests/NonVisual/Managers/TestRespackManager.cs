@@ -22,72 +22,104 @@ namespace hues.Game.Test.NonVisual.Managers
     public class TestRespackManager : HuesTestScene
     {
         [Cached]
-        protected readonly RespackTrackResourceStore trackResources = new RespackTrackResourceStore();
+        private readonly RespackTrackResourceStore trackResources = new RespackTrackResourceStore();
 
         [Cached]
-        protected readonly RespackTextureResourceStore textureResources = new RespackTextureResourceStore();
+        private readonly RespackTextureResourceStore textureResources = new RespackTextureResourceStore();
+
+        [Cached]
+        private readonly ImageManager imageManager = new ImageManager();
 
         private RespackManager manager;
 
-        protected override void LoadComplete()
+        private void reset()
         {
-            base.LoadComplete();
+            textureResources.Clear();
+            trackResources.Clear();
 
+            manager?.Expire();
             Child = manager = new RespackManager();
         }
 
         [Test]
         public void TestNoInfoFile()
         {
+            var emptyRespack = TestResources.OpenResource("Respacks/emptyRespack.zip");
+            RespackMissingFileException ex = null;
+
+            AddStep("Reset", () => { reset(); });
             AddStep("Add respack with no info.xml file", () =>
             {
-                var emptyRespack = TestResources.OpenResource("Respacks/emptyRespack.zip");
-
-                var ex = Assert.Throws(typeof(RespackMissingFileException), () => { manager.Add(emptyRespack); });
-                Assert.AreEqual(ex.Message, "Unable to find file `info.xml` in respack archive");
+                try
+                {
+                    manager.Add(emptyRespack);
+                }
+                catch (RespackMissingFileException e)
+                {
+                    ex = e;
+                }
             });
+
+            AddAssert("Exception was thrown", () => ex != null);
+            AddAssert("Exception has correct message", () => ex.Message == "Unable to find file `info.xml` in respack archive");
         }
 
         [Test]
         public void TestNoSongFile()
         {
+            var noSongRespack = TestResources.OpenResource("Respacks/noSongRespack.zip");
+            RespackMissingFileException ex = null;
+
+            AddStep("Reset", () => { reset(); });
             AddStep("Add respack with missing song file", () =>
             {
-                var noSongRespack = TestResources.OpenResource("Respacks/noSongRespack.zip");
-
-                var ex = Assert.Throws(typeof(RespackMissingFileException), () => { manager.Add(noSongRespack); });
-                Assert.AreEqual(ex.Message, "Unable to find file `loop_file_not_exist` in respack archive");
+                try
+                {
+                    manager.Add(noSongRespack);
+                }
+                catch (RespackMissingFileException e)
+                {
+                    ex = e;
+                }
             });
+            AddAssert("Exception was thrown", () => ex != null);
+            AddAssert("Exception has correct message", () => ex.Message == "Unable to find file `loop_file_not_exist` in respack archive");
         }
 
         [Test]
         public void TestNoImageFile()
         {
-            AddStep("Add respack with missing image file", () =>
-            {
-                var noSongRespack = TestResources.OpenResource("Respacks/noImageRespack.zip");
+            var noSongRespack = TestResources.OpenResource("Respacks/noImageRespack.zip");
+            RespackMissingFileException ex = null;
 
-                var ex = Assert.Throws(typeof(RespackMissingFileException), () => { manager.Add(noSongRespack); });
-                Assert.AreEqual(ex.Message, "Unable to find file `image_file_not_exist` in respack archive");
+            AddStep("Reset", () => { reset(); });
+            AddStep("Add respack with missing song file", () =>
+            {
+                try
+                {
+                    manager.Add(noSongRespack);
+                }
+                catch (RespackMissingFileException e)
+                {
+                    ex = e;
+                }
             });
+            AddAssert("Exception was thrown", () => ex != null);
+            AddAssert("Exception has correct message", () => ex.Message == "Unable to find file `image_file_not_exist` in respack archive");
         }
 
         [Test]
         public void TestAddRespack()
         {
-            AddStep("Add respack with song and image files", () =>
-            {
-                var respack = TestResources.OpenResource("Respacks/fullRespack.zip");
+            var respack = TestResources.OpenResource("Respacks/fullRespack.zip");
 
-                manager.Add(respack);
-
-                Assert.AreEqual(manager.Respacks.Count, 1);
-                Assert.AreEqual(manager.Respacks.First().Songs.Count, 1);
-                Assert.AreEqual(manager.Respacks.First().Images.Count, 1);
-
-                Assert.NotNull(trackResources.Get("track_sample"));
-                Assert.NotNull(textureResources.Get("texture_sample"));
-            });
+            AddStep("Reset", () => { reset(); });
+            AddStep("Add respack with song and image files", () => { manager.Add(respack); });
+            AddAssert("Respack added", () => manager.Respacks.Count == 1);
+            AddAssert("Songs added", () => manager.Respacks.First().Songs.Count == 1);
+            AddAssert("Images added", () => manager.Respacks.First().Images.Count == 1);
+            AddAssert("Track resources stored", () => trackResources.Get("track_sample") != null);
+            AddAssert("Texture resources stored", () => textureResources.Get("texture_sample") != null);
         }
     }
 }

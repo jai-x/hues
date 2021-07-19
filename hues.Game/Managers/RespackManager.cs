@@ -24,6 +24,9 @@ namespace hues.Game.Managers
         [Resolved]
         private GameHost host { get; set; }
 
+        [Resolved]
+        private ImageManager imageManager { get; set; }
+
         private readonly List<Respack> respacks = new List<Respack>();
         private readonly object respackLock = new object();
 
@@ -56,7 +59,10 @@ namespace hues.Game.Managers
             }
 
             lock (respackLock)
+            {
+                imageManager.Add(respack.Images);
                 respacks.Add(respack);
+            }
         }
 
         private void addSongsToResourceStore(ZipArchive archive, IReadOnlyCollection<Song> songs)

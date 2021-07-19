@@ -59,14 +59,15 @@ namespace hues.Game.Stores
         public IEnumerable<string> GetAvailableResources()
         {
             lock (storeLock)
-            {
                 return store.Keys;
-            }
         }
 
-        public void Dispose()
+        public void Clear()
         {
-            store.Clear();
+            lock (storeLock)
+                store.Clear();
         }
+
+        public void Dispose() => Clear();
     }
 }
