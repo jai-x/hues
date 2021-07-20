@@ -22,30 +22,40 @@ namespace hues.Game.Tests.NonVisual.Stores
 
         private readonly RespackTrackResourceStore trackResources = new RespackTrackResourceStore();
 
-        private ITrackStore trackStore;
-
         [Test]
         public void TestAddTrack()
         {
-            AddStep("Create a tracks store from the tracks resources", () =>
+            var trackStream = TestResources.OpenResource("Tracks/sample.mp3");
+            ITrackStore trackStore = null;
+
+            AddAssert("Track store is null", () =>
+            {
+                return trackStore == null;
+            });
+
+            AddStep("Create track store from the track resources", () =>
             {
                 trackStore = audioManager.GetTrackStore(trackResources);
             });
 
+            AddAssert("Track store is created", () =>
+            {
+                return trackStream != null;
+            });
+
             AddStep("Add track file to resources", () =>
             {
-                using (var source = TestResources.OpenResource("Tracks/sample.mp3"))
-                    trackResources.Add("sample_track", source);
+                trackResources.Add("sample_track", trackStream);
             });
 
-            AddStep("Assert track file has beed added to resources", () =>
+            AddAssert("Track file has beed added to resources", () =>
             {
-                Assert.NotNull(trackResources.Get("sample_track"));
+                return trackResources.Get("sample_track") != null;
             });
 
-            AddStep("Assert track can be fetched from the track store", () =>
+            AddAssert("Track can be fetched from track store", () =>
             {
-                Assert.NotNull(trackStore.Get("sample_track"));
+                return trackStore.Get("sample_track") != null;
             });
         }
     }

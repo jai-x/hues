@@ -27,14 +27,25 @@ namespace hues.Game.Tests.NonVisual.Stores
 
         private readonly RespackTextureResourceStore textureResources = new RespackTextureResourceStore();
 
-        private IResourceStore<TextureUpload> textureStore;
-
         [Test]
         public void TestAddTexture()
         {
+            var textureStream = TestResources.OpenResource("Textures/sample-texture.png");
+            IResourceStore<TextureUpload> textureStore = null;
+
+            AddAssert("Texture store is null", () =>
+            {
+                return textureStore == null;
+            });
+
             AddStep("Create texture store from resources", () =>
             {
                 textureStore = gameHost.CreateTextureLoaderStore(textureResources);
+            });
+
+            AddAssert("Texture store is created", () =>
+            {
+                return textureStore != null;
             });
 
             AddStep("Add textureStore to global texture store", () =>
@@ -44,18 +55,17 @@ namespace hues.Game.Tests.NonVisual.Stores
 
             AddStep("Add texture file to resources", () =>
             {
-                using (var source = TestResources.OpenResource("Textures/sample-texture.png"))
-                    textureResources.Add("sample-texture.png", source);
+                textureResources.Add("sample-texture", textureStream);
             });
 
-            AddStep("Assert texture file has been added", () =>
+            AddAssert("Texture file has been added", () =>
             {
-                Assert.NotNull(textureResources.Get("sample-texture.png"));
+                return textureResources.Get("sample-texture") != null;
             });
 
-            AddStep("Assert texture can be fetched from global texture store", () =>
+            AddAssert("Texture can be fetched from global texture store", () =>
             {
-                Assert.NotNull(globalTextures.Get("sample-texture"));
+                return globalTextures.Get("sample-texture") != null;
             });
         }
     }
