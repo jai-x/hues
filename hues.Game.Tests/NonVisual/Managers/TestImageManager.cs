@@ -38,10 +38,15 @@ namespace hues.Game.Test.NonVisual.Managers
         public void TestEmpty()
         {
             AddStep("Reset", () => { reset(); });
+
             AddAssert("Bindable is null", () => currentImage.Value == null);
+
             AddStep("Call Next", () => { manager.Next(); });
+
             AddAssert("Bindable is null", () => currentImage.Value == null);
+
             AddStep("Call Previous", () => { manager.Previous(); });
+
             AddAssert("Bindable is null", () => currentImage.Value == null);
         }
 
@@ -51,8 +56,11 @@ namespace hues.Game.Test.NonVisual.Managers
             var firstImage = new Image { Name = "Test Image", TexturePath = "test_texture_path" };
 
             AddStep("Reset", () => { reset(); });
+
             AddStep("Add single image", () => { manager.Add(firstImage); });
+
             AddAssert("Image is added", () => manager.Images.Count == 1);
+
             AddAssert("Image has correct value", () => manager.Images.First() == firstImage);
         }
 
@@ -66,9 +74,13 @@ namespace hues.Game.Test.NonVisual.Managers
             };
 
             AddStep("Reset", () => { reset(); });
+
             AddStep("Add multiple images", () => { manager.Add(newImages); });
+
             AddAssert("Images are added", () => manager.Images.Count == 2);
+
             AddAssert("First image has correct value", () => manager.Images.First() == newImages[0]);
+
             AddAssert("Second image has correct value", () => manager.Images.Last() == newImages[1]);
         }
 
@@ -78,9 +90,13 @@ namespace hues.Game.Test.NonVisual.Managers
             var firstImage = new Image { Name = "Test Image", TexturePath = "test_texture_path" };
 
             AddStep("Reset", () => { reset(); });
+
             AddStep("Add single image", () => { manager.Add(firstImage); });
+
             AddAssert("Bindable is null", () => currentImage.Value == null);
+
             AddStep("Call Next", () => { manager.Next(); });
+
             AddAssert("Bindable is first image", () => currentImage.Value == firstImage);
         }
 
@@ -90,9 +106,13 @@ namespace hues.Game.Test.NonVisual.Managers
             var firstImage = new Image { Name = "Test Image", TexturePath = "test_texture_path" };
 
             AddStep("Reset", () => { reset(); });
+
             AddStep("Add single image", () => { manager.Add(firstImage); });
+
             AddAssert("Bindable is null", () => currentImage.Value == null);
+
             AddStep("Call Previous", () => { manager.Previous(); });
+
             AddAssert("Bindable is first image", () => currentImage.Value == firstImage);
         }
 
@@ -107,15 +127,25 @@ namespace hues.Game.Test.NonVisual.Managers
             };
 
             AddStep("Reset", () => { reset(); });
+
             AddStep("Add single image", () => { manager.Add(threeImages); });
+
             AddAssert("Bindable is null", () => currentImage.Value == null);
+
             AddStep("Call Next", () => { manager.Next(); });
+
             AddAssert("Bindable is first image", () => currentImage.Value == threeImages[0]);
+
             AddStep("Call Next", () => { manager.Next(); });
+
             AddAssert("Bindable is second image", () => currentImage.Value == threeImages[1]);
+
             AddStep("Call Next", () => { manager.Next(); });
+
             AddAssert("Bindable is third image", () => currentImage.Value == threeImages[2]);
+
             AddStep("Call Next", () => { manager.Next(); });
+
             AddAssert("Bindable loops back to first image", () => currentImage.Value == threeImages[0]);
         }
 
@@ -130,13 +160,21 @@ namespace hues.Game.Test.NonVisual.Managers
             };
 
             AddStep("Reset", () => { reset(); });
+
             AddStep("Add single image", () => { manager.Add(threeImages); });
+
             AddAssert("Bindable is null", () => currentImage.Value == null);
+
             AddStep("Call Previous", () => { manager.Previous(); });
+
             AddAssert("Bindable is first image", () => currentImage.Value == threeImages[0]);
+
             AddStep("Call Previous", () => { manager.Previous(); });
+
             AddAssert("Bindable loops to last image", () => currentImage.Value == threeImages[2]);
+
             AddStep("Call Previous", () => { manager.Previous(); });
+
             AddAssert("Bindable is second image", () => currentImage.Value == threeImages[1]);
         }
     }

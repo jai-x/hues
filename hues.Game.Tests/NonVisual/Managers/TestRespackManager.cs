@@ -48,6 +48,7 @@ namespace hues.Game.Test.NonVisual.Managers
             RespackMissingFileException ex = null;
 
             AddStep("Reset", () => { reset(); });
+
             AddStep("Add respack with no info.xml file", () =>
             {
                 try
@@ -61,7 +62,11 @@ namespace hues.Game.Test.NonVisual.Managers
             });
 
             AddAssert("Exception was thrown", () => ex != null);
-            AddAssert("Exception has correct message", () => ex.Message == "Unable to find file `info.xml` in respack archive");
+
+            AddAssert("Exception has correct message", () =>
+            {
+                return ex.Message == "Unable to find file `info.xml` in respack archive";
+            });
         }
 
         [Test]
@@ -71,6 +76,7 @@ namespace hues.Game.Test.NonVisual.Managers
             RespackMissingFileException ex = null;
 
             AddStep("Reset", () => { reset(); });
+
             AddStep("Add respack with missing song file", () =>
             {
                 try
@@ -82,8 +88,13 @@ namespace hues.Game.Test.NonVisual.Managers
                     ex = e;
                 }
             });
+
             AddAssert("Exception was thrown", () => ex != null);
-            AddAssert("Exception has correct message", () => ex.Message == "Unable to find file `loop_file_not_exist` in respack archive");
+
+            AddAssert("Exception has correct message", () =>
+            {
+                return ex.Message == "Unable to find file `loop_file_not_exist` in respack archive";
+            });
         }
 
         [Test]
@@ -93,6 +104,7 @@ namespace hues.Game.Test.NonVisual.Managers
             RespackMissingFileException ex = null;
 
             AddStep("Reset", () => { reset(); });
+
             AddStep("Add respack with missing song file", () =>
             {
                 try
@@ -104,8 +116,13 @@ namespace hues.Game.Test.NonVisual.Managers
                     ex = e;
                 }
             });
+
             AddAssert("Exception was thrown", () => ex != null);
-            AddAssert("Exception has correct message", () => ex.Message == "Unable to find file `image_file_not_exist` in respack archive");
+
+            AddAssert("Exception has correct message", () =>
+            {
+                return ex.Message == "Unable to find file `image_file_not_exist` in respack archive";
+            });
         }
 
         [Test]
@@ -114,11 +131,17 @@ namespace hues.Game.Test.NonVisual.Managers
             var respack = TestResources.OpenResource("Respacks/fullRespack.zip");
 
             AddStep("Reset", () => { reset(); });
+
             AddStep("Add respack with song and image files", () => { manager.Add(respack); });
+
             AddAssert("Respack added", () => manager.Respacks.Count == 1);
+
             AddAssert("Songs added", () => manager.Respacks.First().Songs.Count == 1);
+
             AddAssert("Images added", () => manager.Respacks.First().Images.Count == 1);
+
             AddAssert("Track resources stored", () => trackResources.Get("track_sample") != null);
+
             AddAssert("Texture resources stored", () => textureResources.Get("texture_sample") != null);
         }
     }
