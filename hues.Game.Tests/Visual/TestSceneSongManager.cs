@@ -7,10 +7,13 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Logging;
 
+using hues.Game.Managers;
+
 namespace hues.Game.Tests.Visual
 {
     public class TestSceneSongManager : HuesTestScene
     {
+        /*
         [Cached]
         protected readonly Bindable<WorkingSong> workingSong = new Bindable<WorkingSong>();
 
@@ -87,5 +90,6 @@ namespace hues.Game.Tests.Visual
             loopSource.Text = s?.Song.LoopSource ?? "none";
             loopChars.Text = s?.Song.LoopBeatchars ?? "none";
         }
+    */
     }
 }

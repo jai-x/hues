@@ -15,6 +15,7 @@ namespace hues.Game.Tests.Visual
 {
     public class TestSceneBeatSyncedCompositeDrawable : HuesTestScene
     {
+        /*
         [Cached]
         protected readonly Bindable<WorkingSong> workingSong = new Bindable<WorkingSong>();
 
@@ -142,5 +143,6 @@ namespace hues.Game.Tests.Visual
                     flashBlue.FadeOutFromOne(beatLength);
             }
         }
+        */
     }
 }

@@ -13,6 +13,7 @@ namespace hues.Game.Tests.Visual
 {
     public class TestSceneBeatLine : HuesTestScene
     {
+        /*
         [Resolved]
         private AudioManager audioManager { get; set; }
 
@@ -67,5 +68,6 @@ namespace hues.Game.Tests.Visual
             testSong?.Dispose();
             base.Dispose(isDisposing);
         }
+        */
     }
 }
