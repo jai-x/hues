@@ -128,7 +128,7 @@ namespace hues.Game.Test.NonVisual.Managers
 
             AddStep("Reset", () => { reset(); });
 
-            AddStep("Add single image", () => { manager.Add(threeImages); });
+            AddStep("Add images", () => { manager.Add(threeImages); });
 
             AddAssert("Bindable is null", () => currentImage.Value == null);
 
@@ -161,7 +161,7 @@ namespace hues.Game.Test.NonVisual.Managers
 
             AddStep("Reset", () => { reset(); });
 
-            AddStep("Add single image", () => { manager.Add(threeImages); });
+            AddStep("Add images", () => { manager.Add(threeImages); });
 
             AddAssert("Bindable is null", () => currentImage.Value == null);
 
@@ -176,6 +176,33 @@ namespace hues.Game.Test.NonVisual.Managers
             AddStep("Call Previous", () => { manager.Previous(); });
 
             AddAssert("Bindable is second image", () => currentImage.Value == threeImages[1]);
+        }
+
+        [Test]
+        public void TestNextWhenCurrentIsNotStored()
+        {
+            var otherImage = new Image { Name = "Other Image", TexturePath = "other_texture_path" };
+
+            var threeImages = new Image[]
+            {
+                new Image { Name = "Test Image 1", TexturePath = "test_texture_path_1" },
+                new Image { Name = "Test Image 2", TexturePath = "test_texture_path_2" },
+                new Image { Name = "Test Image 3", TexturePath = "test_texture_path_3" },
+            };
+
+            AddStep("Reset", () => { reset(); });
+
+            AddStep("Add images", () => { manager.Add(threeImages); });
+
+            AddAssert("Bindable is null", () => currentImage.Value == null);
+
+            AddStep("Set bindable to other image", () => { currentImage.Value = otherImage; });
+
+            AddAssert("Bindable is other image", () => currentImage.Value == otherImage);
+
+            AddStep("Call Next", () => { manager.Next(); });
+
+            AddAssert("Bindable is first image", () => currentImage.Value == threeImages[0]);
         }
     }
 }

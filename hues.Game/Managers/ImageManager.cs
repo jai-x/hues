@@ -31,6 +31,20 @@ namespace hues.Game.Managers
                 this.images.AddRange(images);
         }
 
+        private bool canProgess()
+        {
+            if (images.Count == 0)
+                return false;
+
+            if (current.Value == null)
+            {
+                current.Value = images.First();
+                return false;
+            }
+
+            return true;
+        }
+
         public void Next()
         {
             lock (imagesLock)
@@ -60,20 +74,6 @@ namespace hues.Game.Managers
                                       .DefaultIfEmpty(images.Last())
                                       .Last();
             }
-        }
-
-        private bool canProgess()
-        {
-            if (images.Count == 0)
-                return false;
-
-            if (current.Value == null)
-            {
-                current.Value = images.First();
-                return false;
-            }
-
-            return true;
         }
     }
 }
