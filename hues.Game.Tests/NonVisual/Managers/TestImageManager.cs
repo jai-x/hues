@@ -27,18 +27,19 @@ namespace hues.Game.Test.NonVisual.Managers
 
         private ImageManager manager;
 
-        private void reset()
+        [SetUp]
+        public void SetUp()
         {
-            manager?.Expire();
-            currentImage.Value = null;
-            Child = manager = new ImageManager();
+            AddStep("Set bindable to null", () =>  { currentImage.Value = null; });
+
+            AddStep("Expire manager instance", () => { manager?.Expire(); });
+
+            AddStep("Recreate manage instance", () => { Child = manager = new ImageManager(); });
         }
 
         [Test]
         public void TestEmpty()
         {
-            AddStep("Reset", () => { reset(); });
-
             AddAssert("Bindable is null", () => currentImage.Value == null);
 
             AddStep("Call Next", () => { manager.Next(); });
@@ -54,8 +55,6 @@ namespace hues.Game.Test.NonVisual.Managers
         public void TestAddImage()
         {
             var firstImage = new Image { Name = "Test Image", TexturePath = "test_texture_path" };
-
-            AddStep("Reset", () => { reset(); });
 
             AddStep("Add single image", () => { manager.Add(firstImage); });
 
@@ -73,8 +72,6 @@ namespace hues.Game.Test.NonVisual.Managers
                 new Image { Name = "Test Image 2", TexturePath = "test_texture_path_2" },
             };
 
-            AddStep("Reset", () => { reset(); });
-
             AddStep("Add multiple images", () => { manager.Add(newImages); });
 
             AddAssert("Images are added", () => manager.Images.Count == 2);
@@ -89,8 +86,6 @@ namespace hues.Game.Test.NonVisual.Managers
         {
             var firstImage = new Image { Name = "Test Image", TexturePath = "test_texture_path" };
 
-            AddStep("Reset", () => { reset(); });
-
             AddStep("Add single image", () => { manager.Add(firstImage); });
 
             AddAssert("Bindable is null", () => currentImage.Value == null);
@@ -104,8 +99,6 @@ namespace hues.Game.Test.NonVisual.Managers
         public void TestPreviousChangesBindableToFirst()
         {
             var firstImage = new Image { Name = "Test Image", TexturePath = "test_texture_path" };
-
-            AddStep("Reset", () => { reset(); });
 
             AddStep("Add single image", () => { manager.Add(firstImage); });
 
@@ -125,8 +118,6 @@ namespace hues.Game.Test.NonVisual.Managers
                 new Image { Name = "Test Image 2", TexturePath = "test_texture_path_2" },
                 new Image { Name = "Test Image 3", TexturePath = "test_texture_path_3" },
             };
-
-            AddStep("Reset", () => { reset(); });
 
             AddStep("Add images", () => { manager.Add(threeImages); });
 
@@ -159,8 +150,6 @@ namespace hues.Game.Test.NonVisual.Managers
                 new Image { Name = "Test Image 3", TexturePath = "test_texture_path_3" },
             };
 
-            AddStep("Reset", () => { reset(); });
-
             AddStep("Add images", () => { manager.Add(threeImages); });
 
             AddAssert("Bindable is null", () => currentImage.Value == null);
@@ -189,8 +178,6 @@ namespace hues.Game.Test.NonVisual.Managers
                 new Image { Name = "Test Image 2", TexturePath = "test_texture_path_2" },
                 new Image { Name = "Test Image 3", TexturePath = "test_texture_path_3" },
             };
-
-            AddStep("Reset", () => { reset(); });
 
             AddStep("Add images", () => { manager.Add(threeImages); });
 

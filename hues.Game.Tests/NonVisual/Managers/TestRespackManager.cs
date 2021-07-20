@@ -17,8 +17,8 @@ using NUnit.Framework;
 
 namespace hues.Game.Test.NonVisual.Managers
 {
-    [TestFixture]
     [HeadlessTest]
+    [TestFixture]
     public class TestRespackManager : HuesTestScene
     {
         [Cached]
@@ -32,13 +32,16 @@ namespace hues.Game.Test.NonVisual.Managers
 
         private RespackManager manager;
 
-        private void reset()
+        [SetUp]
+        public void SetUp()
         {
-            textureResources.Clear();
-            trackResources.Clear();
+            AddStep("Clear texture resources", () => { textureResources.Clear(); });
 
-            manager?.Expire();
-            Child = manager = new RespackManager();
+            AddStep("Clear track resources", () => { trackResources.Clear(); });
+
+            AddStep("Expire manager instance", () => { manager?.Expire(); });
+
+            AddStep("Recreate manage instance", () => { Child = manager = new RespackManager(); });
         }
 
         [Test]
@@ -46,8 +49,6 @@ namespace hues.Game.Test.NonVisual.Managers
         {
             var emptyRespack = TestResources.OpenResource("Respacks/emptyRespack.zip");
             RespackMissingFileException ex = null;
-
-            AddStep("Reset", () => { reset(); });
 
             AddStep("Add respack with no info.xml file", () =>
             {
@@ -75,8 +76,6 @@ namespace hues.Game.Test.NonVisual.Managers
             var noSongRespack = TestResources.OpenResource("Respacks/noSongRespack.zip");
             RespackMissingFileException ex = null;
 
-            AddStep("Reset", () => { reset(); });
-
             AddStep("Add respack with missing song file", () =>
             {
                 try
@@ -103,8 +102,6 @@ namespace hues.Game.Test.NonVisual.Managers
             var noSongRespack = TestResources.OpenResource("Respacks/noImageRespack.zip");
             RespackMissingFileException ex = null;
 
-            AddStep("Reset", () => { reset(); });
-
             AddStep("Add respack with missing song file", () =>
             {
                 try
@@ -129,8 +126,6 @@ namespace hues.Game.Test.NonVisual.Managers
         public void TestAddRespack()
         {
             var respack = TestResources.OpenResource("Respacks/fullRespack.zip");
-
-            AddStep("Reset", () => { reset(); });
 
             AddStep("Add respack with song and image files", () => { manager.Add(respack); });
 

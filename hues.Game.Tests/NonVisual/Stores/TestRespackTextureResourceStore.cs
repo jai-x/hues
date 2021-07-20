@@ -17,6 +17,7 @@ using hues.Game.Tests.Resources;
 namespace hues.Game.Tests.NonVisual.Stores
 {
     [HeadlessTest]
+    [TestFixture]
     public class TestRespackTextureResourceStore : HuesTestScene
     {
         [Resolved]
