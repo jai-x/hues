@@ -42,8 +42,8 @@ namespace hues.Game
             AddFont(Resources, "Fonts/PetMe64/PetMe64");
 
             // Cache the LargeTextureStore
-            var textureNamespace = new NamespacedResourceStore<byte[]>(Resources, @"Textures");
-            var largeTextureStore = new LargeTextureStore(Host.CreateTextureLoaderStore(textureNamespace));
+            var textureResources = new NamespacedResourceStore<byte[]>(Resources, @"Textures");
+            var largeTextureStore = new LargeTextureStore(Host.CreateTextureLoaderStore(textureResources));
             dependencies.Cache(largeTextureStore);
         }
     }
