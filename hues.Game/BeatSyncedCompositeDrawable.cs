@@ -16,11 +16,11 @@ namespace hues.Game
             Loop,
         }
 
-        protected string BuildupBeatchars => workingSong.Value?.Song.BuildupBeatchars ?? String.Empty;
-        protected string LoopBeatchars => workingSong.Value?.Song.LoopBeatchars ?? String.Empty;
+        protected string BuildupBeatchars => playableSong.Value?.Song.BuildupBeatchars ?? String.Empty;
+        protected string LoopBeatchars => playableSong.Value?.Song.LoopBeatchars ?? String.Empty;
 
         [Resolved]
-        private Bindable<WorkingSong> workingSong { get; set; }
+        private Bindable<PlayableSong> playableSong { get; set; }
 
         private Section lastSection;
         private int lastBeatIndex = -1;
@@ -29,7 +29,7 @@ namespace hues.Game
         {
             base.Update();
 
-            var current = workingSong.Value;
+            var current = playableSong.Value;
 
             // sanity
             if (current == null)

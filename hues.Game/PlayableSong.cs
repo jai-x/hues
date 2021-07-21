@@ -7,33 +7,19 @@ using osu.Framework.Logging;
 
 namespace hues.Game
 {
-    public class WorkingSong : Component
+    public class PlayableSong : IDisposable
     {
-        private Logger logger = Logger.GetLogger();
-
-        private Song song;
-        private AudioManager manager;
-
-        public Track Buildup { get; private set; }
-        public Track Loop { get; private set; }
-
-        public double BuildupBeatlength { get; private set; }
-        public double LoopBeatlength { get; private set; }
-
-        public Song Song => song;
+        public readonly Song Song;
+        public readonly Track Buildup;
+        public readonly Track Loop;
 
         public bool TrackLoaded => (Buildup?.IsLoaded ?? true) && (Loop?.IsLoaded ?? false);
 
-        public WorkingSong(Song s, AudioManager a)
+        public PlayableSong(Song song, ITrackStore trackStore)
         {
-            song = s;
-            manager = a;
-        }
-
-        public void Load()
-        {
-            Buildup = manager.Tracks.Get(song.BuildupSource);
-            Loop = manager.Tracks.Get(song.LoopSource);
+            Song = song;
+            Buildup = trackStore.Get(Song.BuildupSource);
+            Loop = trackStore.Get(Song.LoopSource);
 
             if (Loop == null)
                 throw new Exception();
@@ -64,14 +50,12 @@ namespace hues.Game
             Loop?.Stop();
         }
 
-        protected override void Dispose(bool disposing)
+        public void Dispose()
         {
             Buildup?.Stop();
             Buildup?.Dispose();
             Loop?.Stop();
             Loop?.Dispose();
-
-            base.Dispose(disposing);
         }
     }
 }
