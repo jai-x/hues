@@ -1,8 +1,8 @@
 using System;
 
-namespace hues.Game
+namespace hues.Game.RespackElements
 {
-    public class Image
+    public class Image : RespackElement
     {
         public string Name { get; init; }
         public string Source { get; init; }

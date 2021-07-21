@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 
+using hues.Game.RespackElements;
+
 namespace hues.Game.Managers
 {
-    public class ImageManager : ObjectManager<Image>
+    public class ImageManager : RespackElementManager<Image>
     {
-        public IReadOnlyCollection<Image> Images => AllItems;
+        public IReadOnlyCollection<Image> Images => AllElements;
     }
 }

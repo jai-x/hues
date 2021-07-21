@@ -3,9 +3,9 @@ using System.Text;
 
 using hues.Game.Extensions;
 
-namespace hues.Game
+namespace hues.Game.RespackElements
 {
-    public class Song
+    public class Song : RespackElement
     {
         public string Title { get; init; }
         public string Source { get; init; }

@@ -5,6 +5,8 @@ using osu.Framework.Audio.Track;
 using osu.Framework.Graphics;
 using osu.Framework.Logging;
 
+using hues.Game.RespackElements;
+
 namespace hues.Game
 {
     public class PlayableSong : IDisposable

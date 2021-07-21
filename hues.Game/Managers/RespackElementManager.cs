@@ -8,10 +8,12 @@ using osu.Framework.Graphics;
 using osu.Framework.Logging;
 using osu.Framework.Utils;
 
+using hues.Game.RespackElements;
+
 namespace hues.Game.Managers
 {
-    public class ObjectManager<T> : Component
-        where T : class
+    public class RespackElementManager<T> : Component
+        where T : RespackElement
     {
         public enum AdvanceMode
         {
@@ -23,9 +25,10 @@ namespace hues.Game.Managers
         [Resolved]
         private Bindable<T> current { get; set; }
 
-        protected IReadOnlyCollection<T> AllItems => items;
-        private readonly List<T> items = new List<T>();
-        private readonly object itemLock = new object();
+        protected IReadOnlyCollection<T> AllElements => elements;
+
+        private readonly List<T> elements = new List<T>();
+        private readonly object elementLock = new object();
 
         private AdvanceMode mode = AdvanceMode.Next;
 
@@ -37,31 +40,31 @@ namespace hues.Game.Managers
                 if (value == mode)
                     return;
 
-                lock (itemLock)
+                lock (elementLock)
                     mode = value;
             }
         }
 
-        public void Add(T obj)
+        public void Add(T el)
         {
-            lock (itemLock)
-                items.Add(obj);
+            lock (elementLock)
+                elements.Add(el);
         }
 
-        public void Add(IEnumerable<T> objs)
+        public void Add(IEnumerable<T> els)
         {
-            lock (itemLock)
-                items.AddRange(objs);
+            lock (elementLock)
+                elements.AddRange(els);
         }
 
         private bool canProgress()
         {
-            if (items.Count == 0)
+            if (elements.Count == 0)
                 return false;
 
             if (current.Value == null)
             {
-                current.Value = items.First();
+                current.Value = elements.First();
                 return false;
             }
 
@@ -70,7 +73,7 @@ namespace hues.Game.Managers
 
         public void Next()
         {
-            lock (itemLock)
+            lock (elementLock)
             {
                 if (!canProgress())
                     return;
@@ -85,17 +88,17 @@ namespace hues.Game.Managers
                     case AdvanceMode.Next:
                     {
                         var oldItem = current.Value;
-                        current.Value = items.SkipWhile(obj => obj != oldItem)
+                        current.Value = elements.SkipWhile(obj => obj != oldItem)
                                              .Skip(1)
-                                             .DefaultIfEmpty(items.First())
+                                             .DefaultIfEmpty(elements.First())
                                              .First();
                         break;
                     }
 
                     case AdvanceMode.Random:
                     {
-                        var idx = RNG.Next(items.Count);
-                        current.Value = items[idx];
+                        var idx = RNG.Next(elements.Count);
+                        current.Value = elements[idx];
                         break;
                     }
                 }
@@ -105,7 +108,7 @@ namespace hues.Game.Managers
 
         public void Previous()
         {
-            lock (itemLock)
+            lock (elementLock)
             {
                 if (!canProgress())
                     return;
@@ -120,16 +123,16 @@ namespace hues.Game.Managers
                     case AdvanceMode.Next:
                     {
                         var oldItem = current.Value;
-                        current.Value = items.TakeWhile(obj => obj != oldItem)
-                                             .DefaultIfEmpty(items.Last())
+                        current.Value = elements.TakeWhile(obj => obj != oldItem)
+                                             .DefaultIfEmpty(elements.Last())
                                              .Last();
                         break;
                     }
 
                     case AdvanceMode.Random:
                     {
-                        var idx = RNG.Next(items.Count);
-                        current.Value = items[idx];
+                        var idx = RNG.Next(elements.Count);
+                        current.Value = elements[idx];
                         break;
                     }
                 }

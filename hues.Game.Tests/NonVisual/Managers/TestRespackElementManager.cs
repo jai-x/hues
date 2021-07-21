@@ -11,6 +11,7 @@ using osu.Framework.Testing;
 using osu.Framework.Platform;
 
 using hues.Game.Managers;
+using hues.Game.RespackElements;
 using hues.Game.Stores;
 using hues.Game.Tests;
 using hues.Game.Tests.Resources;
@@ -21,13 +22,13 @@ namespace hues.Game.Test.NonVisual.Managers
 {
     [HeadlessTest]
     [TestFixture]
-    public class TestObjectManager : HuesTestScene
+    public class TestRespackElementManager: HuesTestScene
     {
-        private class Foo { }
+        private class Foo : RespackElement { } 
 
-        private class FooManager : ObjectManager<Foo>
+        private class FooManager : RespackElementManager<Foo>
         {
-            public IReadOnlyCollection<Foo> Items => AllItems;
+            public IReadOnlyCollection<Foo> Items => AllElements;
         }
 
         [Cached]

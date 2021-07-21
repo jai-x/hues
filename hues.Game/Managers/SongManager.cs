@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 
+using hues.Game.RespackElements;
+
 namespace hues.Game.Managers
 {
-    public class SongManager : ObjectManager<Song>
+    public class SongManager : RespackElementManager<Song>
     {
-        public IReadOnlyCollection<Song> Songs => AllItems;
+        public IReadOnlyCollection<Song> Songs => AllElements;
     }
 }
