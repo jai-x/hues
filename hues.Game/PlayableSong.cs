@@ -1,9 +1,7 @@
 using System;
 
-using osu.Framework.Audio;
 using osu.Framework.Audio.Track;
 using osu.Framework.Graphics;
-using osu.Framework.Logging;
 
 using hues.Game.RespackElements;
 
@@ -17,14 +15,16 @@ namespace hues.Game
 
         public bool TrackLoaded => (Buildup?.IsLoaded ?? true) && (Loop?.IsLoaded ?? false);
 
-        public PlayableSong(Song song, ITrackStore trackStore)
+        public bool IsPlaying => Buildup?.IsRunning ?? false || Loop.IsRunning;
+
+        public PlayableSong(Song song, Track buildup, Track loop)
         {
             Song = song;
-            Buildup = trackStore.Get(Song.BuildupSource);
-            Loop = trackStore.Get(Song.LoopSource);
+            Buildup = buildup;
+            Loop = loop;
 
             if (Loop == null)
-                throw new Exception();
+                throw new NullLoopTrackException(Song.LoopSource);
 
             if (Buildup != null)
                 Buildup.Completed += Loop.Start;
@@ -55,9 +55,16 @@ namespace hues.Game
         public void Dispose()
         {
             Buildup?.Stop();
-            Buildup?.Dispose();
             Loop?.Stop();
+            Buildup?.Dispose();
             Loop?.Dispose();
         }
+    }
+
+    public class NullLoopTrackException : Exception
+    {
+        public NullLoopTrackException(string fileName) :
+            base($"Loop track `{fileName}` was null")
+        { }
     }
 }

@@ -68,7 +68,7 @@ namespace hues.Game
 
             var beatChar = beatchars[currentBeatIndex];
 
-            // TODO: Find out is this needs to be Scheduled or put under a transform
+            // TODO: Find out if this needs to be Scheduled or put under a transform
             OnNewBeat(currentBeatIndex, currentSection, beatChar, beatLength);
 
             lastSection = currentSection;
