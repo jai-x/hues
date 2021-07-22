@@ -9,7 +9,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Platform;
 
 using hues.Game.Extensions;
-using hues.Game.Stores;
+using hues.Game.ResourceStores;
 using hues.Game.RespackElements;
 
 namespace hues.Game.Managers

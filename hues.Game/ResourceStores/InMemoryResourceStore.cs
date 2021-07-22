@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 using osu.Framework.IO.Stores;
 
-namespace hues.Game.Stores
+namespace hues.Game.ResourceStores
 {
     public class InMemoryResourceStore : IResourceStore<byte[]>
     {

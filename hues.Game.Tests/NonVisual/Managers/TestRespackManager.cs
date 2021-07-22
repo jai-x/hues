@@ -9,7 +9,7 @@ using osu.Framework.Testing;
 using osu.Framework.Platform;
 
 using hues.Game.Managers;
-using hues.Game.Stores;
+using hues.Game.ResourceStores;
 using hues.Game.Tests;
 using hues.Game.Tests.Resources;
 

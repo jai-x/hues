@@ -9,10 +9,10 @@ using osu.Framework.Bindables;
 using osu.Framework.Testing;
 
 using hues.Game.RespackElements;
-using hues.Game.Stores;
+using hues.Game.ResourceStores;
 using hues.Game.Tests.Resources;
 
-namespace hues.Game.Tests.NonVisual.Stores
+namespace hues.Game.Tests.NonVisual
 {
     [HeadlessTest]
     [TestFixture]

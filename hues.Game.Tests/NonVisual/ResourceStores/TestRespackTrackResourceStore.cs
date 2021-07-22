@@ -9,10 +9,10 @@ using osu.Framework.Audio.Track;
 using osu.Framework.Logging;
 using osu.Framework.Testing;
 
-using hues.Game.Stores;
+using hues.Game.ResourceStores;
 using hues.Game.Tests.Resources;
 
-namespace hues.Game.Tests.NonVisual.Stores
+namespace hues.Game.Tests.NonVisual.ResourceStores
 {
     [HeadlessTest]
     public class TestRespackTrackResourceStore : HuesTestScene
