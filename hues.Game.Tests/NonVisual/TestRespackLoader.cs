@@ -15,11 +15,11 @@ using hues.Game.Tests.Resources;
 
 using NUnit.Framework;
 
-namespace hues.Game.Test.NonVisual.Managers
+namespace hues.Game.Test.NonVisual
 {
     [HeadlessTest]
     [TestFixture]
-    public class TestRespackManager : HuesTestScene
+    public class TestRespackLoader : HuesTestScene
     {
         [Cached]
         private readonly RespackTrackResourceStore trackResources = new RespackTrackResourceStore();
@@ -30,7 +30,10 @@ namespace hues.Game.Test.NonVisual.Managers
         [Cached]
         private readonly ImageManager imageManager = new ImageManager();
 
-        private RespackManager manager;
+        [Cached]
+        private readonly SongManager songManager = new SongManager();
+
+        private RespackLoader loader;
 
         [SetUp]
         public void SetUp()
@@ -39,9 +42,9 @@ namespace hues.Game.Test.NonVisual.Managers
 
             AddStep("Clear track resources", () => { trackResources.Clear(); });
 
-            AddStep("Expire manager instance", () => { manager?.Expire(); });
+            AddStep("Expire loader instance", () => { loader?.Expire(); });
 
-            AddStep("Recreate manage instance", () => { Child = manager = new RespackManager(); });
+            AddStep("Recreate manage instance", () => { Child = loader = new RespackLoader(); });
         }
 
         [Test]
@@ -54,7 +57,7 @@ namespace hues.Game.Test.NonVisual.Managers
             {
                 try
                 {
-                    manager.Add(emptyRespack);
+                    loader.Add(emptyRespack);
                 }
                 catch (RespackMissingFileException e)
                 {
@@ -80,7 +83,7 @@ namespace hues.Game.Test.NonVisual.Managers
             {
                 try
                 {
-                    manager.Add(noSongRespack);
+                    loader.Add(noSongRespack);
                 }
                 catch (RespackMissingFileException e)
                 {
@@ -106,7 +109,7 @@ namespace hues.Game.Test.NonVisual.Managers
             {
                 try
                 {
-                    manager.Add(noSongRespack);
+                    loader.Add(noSongRespack);
                 }
                 catch (RespackMissingFileException e)
                 {
@@ -127,13 +130,13 @@ namespace hues.Game.Test.NonVisual.Managers
         {
             var respack = TestResources.OpenResource("Respacks/fullRespack.zip");
 
-            AddStep("Add respack with song and image files", () => { manager.Add(respack); });
+            AddStep("Add respack with song and image files", () => { loader.Add(respack); });
 
-            AddAssert("Respack added", () => manager.Respacks.Count == 1);
+            AddAssert("Respack added", () => loader.Respacks.Count == 1);
 
-            AddAssert("Songs added", () => manager.Respacks.First().Songs.Count == 1);
+            AddAssert("Songs added", () => songManager.Songs.Count == 1);
 
-            AddAssert("Images added", () => manager.Respacks.First().Images.Count == 1);
+            AddAssert("Images added", () => imageManager.Images.Count == 1);
 
             AddAssert("Track resources stored", () => trackResources.Get("track_sample") != null);
 

@@ -9,12 +9,13 @@ using osu.Framework.Graphics;
 using osu.Framework.Platform;
 
 using hues.Game.Extensions;
+using hues.Game.Managers;
 using hues.Game.ResourceStores;
 using hues.Game.RespackElements;
 
-namespace hues.Game.Managers
+namespace hues.Game
 {
-    public class RespackManager : Component
+    public class RespackLoader : Component
     {
         [Resolved]
         private RespackTrackResourceStore trackResources { get; set; }
@@ -27,6 +28,9 @@ namespace hues.Game.Managers
 
         [Resolved]
         private ImageManager imageManager { get; set; }
+
+        [Resolved]
+        private SongManager songManager { get; set; }
 
         private readonly List<Respack> respacks = new List<Respack>();
         private readonly object respackLock = new object();
@@ -62,6 +66,7 @@ namespace hues.Game.Managers
             lock (respackLock)
             {
                 imageManager.Add(respack.Images);
+                songManager.Add(respack.Songs);
                 respacks.Add(respack);
             }
         }
