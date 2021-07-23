@@ -26,6 +26,8 @@ namespace hues.Game
             dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
 
 
+        #region cached attributes
+
         // Backing in memory resources
         private RespackTrackResourceStore trackResources;
         private RespackTextureResourceStore textureResources;
@@ -37,16 +39,18 @@ namespace hues.Game
         // Bindables
         private Bindable<Song> currentSong;
         private Bindable<RespackElements.Image> currentImage;
-        private Bindable<Colour> currentColour;
+        private Bindable<Hue> currentHue;
         private Bindable<PlayableSong> currentPlayable;
 
         // Managers
         private SongManager songManager;
         private ImageManager imageManager;
-        private ColourManager colourManager;
+        private HueManager hueManager;
 
         // Respack loader
         private RespackLoader respackLoader;
+
+        #endregion
 
         [BackgroundDependencyLoader]
         private void load()
@@ -68,19 +72,19 @@ namespace hues.Game
             // Init and cache bindables
             dependencies.CacheAs(currentSong = new Bindable<Song>());
             dependencies.CacheAs(currentImage = new Bindable<RespackElements.Image>());
-            dependencies.CacheAs(currentColour = new Bindable<Colour>());
+            dependencies.CacheAs(currentHue = new Bindable<Hue>());
             dependencies.CacheAs(currentPlayable = new Bindable<PlayableSong>());
 
             // Init and cache managers and respack loader
             dependencies.CacheAs(songManager = new SongManager());
             dependencies.CacheAs(imageManager = new ImageManager());
-            dependencies.CacheAs(colourManager = new ColourManager());
+            dependencies.CacheAs(hueManager = new HueManager());
             dependencies.CacheAs(respackLoader = new RespackLoader());
 
             // Add managers and respack loader to hierarchy
             AddInternal(songManager);
             AddInternal(imageManager);
-            AddInternal(colourManager);
+            AddInternal(hueManager);
             AddInternal(respackLoader);
 
             // Song player

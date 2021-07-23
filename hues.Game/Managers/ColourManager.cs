@@ -5,8 +5,8 @@ using hues.Game.RespackElements;
 
 namespace hues.Game.Managers
 {
-    public class ColourManager : RespackElementManager<Colour>
+    public class HueManager : RespackElementManager<Hue>
     {
-        public IReadOnlyCollection<Colour> Colours => AllElements;
+        public IReadOnlyCollection<Hue> Hues => AllElements;
     }
 }

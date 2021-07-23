@@ -29,16 +29,23 @@ namespace hues.Game.Tests
         private ImageManager imageManager { get; set; }
 
         [Resolved]
+        private HueManager hueManager { get; set; }
+
+        [Resolved]
         private RespackLoader respackLoader { get; set; }
 
         [SetUp]
         public void BaseSetUp()
         {
-            AddStep("Clear songs", () => { songManager.Clear(); });
-            AddStep("Clear images", () => { imageManager.Clear(); });
-            AddStep("Clear tracks", () => { trackResources.Clear(); });
-            AddStep("Clear textures", () => { textureResources.Clear(); });
-            AddStep("Clear respacks", () => { respackLoader.Clear(); });
+            Schedule(() =>
+            {
+                songManager.Clear();
+                imageManager.Clear();
+                hueManager.Clear();
+                trackResources.Clear();
+                textureResources.Clear();
+                respackLoader.Clear();
+            });
         }
     }
 }
