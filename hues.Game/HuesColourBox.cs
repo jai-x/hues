@@ -7,6 +7,7 @@ namespace hues.Game
 {
     public class HuesColourBox : Box
     {
+        /*
         [Resolved]
         private HuesColourManager hcm { get; set; }
 
@@ -22,5 +23,6 @@ namespace hues.Game
             Colour = hcm.Current.Value.Colour;
             hcm.Current.ValueChanged += (hc) => Colour = hc.NewValue.Colour;
         }
+        */
     }
 }
