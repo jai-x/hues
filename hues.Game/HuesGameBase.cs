@@ -37,11 +37,13 @@ namespace hues.Game
         // Bindables
         private Bindable<Song> currentSong;
         private Bindable<RespackElements.Image> currentImage;
+        private Bindable<Colour> currentColour;
         private Bindable<PlayableSong> currentPlayable;
 
         // Managers
         private SongManager songManager;
         private ImageManager imageManager;
+        private ColourManager colourManager;
 
         // Respack loader
         private RespackLoader respackLoader;
@@ -66,16 +68,19 @@ namespace hues.Game
             // Init and cache bindables
             dependencies.CacheAs(currentSong = new Bindable<Song>());
             dependencies.CacheAs(currentImage = new Bindable<RespackElements.Image>());
+            dependencies.CacheAs(currentColour = new Bindable<Colour>());
             dependencies.CacheAs(currentPlayable = new Bindable<PlayableSong>());
 
             // Init and cache managers and respack loader
             dependencies.CacheAs(songManager = new SongManager());
             dependencies.CacheAs(imageManager = new ImageManager());
+            dependencies.CacheAs(colourManager = new ColourManager());
             dependencies.CacheAs(respackLoader = new RespackLoader());
 
             // Add managers and respack loader to hierarchy
             AddInternal(songManager);
             AddInternal(imageManager);
+            AddInternal(colourManager);
             AddInternal(respackLoader);
 
             // Song player
