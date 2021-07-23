@@ -6,6 +6,7 @@ using System.Linq;
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Logging;
 using osu.Framework.Platform;
 
 using hues.Game.Extensions;
@@ -37,13 +38,13 @@ namespace hues.Game
 
         public IReadOnlyCollection<Respack> Respacks => respacks;
 
-        public void Add(string path)
+        public void LoadPath(string path)
         {
             using (var fileStream = File.OpenRead(path))
-                Add(fileStream);
+                LoadStream(fileStream);
         }
 
-        public void Add(Stream stream)
+        public void LoadStream(Stream stream)
         {
             Respack respack;
 
@@ -69,6 +70,14 @@ namespace hues.Game
                 songManager.Add(respack.Songs);
                 respacks.Add(respack);
             }
+        }
+
+        public void Clear()
+        {
+            lock (respackLock)
+                respacks.Clear();
+
+            Logger.Log($"{this.GetType()} cleared!", level: LogLevel.Debug);
         }
 
         private void addSongsToResourceStore(ZipArchive archive, IReadOnlyCollection<Song> songs)

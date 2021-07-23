@@ -139,5 +139,22 @@ namespace hues.Game.Managers
 
             }
         }
+
+        public void Clear()
+        {
+            lock (elementLock)
+            {
+                current.Value = null;
+                elements.Clear();
+            }
+
+            Logger.Log($"{this.GetType()} cleared!", level: LogLevel.Debug);
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            Clear();
+            base.Dispose(isDisposing);
+        }
     }
 }

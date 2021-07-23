@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading.Tasks;
 
 using osu.Framework.IO.Stores;
+using osu.Framework.Logging;
 
 namespace hues.Game.ResourceStores
 {
@@ -37,13 +38,8 @@ namespace hues.Game.ResourceStores
             }
         }
 
+        // TODO: Find out how C# async works and why this is cursed
         public Task<byte[]> GetAsync(string name) => Task.Run(() => Get(name));
-        /*
-        {
-            // TODO: Find out how C# async works and why this is cursed
-            return new Task<byte[]>(() => Get(name));
-        }
-        */
 
         public Stream GetStream(string name)
         {
@@ -66,6 +62,8 @@ namespace hues.Game.ResourceStores
         {
             lock (storeLock)
                 store.Clear();
+
+            Logger.Log($"{this.GetType()} cleared!", level: LogLevel.Debug);
         }
 
         public void Dispose() => Clear();
