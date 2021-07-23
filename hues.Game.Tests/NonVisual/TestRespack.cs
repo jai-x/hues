@@ -91,6 +91,7 @@ namespace hues.Game.Tests.NonVisual
             });
         }
 
+        [Test]
         public void TestRespackImages()
         {
             var respack = new Respack(infoXml, null, imagesXml);
