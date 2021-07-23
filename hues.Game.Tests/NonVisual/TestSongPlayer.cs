@@ -6,6 +6,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Track;
 using osu.Framework.Bindables;
+using osu.Framework.Logging;
 using osu.Framework.Testing;
 
 using hues.Game.RespackElements;
@@ -19,47 +20,28 @@ namespace hues.Game.Tests.NonVisual
     public class TestSongPlayer : HuesTestScene
     {
         [Resolved]
-        private AudioManager audioManager { get; set; }
+        private Bindable<Song> currentSong { get; set; }
 
-        [Cached]
-        private readonly Bindable<Song> currentSong = new Bindable<Song>();
+        [Resolved]
+        private Bindable<PlayableSong> currentPlayable { get; set; }
 
-        [Cached]
-        private readonly Bindable<PlayableSong> currentPlayable = new Bindable<PlayableSong>();
-
-        private SongPlayer player;
-
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
-        {
-            var audioManager = parent.Get(typeof(AudioManager)) as AudioManager;
-
-            var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
-
-            var trackResources = new RespackTrackResourceStore();
-
-            using (var stream = TestResources.OpenResource("Tracks/sample.mp3"))
-                trackResources.Add("sample_track_1", stream);
-
-            using (var stream = TestResources.OpenResource("Tracks/sample.mp3"))
-                trackResources.Add("sample_track_2", stream);
-
-            var trackStore = audioManager.GetTrackStore(trackResources);
-
-            dependencies.CacheAs(trackStore);
-
-            return dependencies;
-        }
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-            Child = player = new SongPlayer();
-        }
+        [Resolved]
+        private RespackTrackResourceStore trackResources { get; set; }
 
         [SetUp]
         public void SetUp()
         {
-            AddStep("Set current song to null", () => { currentSong.Value = null; });
+            AddStep("Add `sample_track_1` to resources", () =>
+            {
+                using (var stream = TestResources.OpenResource("Tracks/sample.mp3"))
+                    trackResources.Add("sample_track_1", stream);
+            });
+
+            AddStep("Add `sample_track_2` to resources", () =>
+            {
+                using (var stream = TestResources.OpenResource("Tracks/sample.mp3"))
+                    trackResources.Add("sample_track_2", stream);
+            });
         }
 
         [Test]

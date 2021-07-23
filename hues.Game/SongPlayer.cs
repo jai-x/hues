@@ -8,6 +8,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Logging;
 
 using hues.Game.RespackElements;
+using hues.Game.Stores;
 
 namespace hues.Game
 {
@@ -20,7 +21,7 @@ namespace hues.Game
         private Bindable<PlayableSong> currentPlayable { get; set; }
 
         [Resolved]
-        private ITrackStore trackStore { get; set; }
+        private RespackTrackStore trackStore { get; set; }
 
         protected override void LoadComplete()
         {

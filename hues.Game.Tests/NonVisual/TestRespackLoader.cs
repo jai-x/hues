@@ -21,31 +21,20 @@ namespace hues.Game.Test.NonVisual
     [TestFixture]
     public class TestRespackLoader : HuesTestScene
     {
-        [Cached]
-        private readonly RespackTrackResourceStore trackResources = new RespackTrackResourceStore();
+        [Resolved]
+        private RespackTrackResourceStore trackResources { get; set; }
 
-        [Cached]
-        private readonly RespackTextureResourceStore textureResources = new RespackTextureResourceStore();
+        [Resolved]
+        private RespackTextureResourceStore textureResources { get; set; }
 
-        [Cached]
-        private readonly ImageManager imageManager = new ImageManager();
+        [Resolved]
+        private ImageManager imageManager { get; set; }
 
-        [Cached]
-        private readonly SongManager songManager = new SongManager();
+        [Resolved]
+        private SongManager songManager { get; set; }
 
-        private RespackLoader loader;
-
-        [SetUp]
-        public void SetUp()
-        {
-            AddStep("Clear texture resources", () => { textureResources.Clear(); });
-
-            AddStep("Clear track resources", () => { trackResources.Clear(); });
-
-            AddStep("Expire loader instance", () => { loader?.Expire(); });
-
-            AddStep("Recreate manage instance", () => { Child = loader = new RespackLoader(); });
-        }
+        [Resolved]
+        private RespackLoader loader { get; set; }
 
         [Test]
         public void TestNoInfoFile()
@@ -57,7 +46,7 @@ namespace hues.Game.Test.NonVisual
             {
                 try
                 {
-                    loader.Add(emptyRespack);
+                    loader.LoadStream(emptyRespack);
                 }
                 catch (RespackMissingFileException e)
                 {
@@ -83,7 +72,7 @@ namespace hues.Game.Test.NonVisual
             {
                 try
                 {
-                    loader.Add(noSongRespack);
+                    loader.LoadStream(noSongRespack);
                 }
                 catch (RespackMissingFileException e)
                 {
@@ -109,7 +98,7 @@ namespace hues.Game.Test.NonVisual
             {
                 try
                 {
-                    loader.Add(noSongRespack);
+                    loader.LoadStream(noSongRespack);
                 }
                 catch (RespackMissingFileException e)
                 {
@@ -130,7 +119,7 @@ namespace hues.Game.Test.NonVisual
         {
             var respack = TestResources.OpenResource("Respacks/fullRespack.zip");
 
-            AddStep("Add respack with song and image files", () => { loader.Add(respack); });
+            AddStep("Add respack with song and image files", () => { loader.LoadStream(respack); });
 
             AddAssert("Respack added", () => loader.Respacks.Count == 1);
 

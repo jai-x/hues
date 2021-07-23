@@ -4,17 +4,11 @@ using System.Collections.Generic;
 
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics.Textures;
-using osu.Framework.IO.Stores;
-using osu.Framework.Logging;
 using osu.Framework.Testing;
-using osu.Framework.Platform;
 
 using hues.Game.Managers;
 using hues.Game.RespackElements;
-using hues.Game.ResourceStores;
 using hues.Game.Tests;
-using hues.Game.Tests.Resources;
 
 using NUnit.Framework;
 
@@ -22,9 +16,9 @@ namespace hues.Game.Test.NonVisual.Managers
 {
     [HeadlessTest]
     [TestFixture]
-    public class TestRespackElementManager: HuesTestScene
+    public class TestRespackElementManager : HuesTestScene
     {
-        private class Foo : RespackElement { } 
+        private class Foo : RespackElement { }
 
         private class FooManager : RespackElementManager<Foo>
         {
@@ -36,14 +30,15 @@ namespace hues.Game.Test.NonVisual.Managers
 
         private FooManager manager;
 
+        protected override void LoadComplete()
+        {
+            Child = manager = new FooManager();
+        }
+
         [SetUp]
         public void SetUp()
         {
-            AddStep("Set bindable to null", () =>  { currentObject.Value = null; });
-
-            AddStep("Expire manager instance", () => { manager?.Expire(); });
-
-            AddStep("Recreate manage instance", () => { Child = manager = new FooManager(); });
+            AddStep("Clear manager instance", () => { manager.Clear(); });
         }
 
         [Test]
