@@ -6,7 +6,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 
-namespace hues.Game
+namespace hues.Game.Drawables
 {
     public class BeatSyncedCompositeDrawable : CompositeDrawable
     {

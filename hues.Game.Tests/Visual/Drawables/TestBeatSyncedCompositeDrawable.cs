@@ -14,6 +14,7 @@ using hues.Game.Drawables;
 using hues.Game.Managers;
 using hues.Game.RespackElements;
 using hues.Game.Stores;
+using hues.Game.Tests.Resources;
 
 using NUnit.Framework;
 
@@ -36,7 +37,8 @@ namespace hues.Game.Tests.Visual.Drawables
         {
             Schedule(() =>
             {
-                respackLoader.LoadPath("/home/jai/doc/respacks/defaults.zip");
+                var respack = TestResources.OpenResource("Respacks/DefaultsHQ.zip");
+                respackLoader.LoadStream(respack);
                 Child = new TestBeatDrawable();
             });
         }
