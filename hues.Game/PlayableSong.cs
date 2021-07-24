@@ -7,6 +7,12 @@ using hues.Game.RespackElements;
 
 namespace hues.Game
 {
+    public enum SongSection
+    {
+        Buildup,
+        Loop,
+    }
+
     public class PlayableSong : IDisposable
     {
         public readonly Song Song;
@@ -14,8 +20,8 @@ namespace hues.Game
         public readonly Track Loop;
 
         public bool TrackLoaded => (Buildup?.IsLoaded ?? true) && (Loop?.IsLoaded ?? false);
-
         public bool IsPlaying => Buildup?.IsRunning ?? false || Loop.IsRunning;
+        public SongSection Section => (Buildup?.HasCompleted ?? true) ? SongSection.Loop : SongSection.Buildup;
 
         public override string ToString() =>
             $"<{nameof(PlayableSong)}> " +
@@ -32,10 +38,10 @@ namespace hues.Game
             if (Loop == null)
                 throw new NullLoopTrackException(Song.LoopSource);
 
+            Loop.Looping = true;
+
             if (Buildup != null)
                 Buildup.Completed += Loop.Start;
-
-            Loop.Looping = true;
         }
 
         public void Reset()
@@ -46,24 +52,29 @@ namespace hues.Game
 
         public void Start()
         {
-            if (Buildup == null)
-                Loop.Start();
-            else
-                Buildup.Start();
+            switch (Section)
+            {
+                case SongSection.Buildup:
+                    Buildup.Start();
+                    break;
+                case SongSection.Loop:
+                    Loop.Start();
+                    break;
+            }
         }
 
         public void Stop()
         {
             Buildup?.Stop();
-            Loop?.Stop();
+            Loop.Stop();
         }
 
         public void Dispose()
         {
             Buildup?.Stop();
-            Loop?.Stop();
+            Loop.Stop();
             Buildup?.Dispose();
-            Loop?.Dispose();
+            Loop.Dispose();
         }
     }
 

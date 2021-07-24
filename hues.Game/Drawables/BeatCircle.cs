@@ -40,9 +40,9 @@ namespace hues.Game.Drawables
             };
         }
 
-        protected override void OnNewBeat(int beatIndex, Section beatSection, char beatChar, double beatLength)
+        protected override void OnNewBeat(int beatIndex, SongSection songSection, char beatChar, double beatLength)
         {
-            base.OnNewBeat(beatIndex, beatSection, beatChar, beatLength);
+            base.OnNewBeat(beatIndex, songSection, beatChar, beatLength);
 
             if (beatChar == '.')
                 return;

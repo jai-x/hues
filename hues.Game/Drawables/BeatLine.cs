@@ -29,10 +29,10 @@ namespace hues.Game.Drawables
                 },
             };
 
-            displayText(0, Section.Buildup);
+            displayText(0, SongSection.Buildup);
         }
 
-        public void Reset() => displayText(0, Section.Buildup);
+        public void Reset() => displayText(0, SongSection.Buildup);
 
         private class FixedWidthSpriteText : SpriteText
         {
@@ -43,7 +43,7 @@ namespace hues.Game.Drawables
 
         private StringBuilder builder = new StringBuilder();
 
-        private void displayText(int beatIndex, Section beatSection)
+        private void displayText(int beatIndex, SongSection songSection)
         {
 
             if (MaxChars < 1)
@@ -55,12 +55,12 @@ namespace hues.Game.Drawables
             var remaining = MaxChars;
 
             // TODO: Maybe optimise this to not be string builder memes
-            switch (beatSection)
+            switch (songSection)
             {
-                case Section.Buildup:
+                case SongSection.Buildup:
                 {
                     if (String.IsNullOrEmpty(BuildupBeatchars))
-                        goto case Section.Loop;
+                        goto case SongSection.Loop;
 
                     while (remaining > 0)
                     {
@@ -69,12 +69,12 @@ namespace hues.Game.Drawables
                         if (i > BuildupBeatchars.Length - 1)
                         {
                             i = 0;
-                            goto case Section.Loop;
+                            goto case SongSection.Loop;
                         }
                     }
                     break;
                 }
-                case Section.Loop:
+                case SongSection.Loop:
                     while (remaining > 0)
                     {
                         builder.Append(LoopBeatchars[i++]);
@@ -87,11 +87,11 @@ namespace hues.Game.Drawables
             displayBeatchars.Text = builder.ToString();
         }
 
-        protected override void OnNewBeat(int beatIndex, Section beatSection, char beatChar, double beatLength)
+        protected override void OnNewBeat(int beatIndex, SongSection songSection, char beatChar, double beatLength)
         {
-            base.OnNewBeat(beatIndex, beatSection, beatChar, beatLength);
+            base.OnNewBeat(beatIndex, songSection, beatChar, beatLength);
 
-            displayText(beatIndex, beatSection);
+            displayText(beatIndex, songSection);
         }
     }
 }

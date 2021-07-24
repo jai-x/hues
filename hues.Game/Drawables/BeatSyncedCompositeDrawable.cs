@@ -10,19 +10,13 @@ namespace hues.Game.Drawables
 {
     public class BeatSyncedCompositeDrawable : CompositeDrawable
     {
-        public enum Section
-        {
-            Buildup,
-            Loop,
-        }
-
         protected string BuildupBeatchars => playableSong.Value?.Song.BuildupBeatchars ?? String.Empty;
         protected string LoopBeatchars => playableSong.Value?.Song.LoopBeatchars ?? String.Empty;
 
         [Resolved]
         private Bindable<PlayableSong> playableSong { get; set; }
 
-        private Section lastSection;
+        private SongSection lastSection;
         private int lastBeatIndex = -1;
 
         protected override void Update()
@@ -40,17 +34,18 @@ namespace hues.Game.Drawables
                 return;
 
             // get track and section
-            if (current.Buildup != null && current.Buildup.IsRunning)
+            switch (current.Section)
             {
-                update(current.Buildup, current.Song.BuildupBeatchars, Section.Buildup);
-            }
-            else if (current.Loop.IsRunning)
-            {
-                update(current.Loop, current.Song.LoopBeatchars, Section.Loop);
+                case SongSection.Buildup:
+                    update(current.Buildup, current.Song.BuildupBeatchars, current.Section);
+                    break;
+                case SongSection.Loop:
+                    update(current.Loop, current.Song.LoopBeatchars, current.Section);
+                    break;
             }
         }
 
-        private void update(ITrack track, string beatchars, Section currentSection)
+        private void update(ITrack track, string beatchars, SongSection currentSection)
         {
             if (String.IsNullOrEmpty(beatchars))
                 return;
@@ -75,7 +70,7 @@ namespace hues.Game.Drawables
             lastBeatIndex = currentBeatIndex;
         }
 
-        protected virtual void OnNewBeat(int beatIndex, Section beatSection, char beatChar, double beatLength)
+        protected virtual void OnNewBeat(int beatIndex, SongSection songSection, char beatChar, double beatLength)
         {
         }
     }

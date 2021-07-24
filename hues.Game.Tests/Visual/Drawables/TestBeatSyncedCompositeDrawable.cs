@@ -63,7 +63,7 @@ namespace hues.Game.Tests.Visual.Drawables
             private Box flashBlue;
 
             [Resolved]
-            private Bindable<Song> currentSong { get; set; }
+            private Bindable<PlayableSong> playableSong { get; set; }
 
             public TestBeatDrawable()
             {
@@ -120,15 +120,19 @@ namespace hues.Game.Tests.Visual.Drawables
                     },
                 };
 
-                currentSong.BindValueChanged(change => { title.Text = change.NewValue?.Title ?? "none"; }, true);
+                playableSong.BindValueChanged(change =>
+                {
+                    title.Text = change.NewValue?.Song.Title ?? "none";
+                    section.Text = change.NewValue?.Section.ToString() ?? "no section";
+                }, true);
             }
 
-            protected override void OnNewBeat(int beatIndex, Section beatSection, char beatChar, double beatLength)
+            protected override void OnNewBeat(int beatIndex, SongSection songSection, char beatChar, double beatLength)
             {
-                base.OnNewBeat(beatIndex, beatSection, beatChar, beatLength);
+                base.OnNewBeat(beatIndex, songSection, beatChar, beatLength);
 
                 index.Text = "0x" + beatIndex.ToString("X2");
-                section.Text = beatSection.ToString();
+                section.Text = songSection.ToString();
 
                 if (beatChar == '.')
                     return;
