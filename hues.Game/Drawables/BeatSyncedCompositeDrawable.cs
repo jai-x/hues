@@ -6,6 +6,8 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 
+using hues.Game.RespackElements;
+
 namespace hues.Game.Drawables
 {
     public class BeatSyncedCompositeDrawable : CompositeDrawable
@@ -16,6 +18,7 @@ namespace hues.Game.Drawables
         [Resolved]
         private Bindable<PlayableSong> playableSong { get; set; }
 
+        private Song lastSong;
         private SongSection lastSection;
         private int lastBeatIndex = -1;
 
@@ -33,7 +36,20 @@ namespace hues.Game.Drawables
             if (!current.TrackLoaded)
                 return;
 
-            // get track and section
+            // reset beat on new song
+            if (current.Song != lastSong)
+            {
+                lastBeatIndex = -1;
+                lastSong = current.Song;
+            }
+
+            // reset beat on new section
+            if (current.Section != lastSection)
+            {
+                lastBeatIndex = -1;
+                lastSection = current.Section;
+            }
+
             switch (current.Section)
             {
                 case SongSection.Buildup:
@@ -47,26 +63,28 @@ namespace hues.Game.Drawables
 
         private void update(ITrack track, string beatchars, SongSection currentSection)
         {
-            if (String.IsNullOrEmpty(beatchars))
-                return;
+            double beatLength = 0;
+            int currentBeatIndex = 0;
+            char beatChar = '.';
 
-            if (currentSection != lastSection)
-                lastBeatIndex = -1;
+            if (!String.IsNullOrEmpty(beatchars))
+            {
+                beatLength = track.Length / beatchars.Length;
 
-            var beatLength = track.Length / beatchars.Length;
+                // TODO: Find out why this sometimes creates an index that is 1 larger than number of beatchars
+                currentBeatIndex = Math.Min((int)(track.CurrentTime / beatLength), beatchars.Length - 1);
 
-            // TODO: Find out why this sometimes creates an index that is 1 larger than number of beatchars
-            var currentBeatIndex = Math.Min((int)(track.CurrentTime / beatLength), beatchars.Length - 1);
+                beatChar = beatchars[currentBeatIndex];
+            }
 
+            // don't update on the same beat
             if (lastBeatIndex == currentBeatIndex)
                 return;
-
-            var beatChar = beatchars[currentBeatIndex];
 
             // TODO: Find out if this needs to be Scheduled or put under a transform
             OnNewBeat(currentBeatIndex, currentSection, beatChar, beatLength);
 
-            lastSection = currentSection;
+            // this is a new beat
             lastBeatIndex = currentBeatIndex;
         }
 

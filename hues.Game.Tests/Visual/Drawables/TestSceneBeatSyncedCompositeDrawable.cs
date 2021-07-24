@@ -44,7 +44,7 @@ namespace hues.Game.Tests.Visual.Drawables
         }
 
         [Test]
-        public void TestOnBeatWorks()
+        public void TestVisual()
         {
             AddStep("Next song", () => { songManager.Next(); });
             AddStep("Previous song", () => { songManager.Previous(); });
@@ -63,7 +63,7 @@ namespace hues.Game.Tests.Visual.Drawables
             private Box flashBlue;
 
             [Resolved]
-            private Bindable<PlayableSong> playableSong { get; set; }
+            private Bindable<Song> currentSong { get; set; }
 
             public TestBeatDrawable()
             {
@@ -120,11 +120,7 @@ namespace hues.Game.Tests.Visual.Drawables
                     },
                 };
 
-                playableSong.BindValueChanged(change =>
-                {
-                    title.Text = change.NewValue?.Song.Title ?? "none";
-                    section.Text = change.NewValue?.Section.ToString() ?? "no section";
-                }, true);
+                currentSong.BindValueChanged(change => { title.Text = change.NewValue?.Title ?? "none"; }, true);
             }
 
             protected override void OnNewBeat(int beatIndex, SongSection songSection, char beatChar, double beatLength)
