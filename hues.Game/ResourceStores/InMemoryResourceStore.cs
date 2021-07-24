@@ -10,16 +10,16 @@ namespace hues.Game.ResourceStores
 {
     public class InMemoryResourceStore : IResourceStore<byte[]>
     {
-        protected readonly Dictionary<string, MemoryStream> store = new Dictionary<string, MemoryStream>();
+        protected readonly Dictionary<string, byte[]> store = new Dictionary<string, byte[]>();
         protected readonly object storeLock = new object();
 
-        public void Add(string name, Stream stream)
+        public void Add(string name, Stream stream, long length)
         {
             lock (storeLock)
             {
-                var dest = new MemoryStream();
-                stream.CopyTo(dest);
-                store[name] = dest;
+                byte[] buffer = new byte[length];
+                stream.Read(buffer);
+                store[name] = buffer;
             }
         }
 
@@ -30,11 +30,7 @@ namespace hues.Game.ResourceStores
                 if (!store.ContainsKey(name))
                     return null;
 
-                var stream = store[name];
-
-                byte[] buffer = new byte[stream.Length];
-                stream.Read(buffer, 0, buffer.Length);
-                return buffer;
+                return store[name];
             }
         }
 
@@ -48,7 +44,7 @@ namespace hues.Game.ResourceStores
                 if (!store.ContainsKey(name))
                     return null;
 
-                return store[name];
+                return new MemoryStream(store[name]);
             }
         }
 

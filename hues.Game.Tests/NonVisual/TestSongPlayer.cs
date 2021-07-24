@@ -34,13 +34,13 @@ namespace hues.Game.Tests.NonVisual
             AddStep("Add `sample_track_1` to resources", () =>
             {
                 using (var stream = TestResources.OpenResource("Tracks/sample.mp3"))
-                    trackResources.Add("sample_track_1", stream);
+                    trackResources.Add("sample_track_1", stream, stream.Length);
             });
 
             AddStep("Add `sample_track_2` to resources", () =>
             {
                 using (var stream = TestResources.OpenResource("Tracks/sample.mp3"))
-                    trackResources.Add("sample_track_2", stream);
+                    trackResources.Add("sample_track_2", stream, stream.Length);
             });
         }
 

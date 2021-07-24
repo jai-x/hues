@@ -45,7 +45,7 @@ namespace hues.Game.Tests.NonVisual.ResourceStores
 
             AddStep("Add track file to resources", () =>
             {
-                trackResources.Add("sample_track", trackStream);
+                trackResources.Add("sample_track", trackStream, trackStream.Length);
             });
 
             AddAssert("Track file has beed added to resources", () =>

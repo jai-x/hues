@@ -8,46 +8,66 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Logging;
-
 using osuTK;
 
-namespace hues.Game.Tests.Visual
+using hues.Game.Drawables;
+using hues.Game.Managers;
+using hues.Game.RespackElements;
+using hues.Game.Stores;
+
+using NUnit.Framework;
+
+namespace hues.Game.Tests.Visual.Drawables
 {
-    public class TestSceneBeatSyncedCompositeDrawable : HuesTestScene
+    [TestFixture]
+    public class TestBeatSyncedCompositeDrawable : HuesTestScene
     {
-        /*
-        [Cached]
-        protected readonly Bindable<WorkingSong> workingSong = new Bindable<WorkingSong>();
+        [Resolved]
+        private RespackLoader respackLoader { get; set; }
 
         [Resolved]
-        private AudioManager audioManager { get; set; }
+        private SongManager songManager { get; set; }
 
-        private WorkingSong testSong;
+        [Resolved]
+        private SongPlayer songPlayer { get; set; }
 
-        public TestSceneBeatSyncedCompositeDrawable()
+        [Resolved]
+        private RespackTrackStore trackStore { get; set; }
+
+        [Resolved]
+        private Bindable<PlayableSong> playableSong { get; set; }
+
+        [SetUp]
+        public void SetUp()
         {
-            RelativeSizeAxes = Axes.Both;
+            Schedule(() =>
+            {
+                songPlayer.AutoPlay = false;
+                respackLoader.LoadPath("/home/jai/doc/respacks/defaults.zip");
+                Child = new TestBeatDrawable();
+
+                playableSong.BindValueChanged(change =>
+                {
+                    var p = change.NewValue;
+                    if (p == null)
+                    {
+                        Logger.Log("null song");
+                        return;
+                    }
+                    Logger.Log(p.Song.ToString());
+                    Logger.Log(p.ToString());
+                }, true);
+            });
         }
 
-        protected override void LoadComplete()
+        [Test]
+        public void TestOnBeatWorks()
         {
-            base.LoadComplete();
-
-            Child = new TestBeatDrawable();
-
-            testSong = new WorkingSong(Song.All[0], audioManager);
-
-            testSong.Load();
-            workingSong.Value = testSong;
-
-            AddStep("Reset", testSong.Reset);
-            AddStep("Start", testSong.Start);
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            testSong?.Dispose();
-            base.Dispose(isDisposing);
+            AddStep("Next song", () => { songManager.Next(); });
+            AddStep("Previous song", () => { songManager.Previous(); });
+            AddStep("Song stop", () => { playableSong.Value?.Stop(); });
+            AddStep("Song start", () => { playableSong.Value?.Start(); });
+            AddStep("Song reset", () => { playableSong.Value?.Reset(); });
         }
 
         private class TestBeatDrawable : BeatSyncedCompositeDrawable
@@ -60,7 +80,7 @@ namespace hues.Game.Tests.Visual
             private Box flashBlue;
 
             [Resolved]
-            private Bindable<WorkingSong> workingSong { get; set; }
+            private Bindable<Song> currentSong { get; set; }
 
             public TestBeatDrawable()
             {
@@ -117,11 +137,8 @@ namespace hues.Game.Tests.Visual
                     },
                 };
 
-                updateName(workingSong.Value);
-                workingSong.ValueChanged += (change) => updateName(change.NewValue);
+                currentSong.BindValueChanged(change => { title.Text = change.NewValue?.Title ?? "none"; }, true);
             }
-
-            private void updateName(WorkingSong b) => title.Text = b?.Song.Title ?? "none";
 
             protected override void OnNewBeat(int beatIndex, Section beatSection, char beatChar, double beatLength)
             {
@@ -143,6 +160,5 @@ namespace hues.Game.Tests.Visual
                     flashBlue.FadeOutFromOne(beatLength);
             }
         }
-        */
     }
 }
