@@ -5,7 +5,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
-
 using osuTK;
 
 namespace hues.Game.Drawables
@@ -28,11 +27,7 @@ namespace hues.Game.Drawables
                     Origin = Anchor.CentreLeft,
                 },
             };
-
-            displayText(0, SongSection.Buildup);
         }
-
-        public void Reset() => displayText(0, SongSection.Buildup);
 
         private class FixedWidthSpriteText : SpriteText
         {
@@ -45,9 +40,11 @@ namespace hues.Game.Drawables
 
         private void displayText(int beatIndex, SongSection songSection)
         {
-
             if (MaxChars < 1)
+            {
                 displayBeatchars.Text = String.Empty;
+                return;
+            }
 
             builder.Clear();
 
@@ -75,6 +72,13 @@ namespace hues.Game.Drawables
                     break;
                 }
                 case SongSection.Loop:
+                {
+                    if (String.IsNullOrEmpty(LoopBeatchars))
+                    {
+                        builder.Append('.', remaining);
+                        break;
+                    }
+
                     while (remaining > 0)
                     {
                         builder.Append(LoopBeatchars[i++]);
@@ -82,6 +86,7 @@ namespace hues.Game.Drawables
                         i = (i > LoopBeatchars.Length - 1) ? 0 : i;
                     }
                     break;
+                }
             }
 
             displayBeatchars.Text = builder.ToString();
