@@ -4,7 +4,7 @@ using osu.Framework.Graphics.Shapes;
 
 using osuTK;
 
-namespace hues.Game
+namespace hues.Game.Drawables
 {
     public class BeatCircle : BeatSyncedCompositeDrawable
     {

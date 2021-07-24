@@ -8,7 +8,7 @@ using osu.Framework.Graphics.Sprites;
 
 using osuTK;
 
-namespace hues.Game
+namespace hues.Game.Drawables
 {
     public class BeatLine : BeatSyncedCompositeDrawable
     {
