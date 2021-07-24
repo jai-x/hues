@@ -101,7 +101,7 @@ namespace hues.Game
                     throw new RespackMissingFileException(song.BuildupSource);
 
                 using (var stream = buildupEntry.Open())
-                    trackResources.Add(song.LoopSource, stream);
+                    trackResources.Add(song.BuildupSource, stream);
             }
         }
 
