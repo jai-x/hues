@@ -61,7 +61,7 @@ namespace hues.Game
             Resources.AddStore(new DllResourceStore(HuesResources.ResourceAssembly));
 
             // Add PetMe font
-            AddFont(Resources, "Fonts/PetMe64/PetMe64");
+            AddFont(Resources, "Resources/Fonts/PetMe64/PetMe64");
 
             // Init and cache backing resources
             dependencies.CacheAs(trackResources = new RespackTrackResourceStore());
