@@ -21,7 +21,7 @@ using NUnit.Framework;
 namespace hues.Game.Tests.Visual.Drawables
 {
     [TestFixture]
-    public class TestBeatSyncedCompositeDrawable : HuesTestScene
+    public class TestSceneBeatSyncedCompositeDrawable : HuesTestScene
     {
         [Resolved]
         private RespackLoader respackLoader { get; set; }

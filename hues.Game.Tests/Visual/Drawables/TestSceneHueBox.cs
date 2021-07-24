@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace hues.Game.Tests.Visual.Drawables
 {
     [TestFixture]
-    public class TestHueBox : HuesTestScene
+    public class TestSceneHueBox : HuesTestScene
     {
         [Resolved]
         private HueManager hueManager { get; set; }
