@@ -9,4 +9,9 @@
     <ProjectReference Include="..\hues.Game\hues.Game.csproj" />
   </ItemGroup>
 
+  <Target Name="PostClean" AfterTargets="Clean">
+    <RemoveDir Directories="$(BaseIntermediateOutputPath)" /> <!-- obj dir -->
+    <RemoveDir Directories="$(BaseOutputPath)" /><!-- bin dir -->
+  </Target>
+
 </Project>

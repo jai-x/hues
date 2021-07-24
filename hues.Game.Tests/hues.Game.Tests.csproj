@@ -10,7 +10,6 @@
     <ProjectReference Include="..\hues.Game\hues.Game.csproj" />
   </ItemGroup>
 
-
   <ItemGroup>
     <EmbeddedResource Include="Resources\**\*" />
   </ItemGroup>
@@ -19,5 +18,10 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
   </ItemGroup>
+
+  <Target Name="PostClean" AfterTargets="Clean">
+    <RemoveDir Directories="$(BaseIntermediateOutputPath)" /> <!-- obj dir -->
+    <RemoveDir Directories="$(BaseOutputPath)" /><!-- bin dir -->
+  </Target>
 
 </Project>

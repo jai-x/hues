@@ -12,4 +12,9 @@
     <PackageReference Include="ppy.osu.Framework" Version="2021.707.0" />
   </ItemGroup>
 
+  <Target Name="PostClean" AfterTargets="Clean">
+    <RemoveDir Directories="$(BaseIntermediateOutputPath)" /> <!-- obj dir -->
+    <RemoveDir Directories="$(BaseOutputPath)" /><!-- bin dir -->
+  </Target>
+
 </Project>
