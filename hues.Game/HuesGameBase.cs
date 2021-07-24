@@ -50,6 +50,8 @@ namespace hues.Game
         // Respack loader
         private RespackLoader respackLoader;
 
+        private SongPlayer songPlayer;
+
         #endregion
 
         [BackgroundDependencyLoader]
@@ -80,15 +82,14 @@ namespace hues.Game
             dependencies.CacheAs(imageManager = new ImageManager());
             dependencies.CacheAs(hueManager = new HueManager());
             dependencies.CacheAs(respackLoader = new RespackLoader());
+            dependencies.CacheAs(songPlayer = new SongPlayer());
 
             // Add managers and respack loader to hierarchy
             AddInternal(songManager);
             AddInternal(imageManager);
             AddInternal(hueManager);
             AddInternal(respackLoader);
-
-            // Song player
-            AddInternal(new SongPlayer());
+            AddInternal(songPlayer);
 
             // All game content is child of the DrawSizePreservingFillContainer
             content = new DrawSizePreservingFillContainer { TargetDrawSize = new Vector2(1366, 768) };
