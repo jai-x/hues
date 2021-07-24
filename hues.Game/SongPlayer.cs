@@ -23,6 +23,8 @@ namespace hues.Game
         [Resolved]
         private RespackTrackStore trackStore { get; set; }
 
+        public bool AutoPlay = true;
+
         protected override void LoadComplete()
         {
             currentSong.BindValueChanged(change => update(change.NewValue));
@@ -50,7 +52,9 @@ namespace hues.Game
             oldPlayable?.Stop();
 
             currentPlayable.Value = newPlayable;
-            currentPlayable.Value.Start();
+
+            if (AutoPlay)
+                currentPlayable.Value.Start();
 
             oldPlayable?.Dispose();
         }
