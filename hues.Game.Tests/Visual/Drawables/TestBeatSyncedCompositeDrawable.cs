@@ -29,12 +29,6 @@ namespace hues.Game.Tests.Visual.Drawables
         private SongManager songManager { get; set; }
 
         [Resolved]
-        private SongPlayer songPlayer { get; set; }
-
-        [Resolved]
-        private RespackTrackStore trackStore { get; set; }
-
-        [Resolved]
         private Bindable<PlayableSong> playableSong { get; set; }
 
         [SetUp]
@@ -42,21 +36,8 @@ namespace hues.Game.Tests.Visual.Drawables
         {
             Schedule(() =>
             {
-                songPlayer.AutoPlay = false;
                 respackLoader.LoadPath("/home/jai/doc/respacks/defaults.zip");
                 Child = new TestBeatDrawable();
-
-                playableSong.BindValueChanged(change =>
-                {
-                    var p = change.NewValue;
-                    if (p == null)
-                    {
-                        Logger.Log("null song");
-                        return;
-                    }
-                    Logger.Log(p.Song.ToString());
-                    Logger.Log(p.ToString());
-                }, true);
             });
         }
 
