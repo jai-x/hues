@@ -17,6 +17,12 @@ namespace hues.Game
 
         public bool IsPlaying => Buildup?.IsRunning ?? false || Loop.IsRunning;
 
+        public override string ToString() =>
+            $"<{nameof(PlayableSong)}> " +
+            $"Title: {Song.Title} " +
+            $"Buildup: {Buildup?.ToString() ?? "[null]"} " +
+            $"Loop: {Loop.ToString()}";
+
         public PlayableSong(Song song, Track buildup, Track loop)
         {
             Song = song;
