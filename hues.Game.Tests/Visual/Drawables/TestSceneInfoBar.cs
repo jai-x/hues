@@ -30,6 +30,12 @@ namespace hues.Game.Tests.Visual.Drawables
         private SongManager songManager { get; set; }
 
         [Resolved]
+        private HueManager hueManager { get; set; }
+
+        [Resolved]
+        private ImageManager imageManager { get; set; }
+
+        [Resolved]
         private Bindable<PlayableSong> playableSong { get; set; }
 
         [SetUp]
@@ -37,8 +43,14 @@ namespace hues.Game.Tests.Visual.Drawables
         {
             Schedule(() =>
             {
-                var respack = TestResources.OpenResource("Respacks/DefaultsHQ.zip");
-                respackLoader.LoadStream(respack);
+                var respackSongs = TestResources.OpenResource("Respacks/DefaultsHQ.zip");
+                var respackImages = TestResources.OpenResource("Respacks/DefaultImages.zip");
+
+                respackLoader.LoadStream(respackSongs);
+                respackLoader.LoadStream(respackImages);
+
+                hueManager.Add(Hue.All);
+
                 Child = new InfoBar
                 {
                     Anchor = Anchor.Centre,
@@ -52,6 +64,10 @@ namespace hues.Game.Tests.Visual.Drawables
         {
             AddStep("Next song", () => { songManager.Next(); });
             AddStep("Previous song", () => { songManager.Previous(); });
+            AddStep("Next hue", () => { hueManager.Next(); });
+            AddStep("Previous hue", () => { hueManager.Previous(); });
+            AddStep("Next image", () => { imageManager.Next(); });
+            AddStep("Previous image", () => { imageManager.Previous(); });
             AddStep("Song stop", () => { playableSong.Value?.Stop(); });
             AddStep("Song start", () => { playableSong.Value?.Start(); });
             AddStep("Song reset", () => { playableSong.Value?.Reset(); });
