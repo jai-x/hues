@@ -1,5 +1,6 @@
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Graphics;
 
 using hues.Game.RespackElements;
 using hues.Game.Managers;
@@ -18,11 +19,13 @@ namespace hues.Game.Tests.Visual.Drawables
         [SetUp]
         public void SetUp()
         {
-            Schedule(() =>
-            {
-                hueManager.Add(Hue.All);
-                Child = new HueBox();;
-            });
+            Schedule(() => { hueManager.Add(Hue.All); });
+        }
+
+        [BackgroundDependencyLoader]
+        private void load()
+        {
+            Child = new HueBox { RelativeSizeAxes = Axes.Both };
         }
 
         [Test]

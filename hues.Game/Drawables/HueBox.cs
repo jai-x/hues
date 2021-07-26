@@ -12,23 +12,18 @@ namespace hues.Game.Drawables
         [Resolved]
         private Bindable<Hue> currentHue { get; set; }
 
-        public HueBox()
+        [BackgroundDependencyLoader]
+        private void load()
         {
-            RelativeSizeAxes = Axes.Both;
-        }
+            currentHue.BindValueChanged(hueChange =>
+            {
+                var hue = hueChange.NewValue;
 
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-            currentHue.BindValueChanged(hueChange => update(hueChange.NewValue), true);
-        }
-
-        private void update(Hue hue)
-        {
-            if (hue == null)
-                this.Colour = Colour4.Black;
-            else
-                this.Colour = hue.Colour4;
+                if (hue == null)
+                    Colour = Colour4.Black;
+                else
+                    Colour = hue.Colour4;
+            });
         }
     }
 }
