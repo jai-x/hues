@@ -12,16 +12,16 @@ using hues.Game.RespackElements;
 
 namespace hues.Game.Managers
 {
+    public enum AdvanceMode
+    {
+        Stopped,
+        Ordered,
+        Random,
+    }
+
     public class RespackElementManager<T> : Component
         where T : RespackElement
     {
-        public enum AdvanceMode
-        {
-            Stopped,
-            Next,
-            Random,
-        }
-
         [Resolved]
         private Bindable<T> current { get; set; }
 
@@ -30,7 +30,7 @@ namespace hues.Game.Managers
         private readonly List<T> elements = new List<T>();
         private readonly object elementLock = new object();
 
-        private AdvanceMode mode = AdvanceMode.Next;
+        private AdvanceMode mode = AdvanceMode.Ordered;
 
         public AdvanceMode Mode
         {
@@ -71,72 +71,95 @@ namespace hues.Game.Managers
             return true;
         }
 
-        public void Next()
+        private void advanceNext()
+        {
+            var oldItem = current.Value;
+            current.Value = elements.SkipWhile(obj => obj != oldItem)
+                                 .Skip(1)
+                                 .DefaultIfEmpty(elements.First())
+                                 .First();
+        }
+
+        private void advancePrevious()
+        {
+            var oldItem = current.Value;
+            current.Value = elements.TakeWhile(obj => obj != oldItem)
+                                 .DefaultIfEmpty(elements.Last())
+                                 .Last();
+        }
+
+        private void advanceRandom()
+        {
+            var idx = RNG.Next(elements.Count);
+            current.Value = elements[idx];
+        }
+
+        public void Next(bool force = false)
         {
             lock (elementLock)
             {
                 if (!canProgress())
                     return;
 
+                if (force)
+                {
+                    advanceNext();
+                    return;
+                }
+
                 switch (Mode)
                 {
                     case AdvanceMode.Stopped:
-                    {
                         break;
-                    }
 
-                    case AdvanceMode.Next:
-                    {
-                        var oldItem = current.Value;
-                        current.Value = elements.SkipWhile(obj => obj != oldItem)
-                                             .Skip(1)
-                                             .DefaultIfEmpty(elements.First())
-                                             .First();
+                    case AdvanceMode.Ordered:
+                        advanceNext();
                         break;
-                    }
 
                     case AdvanceMode.Random:
-                    {
-                        var idx = RNG.Next(elements.Count);
-                        current.Value = elements[idx];
+                        advanceRandom();
                         break;
-                    }
                 }
-
             }
         }
 
-        public void Previous()
+        public void Previous(bool force = false)
         {
             lock (elementLock)
             {
                 if (!canProgress())
                     return;
 
+                if (force)
+                {
+                    advancePrevious();
+                    return;
+                }
+
                 switch (Mode)
                 {
                     case AdvanceMode.Stopped:
-                    {
                         break;
-                    }
 
-                    case AdvanceMode.Next:
-                    {
-                        var oldItem = current.Value;
-                        current.Value = elements.TakeWhile(obj => obj != oldItem)
-                                             .DefaultIfEmpty(elements.Last())
-                                             .Last();
+                    case AdvanceMode.Ordered:
+                        advancePrevious();
                         break;
-                    }
 
                     case AdvanceMode.Random:
-                    {
-                        var idx = RNG.Next(elements.Count);
-                        current.Value = elements[idx];
+                        advanceRandom();
                         break;
-                    }
                 }
+            }
+        }
 
+        public void Random()
+        {
+            lock (elementLock)
+            {
+                if (!canProgress())
+                    return;
+
+                advanceRandom();
             }
         }
 
