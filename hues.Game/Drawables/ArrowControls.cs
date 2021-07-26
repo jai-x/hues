@@ -68,7 +68,7 @@ namespace hues.Game.Drawables
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
                                 Masking = true,
-                                Size = new Vector2(22),
+                                Size = new Vector2(26, 22),
                                 Children = new Drawable[]
                                 {
                                     new Box
@@ -100,7 +100,7 @@ namespace hues.Game.Drawables
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
                                 Masking = true,
-                                Size = new Vector2(22),
+                                Size = new Vector2(26, 22),
                                 Children = new Drawable[]
                                 {
                                     new Box
