@@ -1,22 +1,31 @@
 using osu.Framework.Allocation;
-using osu.Framework.Audio;
-using osu.Framework.Audio.Track;
-using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
-using osu.Framework.Platform;
+
+using hues.Game.Drawables;
+using hues.Game.Managers;
+using hues.Game.RespackElements;
 
 namespace hues.Game
 {
     public class HuesGame : HuesGameBase
     {
+        [Resolved]
+        private HueManager hueManager { get; set; }
+
         protected override void LoadComplete()
         {
             base.LoadComplete();
 
+            // Load the hues
+            hueManager.Add(Hue.All);
+
             Children = new Drawable[]
             {
-                new HuesMain(),
+                new InfoBar
+                {
+                    Anchor = Anchor.BottomCentre,
+                    Origin = Anchor.BottomCentre,
+                },
             };
         }
     }
