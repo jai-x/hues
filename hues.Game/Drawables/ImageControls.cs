@@ -21,13 +21,14 @@ namespace hues.Game.Drawables
         {
             switch (imageManager.Mode)
             {
-                case AdvanceMode.Ordered:
-                    imageManager.Mode = AdvanceMode.Stopped;
-                    break;
                 case AdvanceMode.Stopped:
                     imageManager.Mode = AdvanceMode.Ordered;
                     break;
-                default:
+                case AdvanceMode.Ordered:
+                    imageManager.Mode = AdvanceMode.Random;
+                    break;
+                case AdvanceMode.Random:
+                    imageManager.Mode = AdvanceMode.Stopped;
                     break;
             }
             updateIcon();
@@ -44,7 +45,7 @@ namespace hues.Game.Drawables
                     CentreIcon = FontAwesome.Solid.PauseCircle;
                     break;
                 case AdvanceMode.Random:
-                    CentreIcon = FontAwesome.Solid.Question;
+                    CentreIcon = FontAwesome.Solid.Random;
                     break;
             }
         }
