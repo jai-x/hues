@@ -10,15 +10,12 @@ namespace hues.Game.Drawables
         {
             base.LoadComplete();
 
-            InternalChildren = new Drawable[]
+            InternalChild = new SpriteIcon
             {
-                new SpriteIcon
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Origin = Anchor.Centre,
-                    Anchor = Anchor.Centre,
-                    Icon = FontAwesome.Solid.Cog,
-                },
+                RelativeSizeAxes = Axes.Both,
+                Origin = Anchor.Centre,
+                Anchor = Anchor.Centre,
+                Icon = FontAwesome.Solid.Cog,
             };
         }
     }
