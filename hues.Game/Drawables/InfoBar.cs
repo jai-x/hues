@@ -29,7 +29,10 @@ namespace hues.Game.Drawables
 
         public InfoBar()
         {
-            Size = new Vector2(800, 45);
+            Size = new Vector2(800, 50);
+            Masking = true;
+            BorderColour = Colour4.DimGray;
+            BorderThickness = 3;
         }
 
         protected override void LoadComplete()

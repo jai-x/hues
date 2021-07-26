@@ -54,7 +54,7 @@ namespace hues.Game.Drawables
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.X,
-                        Colour = new Colour4(200, 200, 200, 255),
+                        Colour = Colour4.DarkGray,
                         Height = 5,
                     },
                     handle = new Box
