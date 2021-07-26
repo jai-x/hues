@@ -13,7 +13,12 @@ namespace hues.Game.Stores
     {
         private readonly ITrackStore backing;
 
-        public RespackTrackStore(ITrackStore backing) => this.backing = backing;
+        public RespackTrackStore(ITrackStore backing)
+        {
+            this.backing = backing;
+            // Set Volume to half by default
+            this.backing.Volume.Value = 0.5;
+        }
 
         #region ITrackStore
         public Track GetVirtual(double length) => backing.GetVirtual(length);
