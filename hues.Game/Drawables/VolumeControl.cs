@@ -13,10 +13,8 @@ namespace hues.Game.Drawables
 {
     public class VolumeControl : CompositeDrawable
     {
-        [Resolved]
-        private RespackTrackStore trackStore { get; set; }
-
-        protected override void LoadComplete()
+        [BackgroundDependencyLoader]
+        private void load(RespackTrackStore trackStore)
         {
             InternalChildren = new Drawable[]
             {
@@ -30,7 +28,7 @@ namespace hues.Game.Drawables
                 },
                 new VolumeSlider
                 {
-                    Current = trackStore.Volume,
+                    Current = trackStore.Volume.GetBoundCopy(),
                     Anchor = Anchor.BottomCentre,
                     Origin = Anchor.BottomCentre,
                     RelativeSizeAxes = Axes.X,
@@ -43,10 +41,9 @@ namespace hues.Game.Drawables
         {
             private Box handle;
 
-            protected override void LoadComplete()
+            [BackgroundDependencyLoader]
+            private void load()
             {
-                base.LoadComplete();
-
                 InternalChildren = new Drawable[]
                 {
                     new Box

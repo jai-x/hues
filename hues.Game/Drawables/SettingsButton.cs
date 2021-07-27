@@ -1,3 +1,4 @@
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
@@ -6,10 +7,9 @@ namespace hues.Game.Drawables
 {
     public class SettingsButton : CompositeDrawable
     {
-        protected override void LoadComplete()
+        [BackgroundDependencyLoader]
+        private void load()
         {
-            base.LoadComplete();
-
             InternalChild = new SpriteIcon
             {
                 RelativeSizeAxes = Axes.Both,

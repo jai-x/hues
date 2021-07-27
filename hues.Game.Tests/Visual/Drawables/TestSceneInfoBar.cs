@@ -43,20 +43,20 @@ namespace hues.Game.Tests.Visual.Drawables
         {
             Schedule(() =>
             {
-                var respackSongs = TestResources.OpenResource("Respacks/DefaultsHQ.zip");
-                var respackImages = TestResources.OpenResource("Respacks/DefaultImages.zip");
-
-                respackLoader.LoadStream(respackSongs);
-                respackLoader.LoadStream(respackImages);
-
+                respackLoader.LoadStream(TestResources.OpenResource("Respacks/DefaultsHQ.zip"));
+                respackLoader.LoadStream(TestResources.OpenResource("Respacks/DefaultImages.zip"));
                 hueManager.Add(Hue.All);
-
-                Child = new InfoBar
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                };
             });
+        }
+
+        [BackgroundDependencyLoader]
+        private void load()
+        {
+            Child = new InfoBar
+            {
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+            };
         }
 
         [Test]

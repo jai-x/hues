@@ -1,3 +1,4 @@
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -23,7 +24,8 @@ namespace hues.Game.Drawables
 
         private SpriteText labelSpriteText;
 
-        protected override void LoadComplete()
+        [BackgroundDependencyLoader]
+        private void load()
         {
             InternalChildren = new Drawable[]
             {

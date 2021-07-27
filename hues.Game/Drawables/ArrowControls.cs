@@ -1,4 +1,5 @@
 using System;
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -27,10 +28,9 @@ namespace hues.Game.Drawables
         protected virtual Action NextClick { get; }
         protected virtual Action CentreClick { get; }
 
-        protected override void LoadComplete()
+        [BackgroundDependencyLoader]
+        private void load()
         {
-            base.LoadComplete();
-
             InternalChildren = new Drawable[]
             {
                 new ClickableContainer
@@ -144,7 +144,6 @@ namespace hues.Game.Drawables
                                         Anchor = Anchor.Centre,
                                         Origin = Anchor.Centre,
                                         Size = new Vector2(16),
-                                        //Icon = CentreIcon,
                                     },
                                 },
                             },

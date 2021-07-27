@@ -35,10 +35,9 @@ namespace hues.Game.Drawables
             BorderThickness = 3;
         }
 
-        protected override void LoadComplete()
+        [BackgroundDependencyLoader]
+        private void load()
         {
-            base.LoadComplete();
-
             InternalChildren = new Drawable[]
             {
                 new Box
@@ -101,7 +100,11 @@ namespace hues.Game.Drawables
                     X = 5,
                 },
             };
+        }
 
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
             currentImage.BindValueChanged(change => { imageLabel.SetText(change.NewValue?.Name); }, true);
             currentHue.BindValueChanged(change => { hueLabel.SetText(change.NewValue?.Name); }, true);
             currentSong.BindValueChanged(change => { songLabel.SetText(change.NewValue?.Title); }, true);
