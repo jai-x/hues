@@ -1,15 +1,9 @@
-using System;
-using System.IO;
-
 using NUnit.Framework;
-
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
-using osu.Framework.Logging;
 using osu.Framework.Testing;
 using osu.Framework.Platform;
-
 using hues.Game.ResourceStores;
 using hues.Game.Tests.Resources;
 

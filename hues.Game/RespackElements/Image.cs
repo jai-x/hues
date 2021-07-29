@@ -1,5 +1,3 @@
-using System;
-
 namespace hues.Game.RespackElements
 {
     public class Image : RespackElement

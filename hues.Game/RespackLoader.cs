@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Logging;
 using osu.Framework.Platform;
-
-using hues.Game.Extensions;
 using hues.Game.Managers;
 using hues.Game.ResourceStores;
 using hues.Game.RespackElements;

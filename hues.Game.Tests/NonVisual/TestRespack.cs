@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Text;
-
 using NUnit.Framework;
+using System;
+using System.Linq;
 
 namespace hues.Game.Tests.NonVisual
 {

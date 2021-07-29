@@ -5,8 +5,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Logging;
-
 using hues.Game.Stores;
 
 namespace hues.Game.Drawables

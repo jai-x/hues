@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-
 using osu.Framework.IO.Stores;
 using osu.Framework.Logging;
 

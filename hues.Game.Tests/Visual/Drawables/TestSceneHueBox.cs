@@ -1,12 +1,9 @@
+using NUnit.Framework;
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-
 using hues.Game.RespackElements;
 using hues.Game.Managers;
 using hues.Game.Drawables;
-
-using NUnit.Framework;
 
 namespace hues.Game.Tests.Visual.Drawables
 {

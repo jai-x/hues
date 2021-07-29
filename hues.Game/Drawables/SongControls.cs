@@ -2,7 +2,6 @@ using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Logging;
-
 using hues.Game.Managers;
 
 namespace hues.Game.Drawables

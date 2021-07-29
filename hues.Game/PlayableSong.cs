@@ -1,8 +1,5 @@
 using System;
-
 using osu.Framework.Audio.Track;
-using osu.Framework.Graphics;
-
 using hues.Game.RespackElements;
 
 namespace hues.Game

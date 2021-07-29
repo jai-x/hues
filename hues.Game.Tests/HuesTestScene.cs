@@ -1,14 +1,8 @@
-using osu.Framework.Allocation;
-using osu.Framework.Bindables;
-using osu.Framework.Testing;
-
-using hues.Game.Managers;
-using hues.Game.Stores;
-using hues.Game.RespackElements;
-using hues.Game.ResourceStores;
-using hues.Game.Resources;
-
 using NUnit.Framework;
+using osu.Framework.Allocation;
+using osu.Framework.Testing;
+using hues.Game.Managers;
+using hues.Game.ResourceStores;
 
 namespace hues.Game.Tests
 {

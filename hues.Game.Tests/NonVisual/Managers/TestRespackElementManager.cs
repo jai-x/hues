@@ -1,16 +1,12 @@
-using System;
+using NUnit.Framework;
 using System.Linq;
 using System.Collections.Generic;
-
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Testing;
-
 using hues.Game.Managers;
 using hues.Game.RespackElements;
 using hues.Game.Tests;
-
-using NUnit.Framework;
 
 namespace hues.Game.Test.NonVisual.Managers
 {
