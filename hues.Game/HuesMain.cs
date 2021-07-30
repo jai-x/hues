@@ -1,6 +1,9 @@
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osuTK;
 using hues.Game.Drawables;
 using hues.Game.Managers;
 
@@ -14,108 +17,99 @@ namespace hues.Game
         [Resolved]
         private ImageManager imageManager { get; set; }
 
+        private BufferedContainer buffer;
         private Box blackout;
-        private Box whiteout;
 
         [BackgroundDependencyLoader]
         private void load()
         {
             InternalChildren = new Drawable[]
             {
-                new Box
-                {
-                    Name = "Backlight",
-                    RelativeSizeAxes = Axes.Both,
-                    Colour = Colour4.White,
-                },
-                new ImageBox
+                buffer = new BufferedContainer
                 {
                     RelativeSizeAxes = Axes.Both,
-                },
-                new HueBox
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Alpha = 0.4f,
-                },
-                blackout = new Box
-                {
-                    Colour = Colour4.Black,
-                    RelativeSizeAxes = Axes.Both,
-                    Alpha = 0f,
-                },
-                whiteout = new Box
-                {
-                    Colour = Colour4.White,
-                    RelativeSizeAxes = Axes.Both,
-                    Alpha = 0f,
+                    BackgroundColour = Colour4.White,
+                    Children = new Drawable[]
+                    {
+                        new ImageBox
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                        },
+                        new HueBox
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            Alpha = 0.4f,
+                        },
+                        blackout = new Box
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            Alpha = 0f,
+                            Colour = Colour4.Black,
+                        },
+                    },
                 },
             };
         }
+
+        private const float blurAmount = 20f;
+        private readonly Vector2 horizontalBlur = new Vector2(0, blurAmount);
+        private readonly Vector2 verticalBlur = new Vector2(blurAmount, 0);
+        private readonly Vector2 resetBlur = Vector2.Zero;
+
+        private readonly char nullChar = '.';
+        private readonly char[] nonBlackoutCancelChars = new char[] { '+', '|', '¤' };
+        private readonly char[] verticalBlurChars = new char[] { 'x', 'X' };
+        private readonly char[] horizontalBlurChars = new char[] { 'o', 'O', '+' };
+        private readonly char[] colourChangeChars = new char[] { 'x', 'o', '-', '|', ':' };
+        private readonly char[] imageChangeChars = new char[] { 'x', 'o', '-', '|', '*', '=', 'I' };
+        private readonly char blackoutChar = '+';
+        private readonly char shortBlackoutChar = '|';
+        private readonly char whiteoutChar = '¤';
 
         protected override void OnNewBeat(int beatIndex, SongSection songSection, char beatChar, double beatLength)
         {
             base.OnNewBeat(beatIndex, songSection, beatChar, beatLength);
 
-            switch (beatChar)
+            // Null
+            if (beatChar == nullChar)
+                return;
+
+            // Reset blackout
+            if (!nonBlackoutCancelChars.Contains(beatChar))
             {
-                // Vertical blur (snare)
-                case 'x':
-                    blackout.Hide();
-                    whiteout.Hide();
-                    hueManager.Next();
-                    imageManager.Next();
-                    break;
+                blackout.Hide();
+                blackout.Colour = Colour4.Black;
+            }
 
-                // Horizontal blue (bass)
-                case 'o':
-                    blackout.Hide();
-                    whiteout.Hide();
-                    hueManager.Next();
-                    imageManager.Next();
-                    break;
+            // Vertical blur
+            if (verticalBlurChars.Contains(beatChar))
+                buffer.BlurTo(verticalBlur).BlurTo(resetBlur, beatLength);
 
-                // No blur
-                case '-':
-                    blackout.Hide();
-                    whiteout.Hide();
-                    hueManager.Next();
-                    imageManager.Next();
-                    break;
+            // Horizonal blur
+            if (horizontalBlurChars.Contains(beatChar))
+                buffer.BlurTo(horizontalBlur).BlurTo(resetBlur, beatLength);
 
-                // Blackout
-                case '+':
-                    whiteout.Hide();
-                    blackout.Show();
-                    break;
+            // Hue
+            if (colourChangeChars.Contains(beatChar))
+                hueManager.Next();
 
-                // Whiteout
-                case '¤':
-                    whiteout.Show();
-                    blackout.Hide();
-                    break;
+            // Image
+            if (imageChangeChars.Contains(beatChar))
+                imageManager.Next();
 
-                // Short blackout
-                case '|':
-                    whiteout.Hide();
-                    blackout.Show();
-                    break;
+            // Blackout
+            if (beatChar == blackoutChar)
+                blackout.FadeIn(beatLength);
 
-                // Colour only
-                case ':':
-                    blackout.Hide();
-                    whiteout.Hide();
-                    hueManager.Next();
-                    break;
+            // Short blackout
+            if (beatChar == shortBlackoutChar)
+                blackout.FadeIn(beatLength / 1.7).FadeOut();
 
-                // Image only
-                case '*':
-                    blackout.Hide();
-                    whiteout.Hide();
-                    imageManager.Next();
-                    break;
-
-                default:
-                    break;
+            // Whiteout
+            if (beatChar == whiteoutChar)
+            {
+                blackout.Colour = Colour4.White;
+                blackout.FadeIn(beatLength);
             }
         }
     }

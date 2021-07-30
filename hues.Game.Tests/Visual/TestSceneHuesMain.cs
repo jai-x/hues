@@ -1,10 +1,19 @@
+using NUnit.Framework;
+using osu.Framework.Allocation;
+using osu.Framework.Graphics;
+
 namespace hues.Game.Tests.Visual
 {
-    public class TestSceneHuesMain : HuesTestScene
+    [TestFixture]
+    public class TestSceneHuesMain : HuesRespackLoadedTestScene
     {
-        public TestSceneHuesMain()
+        [BackgroundDependencyLoader]
+        private void load()
         {
-            Child = new HuesMain();
+            Child = new HuesMain
+            {
+                RelativeSizeAxes = Axes.Both,
+            };
         }
     }
 }
