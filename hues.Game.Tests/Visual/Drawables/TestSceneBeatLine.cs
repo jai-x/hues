@@ -30,15 +30,35 @@ namespace hues.Game.Tests.Visual.Drawables
                 {
                     new SpriteText
                     {
+                        Y = -20,
                         Text = ">>",
                         Anchor = Anchor.CentreLeft,
                         Origin = Anchor.CentreLeft,
                     },
                     new BeatLine
                     {
+                        Y = -20,
                         X = 50,
                         Anchor = Anchor.CentreLeft,
                         Origin = Anchor.CentreLeft,
+                        Direction = BeatlineDirection.Left,
+                        MaxChars = 35,
+                        CharSize = 30,
+                    },
+                    new SpriteText
+                    {
+                        Y = 20,
+                        Text = "<<",
+                        Anchor = Anchor.CentreRight,
+                        Origin = Anchor.CentreRight,
+                    },
+                    new BeatLine
+                    {
+                        Y = 20,
+                        X = -50,
+                        Anchor = Anchor.CentreRight,
+                        Origin = Anchor.CentreRight,
+                        Direction = BeatlineDirection.Right,
                         MaxChars = 35,
                         CharSize = 30,
                     },
