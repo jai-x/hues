@@ -4,10 +4,9 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osuTK;
-using hues.Game.Drawables;
 using hues.Game.Managers;
 
-namespace hues.Game
+namespace hues.Game.Drawables
 {
     public class HuesMain : BeatSyncedCompositeDrawable
     {
