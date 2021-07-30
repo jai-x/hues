@@ -4,6 +4,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Logging;
 using osu.Framework.Platform;
@@ -30,7 +31,8 @@ namespace hues.Game
         [Resolved]
         private SongManager songManager { get; set; }
 
-        private readonly List<Respack> respacks = new List<Respack>();
+        [Resolved]
+        private BindableList<Respack> respacks { get; set; }
         private readonly object respackLock = new object();
 
         public IReadOnlyCollection<Respack> Respacks => respacks;

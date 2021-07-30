@@ -40,8 +40,12 @@ namespace hues.Game
         protected RespackTextureStore textureStore;
 
         // Bindables
+        protected BindableList<Respack> allRespacks;
+        protected BindableList<Song> allSongs;
         protected Bindable<Song> currentSong;
+        protected BindableList<RespackElements.Image> allImages;
         protected Bindable<RespackElements.Image> currentImage;
+        protected BindableList<Hue> allHues;
         protected Bindable<Hue> currentHue;
         protected Bindable<PlayableSong> currentPlayable;
 
@@ -75,8 +79,12 @@ namespace hues.Game
             dependencies.CacheAs(textureStore = new RespackTextureStore(Host.CreateTextureLoaderStore(textureResources)));
 
             // Init and cache bindables
+            dependencies.CacheAs(allRespacks = new BindableList<Respack>());
+            dependencies.CacheAs(allSongs = new BindableList<Song>());
             dependencies.CacheAs(currentSong = new Bindable<Song>());
+            dependencies.CacheAs(allImages = new BindableList<RespackElements.Image>());
             dependencies.CacheAs(currentImage = new Bindable<RespackElements.Image>());
+            dependencies.CacheAs(allHues = new BindableList<Hue>());
             dependencies.CacheAs(currentHue = new Bindable<Hue>());
             dependencies.CacheAs(currentPlayable = new Bindable<PlayableSong>());
 

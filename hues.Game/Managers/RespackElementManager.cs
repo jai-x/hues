@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
@@ -22,9 +23,9 @@ namespace hues.Game.Managers
         [Resolved]
         private Bindable<T> current { get; set; }
 
-        protected IReadOnlyCollection<T> AllElements => elements;
+        [Resolved]
+        private BindableList<T> elements { get; set; }
 
-        private readonly List<T> elements = new List<T>();
         private readonly object elementLock = new object();
 
         private AdvanceMode mode = AdvanceMode.Ordered;

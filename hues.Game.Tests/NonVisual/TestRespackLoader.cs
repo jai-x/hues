@@ -1,7 +1,8 @@
 using NUnit.Framework;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Testing;
-using hues.Game.Managers;
+using hues.Game.RespackElements;
 using hues.Game.ResourceStores;
 using hues.Game.Tests;
 using hues.Game.Tests.Resources;
@@ -19,10 +20,10 @@ namespace hues.Game.Test.NonVisual
         private RespackTextureResourceStore textureResources { get; set; }
 
         [Resolved]
-        private ImageManager imageManager { get; set; }
+        private BindableList<Image> allImages { get; set; }
 
         [Resolved]
-        private SongManager songManager { get; set; }
+        private BindableList<Song> allSongs { get; set; }
 
         [Resolved]
         private RespackLoader loader { get; set; }
@@ -114,9 +115,9 @@ namespace hues.Game.Test.NonVisual
 
             AddAssert("Respack added", () => loader.Respacks.Count == 1);
 
-            AddAssert("Songs added", () => songManager.Songs.Count == 1);
+            AddAssert("Songs added", () => allSongs.Count == 1);
 
-            AddAssert("Images added", () => imageManager.Images.Count == 1);
+            AddAssert("Images added", () => allImages.Count == 1);
 
             AddAssert("Track resources stored", () => trackResources.Get("track_sample") != null);
 

@@ -18,15 +18,18 @@ namespace hues.Game.Test.NonVisual.Managers
 
         private class FooManager : RespackElementManager<Foo>
         {
-            public IReadOnlyCollection<Foo> Items => AllElements;
         }
 
         [Cached]
         private readonly Bindable<Foo> currentObject = new Bindable<Foo>();
 
+        [Cached]
+        private readonly BindableList<Foo> allObjects = new BindableList<Foo>();
+
         private FooManager manager;
 
-        protected override void LoadComplete()
+        [BackgroundDependencyLoader]
+        private void load()
         {
             Child = manager = new FooManager();
         }
@@ -57,19 +60,19 @@ namespace hues.Game.Test.NonVisual.Managers
             var oneObject = new Foo();
             var multipleObjects= new Foo[] { new Foo(), new Foo() };
 
-            AddAssert("Manager has no objects", () => manager.Items.Count == 0);
+            AddAssert("Manager has no objects", () => allObjects.Count == 0);
 
             AddStep("Add single object", () => { manager.Add(oneObject); });
 
             AddStep("Add multiple objects", () => { manager.Add(multipleObjects); });
 
-            AddAssert("Objects added to manager", () => manager.Items.Count == 3);
+            AddAssert("Objects added to manager", () => allObjects.Count == 3);
 
-            AddAssert("First object has correct value", () => manager.Items.Skip(0).First() == oneObject);
+            AddAssert("First object has correct value", () => allObjects.Skip(0).First() == oneObject);
 
-            AddAssert("Second object has correct value", () => manager.Items.Skip(1).First() == multipleObjects[0]);
+            AddAssert("Second object has correct value", () => allObjects.Skip(1).First() == multipleObjects[0]);
 
-            AddAssert("Third object has correct value", () => manager.Items.Skip(2).First() == multipleObjects[1]);
+            AddAssert("Third object has correct value", () => allObjects.Skip(2).First() == multipleObjects[1]);
         }
 
         [Test]
