@@ -14,6 +14,11 @@ namespace hues.Game
 {
     public class HuesGameBase : osu.Framework.Game
     {
+        public HuesGameBase()
+        {
+            Name = "hues";
+        }
+
         // Main content
         private Container<Drawable> content;
         protected override Container<Drawable> Content => content;

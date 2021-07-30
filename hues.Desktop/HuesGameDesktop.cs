@@ -12,6 +12,9 @@ namespace hues.Desktop
             base.SetHost(host);
 
             var desktopWindow = (SDL2DesktopWindow)host.Window;
+
+            desktopWindow.Title = Name;
+
             desktopWindow.DragDrop += (f) => fileDrop(new[] { f });
         }
 
