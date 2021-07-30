@@ -1,6 +1,5 @@
 using osu.Framework;
 using osu.Framework.Platform;
-using hues.Game;
 
 namespace hues.Desktop
 {
@@ -9,7 +8,7 @@ namespace hues.Desktop
         static void Main(string[] args)
         {
             using (GameHost host = Host.GetSuitableHost("hues"))
-            using (var game = new HuesGame())
+            using (var game = new HuesGameDesktop())
                 host.Run(game);
         }
     }
