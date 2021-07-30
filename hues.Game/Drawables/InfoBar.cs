@@ -38,6 +38,7 @@ namespace hues.Game.Drawables
             {
                 new Box
                 {
+                    Name = "Background",
                     RelativeSizeAxes = Axes.Both,
                     Colour = Colour4.Gray,
                 },
