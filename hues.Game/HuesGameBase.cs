@@ -2,10 +2,8 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osuTK;
-
 using hues.Game.Managers;
 using hues.Game.Stores;
 using hues.Game.RespackElements;
@@ -29,28 +27,28 @@ namespace hues.Game
         #region cached attributes
 
         // Backing in memory resources
-        private RespackTrackResourceStore trackResources;
-        private RespackTextureResourceStore textureResources;
+        protected RespackTrackResourceStore trackResources;
+        protected RespackTextureResourceStore textureResources;
 
         // Stores to fetch the respack tracks and textures
-        private RespackTrackStore trackStore;
-        private RespackTextureStore textureStore;
+        protected RespackTrackStore trackStore;
+        protected RespackTextureStore textureStore;
 
         // Bindables
-        private Bindable<Song> currentSong;
-        private Bindable<RespackElements.Image> currentImage;
-        private Bindable<Hue> currentHue;
-        private Bindable<PlayableSong> currentPlayable;
+        protected Bindable<Song> currentSong;
+        protected Bindable<RespackElements.Image> currentImage;
+        protected Bindable<Hue> currentHue;
+        protected Bindable<PlayableSong> currentPlayable;
 
         // Managers
-        private SongManager songManager;
-        private ImageManager imageManager;
-        private HueManager hueManager;
+        protected SongManager songManager;
+        protected ImageManager imageManager;
+        protected HueManager hueManager;
 
         // Respack loader
-        private RespackLoader respackLoader;
+        protected RespackLoader respackLoader;
 
-        private SongPlayer songPlayer;
+        protected SongPlayer songPlayer;
 
         #endregion
 

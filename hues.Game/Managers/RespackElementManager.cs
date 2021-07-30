@@ -72,23 +72,27 @@ namespace hues.Game.Managers
         {
             var oldItem = current.Value;
             current.Value = elements.SkipWhile(obj => obj != oldItem)
-                                 .Skip(1)
-                                 .DefaultIfEmpty(elements.First())
-                                 .First();
+                                    .Skip(1)
+                                    .DefaultIfEmpty(elements.First())
+                                    .First();
         }
 
         private void advancePrevious()
         {
             var oldItem = current.Value;
             current.Value = elements.TakeWhile(obj => obj != oldItem)
-                                 .DefaultIfEmpty(elements.Last())
-                                 .Last();
+                                    .DefaultIfEmpty(elements.Last())
+                                    .Last();
         }
 
         private void advanceRandom()
         {
             var idx = RNG.Next(elements.Count);
-            current.Value = elements[idx];
+            var next = elements[idx];
+            if (current.Value == next)
+                advanceNext();
+            else
+                current.Value = next;
         }
 
         public void Next(bool force = false)

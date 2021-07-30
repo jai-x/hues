@@ -1,13 +1,9 @@
-using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Graphics.Sprites;
-using osu.Framework.Logging;
 using osuTK;
-
 using hues.Game.RespackElements;
 
 namespace hues.Game.Drawables
@@ -51,7 +47,7 @@ namespace hues.Game.Drawables
                     Anchor = Anchor.TopCentre,
                     Origin = Anchor.TopCentre,
                     Size = new Vector2(320, 17),
-                    Y = 3,
+                    Y = 4,
                     X = -90,
                 },
                 hueLabel = new LabelBar
@@ -60,7 +56,7 @@ namespace hues.Game.Drawables
                     Anchor = Anchor.TopCentre,
                     Origin = Anchor.TopCentre,
                     Size = new Vector2(175, 17),
-                    Y = 3,
+                    Y = 4,
                     X = 160,
                 },
                 songLabel = new LabelBar
@@ -69,7 +65,7 @@ namespace hues.Game.Drawables
                     Anchor = Anchor.BottomCentre,
                     Origin = Anchor.BottomCentre,
                     Size = new Vector2(500, 20),
-                    Y = -3,
+                    Y = -4,
                 },
                 new SongControls
                 {

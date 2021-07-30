@@ -8,12 +8,11 @@ namespace hues.Game.Tests.Visual
         [Resolved]
         private GameHost host { get; set; }
 
-        protected override void LoadComplete()
+        [BackgroundDependencyLoader]
+        private void load()
         {
-            base.LoadComplete();
             var game = new HuesGame();
             game.SetHost(host);
-
             Child = game;
         }
     }
