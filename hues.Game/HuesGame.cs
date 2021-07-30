@@ -16,6 +16,11 @@ namespace hues.Game
                 {
                     RelativeSizeAxes = Axes.Both,
                 },
+                new BeatBar
+                {
+                    Anchor = Anchor.TopCentre,
+                    Origin = Anchor.TopCentre,
+                },
                 new InfoBar
                 {
                     Anchor = Anchor.BottomCentre,
