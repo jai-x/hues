@@ -1,43 +1,23 @@
 using NUnit.Framework;
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
+using osu.Framework.Graphics;
 using hues.Game.Drawables;
-using hues.Game.Managers;
-using hues.Game.Tests.Resources;
+using osuTK;
 
 namespace hues.Game.Tests.Visual.Drawables
 {
     [TestFixture]
-    public class TestSceneBeatCircle : HuesTestScene
+    public class TestSceneBeatCircle : HuesRespackLoadedTestScene
     {
-        [Resolved]
-        private RespackLoader respackLoader { get; set; }
-
-        [Resolved]
-        private SongManager songManager { get; set; }
-
-        [Resolved]
-        private Bindable<PlayableSong> playableSong { get; set; }
-
-        [SetUp]
-        public void SetUp()
+        [BackgroundDependencyLoader]
+        private void load()
         {
-            Schedule(() =>
+            Child = new BeatCircle
             {
-                var respack = TestResources.OpenResource("Respacks/DefaultsHQ.zip");
-                respackLoader.LoadStream(respack);
-                Child = new BeatCircle();
-            });
-        }
-
-        [Test]
-        public void TestVisual()
-        {
-            AddStep("Next song", () => { songManager.Next(); });
-            AddStep("Previous song", () => { songManager.Previous(); });
-            AddStep("Song stop", () => { playableSong.Value?.Stop(); });
-            AddStep("Song start", () => { playableSong.Value?.Start(); });
-            AddStep("Song reset", () => { playableSong.Value?.Reset(); });
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+                Size = new Vector2(60),
+            };
         }
     }
 }
