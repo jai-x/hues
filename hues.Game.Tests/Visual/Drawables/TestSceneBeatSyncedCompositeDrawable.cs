@@ -6,43 +6,17 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Shapes;
 using osuTK;
 using hues.Game.Drawables;
-using hues.Game.Managers;
 using hues.Game.RespackElements;
-using hues.Game.Tests.Resources;
 
 namespace hues.Game.Tests.Visual.Drawables
 {
     [TestFixture]
-    public class TestSceneBeatSyncedCompositeDrawable : HuesTestScene
+    public class TestSceneBeatSyncedCompositeDrawable : HuesRespackLoadedTestScene
     {
-        [Resolved]
-        private RespackLoader respackLoader { get; set; }
-
-        [Resolved]
-        private SongManager songManager { get; set; }
-
-        [Resolved]
-        private Bindable<PlayableSong> playableSong { get; set; }
-
-        [SetUp]
-        public void SetUp()
+        [BackgroundDependencyLoader]
+        private void load()
         {
-            Schedule(() =>
-            {
-                var respack = TestResources.OpenResource("Respacks/DefaultsHQ.zip");
-                respackLoader.LoadStream(respack);
-                Child = new TestBeatDrawable();
-            });
-        }
-
-        [Test]
-        public void TestVisual()
-        {
-            AddStep("Next song", () => { songManager.Next(); });
-            AddStep("Previous song", () => { songManager.Previous(); });
-            AddStep("Song stop", () => { playableSong.Value?.Stop(); });
-            AddStep("Song start", () => { playableSong.Value?.Start(); });
-            AddStep("Song reset", () => { playableSong.Value?.Reset(); });
+            Child = new TestBeatDrawable();
         }
 
         private class TestBeatDrawable : BeatSyncedCompositeDrawable
@@ -62,7 +36,8 @@ namespace hues.Game.Tests.Visual.Drawables
                 RelativeSizeAxes = Axes.Both;
             }
 
-            protected override void LoadComplete()
+            [BackgroundDependencyLoader]
+            private void load()
             {
                 InternalChildren = new Drawable[]
                 {
@@ -111,7 +86,11 @@ namespace hues.Game.Tests.Visual.Drawables
                         Alpha = 0f,
                     },
                 };
+            }
 
+            protected override void LoadComplete()
+            {
+                base.LoadComplete();
                 currentSong.BindValueChanged(change => { title.Text = change.NewValue?.Title ?? "none"; }, true);
             }
 

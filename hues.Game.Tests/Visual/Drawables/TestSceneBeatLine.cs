@@ -1,45 +1,19 @@
 using NUnit.Framework;
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using hues.Game.Drawables;
-using hues.Game.Managers;
-using hues.Game.Tests.Resources;
 
 namespace hues.Game.Tests.Visual.Drawables
 {
-    public class TestSceneBeatLine : HuesTestScene
+    [TestFixture]
+    public class TestSceneBeatLine : HuesRespackLoadedTestScene
     {
-        [Resolved]
-        private RespackLoader respackLoader { get; set; }
-
-        [Resolved]
-        private SongManager songManager { get; set; }
-
-        [Resolved]
-        private Bindable<PlayableSong> playableSong { get; set; }
-
-        [SetUp]
-        public void SetUp()
+        [BackgroundDependencyLoader]
+        private void load()
         {
-            Schedule(() =>
-            {
-                var respack = TestResources.OpenResource("Respacks/DefaultsHQ.zip");
-                respackLoader.LoadStream(respack);
-                Child = new TestBeatLine();
-            });
-        }
-
-        [Test]
-        public void TestVisual()
-        {
-            AddStep("Next song", () => { songManager.Next(); });
-            AddStep("Previous song", () => { songManager.Previous(); });
-            AddStep("Song stop", () => { playableSong.Value?.Stop(); });
-            AddStep("Song start", () => { playableSong.Value?.Start(); });
-            AddStep("Song reset", () => { playableSong.Value?.Reset(); });
+            Child = new TestBeatLine();
         }
 
         private class TestBeatLine : CompositeDrawable
@@ -49,10 +23,9 @@ namespace hues.Game.Tests.Visual.Drawables
                 RelativeSizeAxes = Axes.Both;
             }
 
-            protected override void LoadComplete()
+            [BackgroundDependencyLoader]
+            private void load()
             {
-                base.LoadComplete();
-
                 InternalChildren = new Drawable[]
                 {
                     new SpriteText
