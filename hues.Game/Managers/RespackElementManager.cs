@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
@@ -6,7 +5,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Logging;
 using osu.Framework.Utils;
-using hues.Game.RespackElements;
+using hues.Game.Elements;
 
 namespace hues.Game.Managers
 {
@@ -17,8 +16,8 @@ namespace hues.Game.Managers
         Random,
     }
 
-    public class RespackElementManager<T> : Component
-        where T : RespackElement
+    public class ElementManager<T> : Component
+        where T : Element
     {
         [Resolved]
         private Bindable<T> current { get; set; }

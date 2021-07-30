@@ -6,7 +6,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Shapes;
 using osuTK;
 using hues.Game.Drawables;
-using hues.Game.RespackElements;
+using hues.Game.Elements;
 
 namespace hues.Game.Tests.Visual.Drawables
 {

@@ -10,7 +10,7 @@ using osu.Framework.Logging;
 using osu.Framework.Platform;
 using hues.Game.Managers;
 using hues.Game.ResourceStores;
-using hues.Game.RespackElements;
+using hues.Game.Elements;
 
 namespace hues.Game
 {

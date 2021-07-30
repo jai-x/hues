@@ -6,7 +6,7 @@ using osu.Framework.IO.Stores;
 using osuTK;
 using hues.Game.Managers;
 using hues.Game.Stores;
-using hues.Game.RespackElements;
+using hues.Game.Elements;
 using hues.Game.ResourceStores;
 using hues.Game.Resources;
 
@@ -43,8 +43,8 @@ namespace hues.Game
         protected BindableList<Respack> allRespacks;
         protected BindableList<Song> allSongs;
         protected Bindable<Song> currentSong;
-        protected BindableList<RespackElements.Image> allImages;
-        protected Bindable<RespackElements.Image> currentImage;
+        protected BindableList<Elements.Image> allImages;
+        protected Bindable<Elements.Image> currentImage;
         protected BindableList<Hue> allHues;
         protected Bindable<Hue> currentHue;
         protected Bindable<PlayableSong> currentPlayable;
@@ -82,8 +82,8 @@ namespace hues.Game
             dependencies.CacheAs(allRespacks = new BindableList<Respack>());
             dependencies.CacheAs(allSongs = new BindableList<Song>());
             dependencies.CacheAs(currentSong = new Bindable<Song>());
-            dependencies.CacheAs(allImages = new BindableList<RespackElements.Image>());
-            dependencies.CacheAs(currentImage = new Bindable<RespackElements.Image>());
+            dependencies.CacheAs(allImages = new BindableList<Elements.Image>());
+            dependencies.CacheAs(currentImage = new Bindable<Elements.Image>());
             dependencies.CacheAs(allHues = new BindableList<Hue>());
             dependencies.CacheAs(currentHue = new Bindable<Hue>());
             dependencies.CacheAs(currentPlayable = new Bindable<PlayableSong>());

@@ -1,8 +1,8 @@
-using hues.Game.RespackElements;
+using hues.Game.Elements;
 
 namespace hues.Game.Managers
 {
-    public class ImageManager : RespackElementManager<Image>
+    public class ImageManager : ElementManager<Image>
     {
         public ImageManager()
         {

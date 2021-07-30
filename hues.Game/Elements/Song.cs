@@ -1,8 +1,8 @@
 using hues.Game.Extensions;
 
-namespace hues.Game.RespackElements
+namespace hues.Game.Elements
 {
-    public class Song : RespackElement
+    public class Song : Element
     {
         public string Title { get; init; }
         public string Source { get; init; }

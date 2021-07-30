@@ -1,8 +1,8 @@
-using hues.Game.RespackElements;
+using hues.Game.Elements;
 
 namespace hues.Game.Managers
 {
-    public class HueManager : RespackElementManager<Hue>
+    public class HueManager : ElementManager<Hue>
     {
         public HueManager()
         {

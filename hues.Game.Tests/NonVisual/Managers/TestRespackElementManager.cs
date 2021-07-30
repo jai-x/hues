@@ -1,22 +1,21 @@
 using NUnit.Framework;
 using System.Linq;
-using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Testing;
 using hues.Game.Managers;
-using hues.Game.RespackElements;
+using hues.Game.Elements;
 using hues.Game.Tests;
 
 namespace hues.Game.Test.NonVisual.Managers
 {
     [HeadlessTest]
     [TestFixture]
-    public class TestRespackElementManager : HuesTestScene
+    public class TestElementManager : HuesTestScene
     {
-        private class Foo : RespackElement { }
+        private class Foo : Element { }
 
-        private class FooManager : RespackElementManager<Foo>
+        private class FooManager : ElementManager<Foo>
         {
         }
 

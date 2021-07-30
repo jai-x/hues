@@ -1,6 +1,6 @@
-namespace hues.Game.RespackElements
+namespace hues.Game.Elements
 {
-    public class Image : RespackElement
+    public class Image : Element
     {
         public string Name { get; init; }
         public string Source { get; init; }

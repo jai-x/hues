@@ -4,14 +4,14 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osuTK;
-using hues.Game.RespackElements;
+using hues.Game.Elements;
 
 namespace hues.Game.Drawables
 {
     public class InfoBar : CompositeDrawable
     {
         [Resolved]
-        private Bindable<RespackElements.Image> currentImage { get; set; }
+        private Bindable<Elements.Image> currentImage { get; set; }
 
         [Resolved]
         private Bindable<Hue> currentHue { get; set; }

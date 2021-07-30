@@ -1,9 +1,9 @@
 using System.Linq;
 using osu.Framework.Graphics;
 
-namespace hues.Game.RespackElements
+namespace hues.Game.Elements
 {
-    public class Hue : RespackElement
+    public class Hue : Element
     {
         public readonly Colour4 Colour4;
         public readonly string Name;

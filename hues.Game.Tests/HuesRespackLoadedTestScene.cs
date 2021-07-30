@@ -2,7 +2,7 @@ using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using hues.Game.Managers;
-using hues.Game.RespackElements;
+using hues.Game.Elements;
 using hues.Game.Tests.Resources;
 
 namespace hues.Game.Tests

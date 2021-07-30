@@ -1,7 +1,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.Sprites;
-using hues.Game.RespackElements;
+using hues.Game.Elements;
 using hues.Game.Stores;
 
 namespace hues.Game.Drawables
