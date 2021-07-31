@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -46,6 +45,8 @@ namespace hues.Game.Drawables
                     displayBeatchars.Origin = Anchor.CentreRight;
                     break;
             }
+
+            displayText(0, SongSection.Buildup);
         }
 
         private class FixedWidthSpriteText : SpriteText
@@ -65,18 +66,27 @@ namespace hues.Game.Drawables
                 return;
             }
 
+            if (String.IsNullOrEmpty(BuildupBeatchars) && String.IsNullOrEmpty(LoopBeatchars))
+            {
+                displayBeatchars.Text = new String('.', MaxChars);
+                return;
+            }
+
             builder.Clear();
 
             var i = beatIndex;
             var remaining = MaxChars;
 
-            // TODO: Maybe optimise this to not be string builder memes
+            // TODO: Maybe optimise this to not be List<char> memes
             switch (songSection)
             {
                 case SongSection.Buildup:
                 {
                     if (String.IsNullOrEmpty(BuildupBeatchars))
+                    {
+                        i = 0;
                         goto case SongSection.Loop;
+                    }
 
                     while (remaining > 0)
                     {
@@ -92,12 +102,6 @@ namespace hues.Game.Drawables
                 }
                 case SongSection.Loop:
                 {
-                    if (String.IsNullOrEmpty(LoopBeatchars))
-                    {
-                        builder.AddRange(Enumerable.Repeat('.', remaining));
-                        break;
-                    }
-
                     while (remaining > 0)
                     {
                         builder.Add(LoopBeatchars[i++]);
