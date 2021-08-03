@@ -7,6 +7,24 @@ namespace hues.Game
 {
     public class HuesGame : HuesGameBase
     {
+        [Cached]
+        private SongList songList = new SongList
+        {
+            Anchor = Anchor.BottomCentre,
+            Origin = Anchor.BottomCentre,
+            Y = -55,
+            X = 100,
+        };
+
+        [Cached]
+        private ImageList imageList = new ImageList
+        {
+            Anchor = Anchor.BottomCentre,
+            Origin = Anchor.BottomCentre,
+            Y = -55,
+            X = 250,
+        };
+
         [BackgroundDependencyLoader]
         private void load()
         {
@@ -26,6 +44,8 @@ namespace hues.Game
                     Anchor = Anchor.BottomCentre,
                     Origin = Anchor.BottomCentre,
                 },
+                songList,
+                imageList,
             };
         }
 

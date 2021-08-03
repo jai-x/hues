@@ -10,11 +10,6 @@ namespace hues.Game.Drawables
 {
     public abstract class ArrowControls : CompositeDrawable
     {
-        public Action ClickPrevious;
-        public Action ClickNext;
-        public Action ClickCentre;
-        public Action ClickLabel;
-
         private SpriteIcon centreIcon;
         protected IconUsage CentreIcon
         {

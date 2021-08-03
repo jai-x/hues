@@ -1,7 +1,6 @@
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Logging;
 using hues.Game.Managers;
 
 namespace hues.Game.Drawables
@@ -11,9 +10,19 @@ namespace hues.Game.Drawables
         [Resolved]
         private ImageManager imageManager { get; set; }
 
+        [Resolved(CanBeNull = true)]
+        private SongList songList { get; set; }
+
+        [Resolved(CanBeNull = true)]
+        private ImageList imageList { get; set; }
+
         protected override string LabelText => "IMAGES";
 
-        protected override Action LabelClick => () => Logger.Log("Image Label Click");
+        protected override Action LabelClick => () =>
+        {
+            imageList?.ToggleVisibility();
+            songList?.Hide();
+        };
         protected override Action PreviousClick => () => { imageManager.Previous(true); };
         protected override Action NextClick => () => { imageManager.Next(true); };
         protected override Action CentreClick => () =>
