@@ -29,6 +29,9 @@ namespace hues.Game.Drawables
         [Resolved]
         private Bindable<Elements.Image> currentImage { get; set; }
 
+        [Resolved]
+        private Bindable<Song> currentSong { get; set; }
+
         private BufferedContainer buffer;
         private Sprite image;
         private Box blackout;
@@ -47,19 +50,16 @@ namespace hues.Game.Drawables
                 {
                     RelativeSizeAxes = Axes.Both,
                     BackgroundColour = Colour4.White,
-                    Children = new Drawable[]
+                    Child = image = new Sprite
                     {
-                        image = new Sprite
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                        },
-                        blackout = new Box
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                            Alpha = 0f,
-                            Colour = Colour4.Black,
-                        },
+                        RelativeSizeAxes = Axes.Both,
                     },
+                },
+                blackout = new Box
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Alpha = 0f,
+                    Colour = Colour4.Black,
                 },
             };
         }
@@ -87,6 +87,8 @@ namespace hues.Game.Drawables
                 else
                     image.Texture = textureStore.Get(newImage.TexturePath);
             });
+
+            currentSong.BindValueChanged(_ => { isInvert = false; });
         }
 
         private const float blurAmount = 20f;
@@ -112,6 +114,8 @@ namespace hues.Game.Drawables
         private readonly char blackoutChar             = '+';
         private readonly char shortBlackoutChar        = '|';
         private readonly char whiteoutChar             = '¤';
+
+        private bool isInvert = false;
 
         protected override void OnNewBeat(int beatIndex, SongSection songSection, char beatChar, double beatLength)
         {
@@ -147,24 +151,43 @@ namespace hues.Game.Drawables
             // Invert
             if (invertChars.Contains(beatChar))
             {
-                if (buffer.EffectBlending == normalBlend)
-                    buffer.EffectBlending = invertBlend;
-                else
+                if (isInvert)
+                {
                     buffer.EffectBlending = normalBlend;
+                    isInvert = false;
+                }
+                else
+                {
+                    buffer.EffectBlending = invertBlend;
+                    isInvert = true;
+                }
             }
 
             // Blackout
             if (beatChar == blackoutChar)
+            {
+                if (isInvert)
+                    blackout.Colour = Colour4.White;
+
                 blackout.FadeIn(beatLength);
+            }
 
             // Short blackout
             if (beatChar == shortBlackoutChar)
+            {
+                if (isInvert)
+                    blackout.Colour = Colour4.White;
+
                 blackout.FadeIn(beatLength / 1.7).FadeOut();
+            }
 
             // Whiteout
             if (beatChar == whiteoutChar)
             {
-                blackout.Colour = Colour4.White;
+                if (isInvert)
+                    blackout.Colour = Colour4.Black;
+                else
+                    blackout.Colour = Colour4.White;
                 blackout.FadeIn(beatLength);
             }
         }
