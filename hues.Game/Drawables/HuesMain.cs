@@ -1,22 +1,36 @@
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.Sprites;
 using osuTK;
+using hues.Game.Elements;
 using hues.Game.Managers;
+using hues.Game.Stores;
 
 namespace hues.Game.Drawables
 {
     public class HuesMain : BeatSyncedCompositeDrawable
     {
         [Resolved]
+        private RespackTextureStore textureStore { get; set; }
+
+        [Resolved]
         private HueManager hueManager { get; set; }
 
         [Resolved]
         private ImageManager imageManager { get; set; }
 
+        [Resolved]
+        private Bindable<Hue> currentHue { get; set; }
+
+        [Resolved]
+        private Bindable<Elements.Image> currentImage { get; set; }
+
         private BufferedContainer buffer;
+        private Sprite image;
         private Box blackout;
 
         [BackgroundDependencyLoader]
@@ -24,20 +38,20 @@ namespace hues.Game.Drawables
         {
             InternalChildren = new Drawable[]
             {
+                new Box
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Colour = Colour4.White,
+                },
                 buffer = new BufferedContainer
                 {
                     RelativeSizeAxes = Axes.Both,
                     BackgroundColour = Colour4.White,
                     Children = new Drawable[]
                     {
-                        new ImageBox
+                        image = new Sprite
                         {
                             RelativeSizeAxes = Axes.Both,
-                        },
-                        new HueBox
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                            Alpha = 0.4f,
                         },
                         blackout = new Box
                         {
@@ -50,20 +64,54 @@ namespace hues.Game.Drawables
             };
         }
 
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+
+            currentHue.BindValueChanged(hueChange =>
+            {
+                var newHue = hueChange.NewValue;
+
+                if (newHue == null)
+                    buffer.EffectColour= Colour4.White;
+                else
+                    buffer.EffectColour = newHue.Colour4;
+            });
+
+            currentImage.BindValueChanged(imageChange =>
+            {
+                var newImage = imageChange.NewValue;
+
+                if (newImage == null)
+                    image.Texture = null;
+                else
+                    image.Texture = textureStore.Get(newImage.TexturePath);
+            });
+        }
+
         private const float blurAmount = 20f;
         private readonly Vector2 horizontalBlur = new Vector2(0, blurAmount);
         private readonly Vector2 verticalBlur = new Vector2(blurAmount, 0);
         private readonly Vector2 resetBlur = Vector2.Zero;
 
-        private readonly char nullChar = '.';
+        private readonly BlendingParameters normalBlend = BlendingParameters.Inherit;
+        private readonly BlendingParameters invertBlend = new BlendingParameters
+        {
+            Source = BlendingType.Zero,
+            Destination = BlendingType.OneMinusSrcColor,
+            RGBEquation = BlendingEquation.Inherit,
+        };
+
+        private readonly char nullChar                 = '.';
         private readonly char[] nonBlackoutCancelChars = new char[] { '+', '|', '¤' };
-        private readonly char[] verticalBlurChars = new char[] { 'x', 'X' };
-        private readonly char[] horizontalBlurChars = new char[] { 'o', 'O', '+' };
-        private readonly char[] colourChangeChars = new char[] { 'x', 'o', '-', '|', ':' };
-        private readonly char[] imageChangeChars = new char[] { 'x', 'o', '-', '|', '*', '=', 'I' };
-        private readonly char blackoutChar = '+';
-        private readonly char shortBlackoutChar = '|';
-        private readonly char whiteoutChar = '¤';
+        private readonly char[] verticalBlurChars      = new char[] { 'x', 'X' };
+        private readonly char[] horizontalBlurChars    = new char[] { 'o', 'O', '+' };
+        private readonly char[] colourChangeChars      = new char[] { 'x', 'o', '-', '|', ':' };
+        private readonly char[] imageChangeChars       = new char[] { 'x', 'o', '-', '|', '*', '=', 'I' };
+        private readonly char[] invertChars            = new char[] { 'i', 'I' };
+        private readonly char blackoutChar             = '+';
+        private readonly char shortBlackoutChar        = '|';
+        private readonly char whiteoutChar             = '¤';
 
         protected override void OnNewBeat(int beatIndex, SongSection songSection, char beatChar, double beatLength)
         {
@@ -95,6 +143,15 @@ namespace hues.Game.Drawables
             // Image
             if (imageChangeChars.Contains(beatChar))
                 imageManager.Next();
+
+            // Invert
+            if (invertChars.Contains(beatChar))
+            {
+                if (buffer.EffectBlending == normalBlend)
+                    buffer.EffectBlending = invertBlend;
+                else
+                    buffer.EffectBlending = normalBlend;
+            }
 
             // Blackout
             if (beatChar == blackoutChar)
