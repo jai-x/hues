@@ -8,6 +8,9 @@ namespace hues.Game.Drawables
 {
     public class Settings : VisibilityContainer
     {
+        [Resolved]
+        private HuesGameBase game { get; set; }
+
         protected override void PopIn()
         {
             this.FadeIn(200);
@@ -57,7 +60,7 @@ namespace hues.Game.Drawables
                 },
                 new SpriteText
                 {
-                    Text = "inspired by: mon, kepstin, and AMM",
+                    Text = game.Version,
                     Colour = Colour4.Black,
                     Anchor = Anchor.TopCentre,
                     Origin = Anchor.Centre,
@@ -66,7 +69,7 @@ namespace hues.Game.Drawables
                 },
                 new SpriteText
                 {
-                    Text = "drag respack into window to load it",
+                    Text = "drag a respack into the window to load it",
                     Colour = Colour4.Black,
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
@@ -74,55 +77,109 @@ namespace hues.Game.Drawables
                 },
                 new SpriteText
                 {
-                    Text = "F11: window mode",
+                    Text = "F11:",
                     Colour = Colour4.Black,
                     Anchor = Anchor.BottomCentre,
-                    Origin = Anchor.BottomCentre,
+                    Origin = Anchor.BottomRight,
                     Font = FontUsage.Default.With(size: 12),
                     Y = -95,
                 },
                 new SpriteText
                 {
-                    Text = "Ctrl + F1: draw visualiser",
+                    Text = "window mode",
                     Colour = Colour4.Black,
                     Anchor = Anchor.BottomCentre,
-                    Origin = Anchor.BottomCentre,
+                    Origin = Anchor.BottomLeft,
+                    Font = FontUsage.Default.With(size: 12),
+                    Y = -95,
+                },
+                new SpriteText
+                {
+                    Text = "Ctrl + F1:",
+                    Colour = Colour4.Black,
+                    Anchor = Anchor.BottomCentre,
+                    Origin = Anchor.BottomRight,
                     Font = FontUsage.Default.With(size: 12),
                     Y = -80,
                 },
                 new SpriteText
                 {
-                    Text = "Ctrl + F2: global statistics",
+                    Text = "draw visualiser",
                     Colour = Colour4.Black,
                     Anchor = Anchor.BottomCentre,
-                    Origin = Anchor.BottomCentre,
+                    Origin = Anchor.BottomLeft,
+                    Font = FontUsage.Default.With(size: 12),
+                    Y = -80,
+                },
+                new SpriteText
+                {
+                    Text = "Ctrl + F2:",
+                    Colour = Colour4.Black,
+                    Anchor = Anchor.BottomCentre,
+                    Origin = Anchor.BottomRight,
                     Font = FontUsage.Default.With(size: 12),
                     Y = -65,
                 },
                 new SpriteText
                 {
-                    Text = "Ctrl + F3: texture visualiser",
+                    Text = "global statistics",
                     Colour = Colour4.Black,
                     Anchor = Anchor.BottomCentre,
-                    Origin = Anchor.BottomCentre,
+                    Origin = Anchor.BottomLeft,
+                    Font = FontUsage.Default.With(size: 12),
+                    Y = -65,
+                },
+                new SpriteText
+                {
+                    Text = "Ctrl + F3:",
+                    Colour = Colour4.Black,
+                    Anchor = Anchor.BottomCentre,
+                    Origin = Anchor.BottomRight,
                     Font = FontUsage.Default.With(size: 12),
                     Y = -50,
                 },
                 new SpriteText
                 {
-                    Text = "Ctrl + F10: debug log",
+                    Text = "texture visualiser",
                     Colour = Colour4.Black,
                     Anchor = Anchor.BottomCentre,
-                    Origin = Anchor.BottomCentre,
+                    Origin = Anchor.BottomLeft,
+                    Font = FontUsage.Default.With(size: 12),
+                    Y = -50,
+                },
+                new SpriteText
+                {
+                    Text = "Ctrl + F10:",
+                    Colour = Colour4.Black,
+                    Anchor = Anchor.BottomCentre,
+                    Origin = Anchor.BottomRight,
                     Font = FontUsage.Default.With(size: 12),
                     Y = -35,
                 },
                 new SpriteText
                 {
-                    Text = "Ctrl + F11: peformance/fps overlay",
+                    Text = "debug log",
                     Colour = Colour4.Black,
                     Anchor = Anchor.BottomCentre,
-                    Origin = Anchor.BottomCentre,
+                    Origin = Anchor.BottomLeft,
+                    Font = FontUsage.Default.With(size: 12),
+                    Y = -35,
+                },
+                new SpriteText
+                {
+                    Text = "Ctrl + F11:",
+                    Colour = Colour4.Black,
+                    Anchor = Anchor.BottomCentre,
+                    Origin = Anchor.BottomRight,
+                    Font = FontUsage.Default.With(size: 12),
+                    Y = -20,
+                },
+                new SpriteText
+                {
+                    Text = "peformance/FPS display",
+                    Colour = Colour4.Black,
+                    Anchor = Anchor.BottomCentre,
+                    Origin = Anchor.BottomLeft,
                     Font = FontUsage.Default.With(size: 12),
                     Y = -20,
                 },

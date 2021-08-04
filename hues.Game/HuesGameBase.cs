@@ -1,5 +1,8 @@
+using System;
+using System.Reflection;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Development;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.IO.Stores;
@@ -95,6 +98,9 @@ namespace hues.Game
             dependencies.CacheAs(respackLoader = new RespackLoader());
             dependencies.CacheAs(songPlayer = new SongPlayer());
 
+            // Cache self :)
+            dependencies.CacheAs(this);
+
             // Add managers and respack loader to hierarchy
             AddInternal(songManager);
             AddInternal(imageManager);
@@ -105,6 +111,21 @@ namespace hues.Game
             // All game content is child of the DrawSizePreservingFillContainer
             content = new DrawSizePreservingFillContainer { TargetDrawSize = new Vector2(1366, 768) };
             base.Content.Add(content);
+        }
+
+        private Version AssemblyVersion => Assembly.GetEntryAssembly().GetName().Version;
+
+        public string Version
+        {
+            get
+            {
+                if (DebugUtils.IsDebugBuild)
+                    return "dev-local";
+
+                var version = AssemblyVersion;
+
+                return $"v{version.Major}.{version.Minor}.{version.Build}";
+            }
         }
     }
 }
