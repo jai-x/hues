@@ -25,6 +25,13 @@ namespace hues.Game
             X = 250,
         };
 
+        [Cached]
+        private Settings settings = new Settings
+        {
+            Anchor = Anchor.Centre,
+            Origin = Anchor.Centre,
+        };
+
         [BackgroundDependencyLoader]
         private void load()
         {
@@ -46,6 +53,7 @@ namespace hues.Game
                 },
                 songList,
                 imageList,
+                settings,
             };
         }
 
