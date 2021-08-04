@@ -1,9 +1,8 @@
 # hues
 
-A desktop implementation of 0x40 Hues.
+A desktop implementation of 0x40 Hues from the [0X40 Hues project](https://0x40hues.blogspot.com/).
 
-https://0x40hues.blogspot.com/
-https://0x40.mon.im/
+Inspired by [mon's Webhues](https://0x40.mon.im/)
 
 ## respack
 
@@ -78,5 +77,33 @@ An example format of a `songs.xml` is as follows:
 An example format of a `images.xml` is as follows:
 
 ```xml
-TODO
+<images>
+  <image name="image_src">
+    <source>https://image.link/</source>
+    <fullname>Image Fullname</fullname>
+  </image>
+
+  <image>
+    ...
+  </image>
+</images>
 ```
+
+* The `images.xml` MUST include a root `<images>` element
+  * The `<images>` element MUST include one or more nested `<image>` elements
+    * The `<image>` element MUST include a `name` attribute containing the image
+      filename with no file extension
+      * The file corresponding to the image filename MUST be included within the
+        respack archive, either in the root of the archive or in a nested directory
+    * The `<image>` element MUST include a `<source>` element
+    * The `<image>` element MUST include a `<fullname>` element
+    * The `<image>` element may OPTIONALLY include a `<source_other>` element
+      * NOTE: Support to handle this element is currently not implemented
+    * The `<image>` element may OPTIONALLY include a `<align>` element
+      * NOTE: Support to handle this element is currently not implemented
+    * The `<image>` element may OPTIONALLY include a `<align>` element
+      * NOTE: Support to handle this element is currently not implemented
+    * The `<image>` element may OPTIONALLY include a `<frameDuration>` element
+      to indicate this image is part of an animated set
+      * NOTE: Support to handle this element and animated images is currently
+        not implemented
