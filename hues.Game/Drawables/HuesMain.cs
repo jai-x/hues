@@ -88,7 +88,12 @@ namespace hues.Game.Drawables
                     image.Texture = textureStore.Get(newImage.TexturePath);
             });
 
-            currentSong.BindValueChanged(_ => { isInvert = false; });
+            // Reset invert on song change
+            currentSong.BindValueChanged(_ =>
+            {
+                isInvert = false;
+                buffer.EffectBlending = normalBlend;
+            });
         }
 
         private const float blurAmount = 20f;
