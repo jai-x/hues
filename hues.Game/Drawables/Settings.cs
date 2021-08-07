@@ -176,7 +176,7 @@ namespace hues.Game.Drawables
                 },
                 new SpriteText
                 {
-                    Text = "peformance/FPS display",
+                    Text = "performance/FPS display",
                     Colour = Colour4.Black,
                     Anchor = Anchor.BottomCentre,
                     Origin = Anchor.BottomLeft,
