@@ -96,11 +96,34 @@ namespace hues.Game.Drawables
             });
         }
 
-        private const float blurAmount = 20f;
+        // Timings
+        // Original hues flash was 30fps, frame time in ms
+        private const double flashFrame          = 1000 / 30;
+        private const double blurTimeMs          = flashFrame;
+        private const double blackoutTime        = flashFrame * 2;
+        private const double shortBlackoutFactor = 1 / 1.7;
+
+        // Blur amounts
+        private const float blurLow    = 48f;
+        private const float blurMedium = 96f;
+        private const float blurHight  = 384f;
+
+        // Blur decays
+        private const double blurDecaySlow     = 7.8;
+        private const double blurDecayMedium   = 14.1;
+        private const double blurDecayFast     = 20.8;
+        private const double blurDecayVeryFast = 28.7;
+
+        // Medium blur params hardcoded for now
+        private const float blurAmount = blurMedium;
+        private const double blurDecay = blurDecayMedium;
+
+        // Blurs
         private readonly Vector2 horizontalBlur = new Vector2(0, blurAmount);
         private readonly Vector2 verticalBlur = new Vector2(blurAmount, 0);
         private readonly Vector2 resetBlur = Vector2.Zero;
 
+        // Blending
         private readonly BlendingParameters normalBlend = BlendingParameters.Inherit;
         private readonly BlendingParameters invertBlend = new BlendingParameters
         {
@@ -109,6 +132,7 @@ namespace hues.Game.Drawables
             RGBEquation = BlendingEquation.Inherit,
         };
 
+        // Beatchars
         private readonly char nullChar                 = '.';
         private readonly char[] nonBlackoutCancelChars = new char[] { '+', '|', '¤' };
         private readonly char[] verticalBlurChars      = new char[] { 'x', 'X' };
@@ -139,11 +163,11 @@ namespace hues.Game.Drawables
 
             // Vertical blur
             if (verticalBlurChars.Contains(beatChar))
-                buffer.BlurTo(verticalBlur).BlurTo(resetBlur, beatLength);
+                buffer.BlurTo(verticalBlur).BlurTo(resetBlur, blurTimeMs * blurDecay, Easing.OutExpo);
 
             // Horizonal blur
             if (horizontalBlurChars.Contains(beatChar))
-                buffer.BlurTo(horizontalBlur).BlurTo(resetBlur, beatLength);
+                buffer.BlurTo(horizontalBlur).BlurTo(resetBlur, blurTimeMs * blurDecay, Easing.OutExpo);
 
             // Hue
             if (colourChangeChars.Contains(beatChar))
@@ -174,7 +198,7 @@ namespace hues.Game.Drawables
                 if (isInvert)
                     blackout.Colour = Colour4.White;
 
-                blackout.FadeIn(beatLength);
+                blackout.FadeIn(blackoutTime);
             }
 
             // Short blackout
@@ -183,7 +207,7 @@ namespace hues.Game.Drawables
                 if (isInvert)
                     blackout.Colour = Colour4.White;
 
-                blackout.FadeIn(beatLength / 1.7).FadeOut();
+                blackout.FadeIn(beatLength * shortBlackoutFactor).FadeOut();
             }
 
             // Whiteout
@@ -193,7 +217,8 @@ namespace hues.Game.Drawables
                     blackout.Colour = Colour4.Black;
                 else
                     blackout.Colour = Colour4.White;
-                blackout.FadeIn(beatLength);
+
+                blackout.FadeIn(blackoutTime);
             }
         }
     }
