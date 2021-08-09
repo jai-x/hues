@@ -113,18 +113,29 @@ namespace hues.Game
             base.Content.Add(content);
         }
 
-        private Version AssemblyVersion => Assembly.GetEntryAssembly().GetName().Version;
+        public string FrameworkVersion
+        {
+            get
+            {
+                var version = typeof(osu.Framework.Game).Assembly.GetName().Version;
+                return $"{version.Major}.{version.Minor}.{version.Build}";
+            }
+        }
+
+        private Version gameVersion => Assembly.GetEntryAssembly().GetName().Version;
+
+        public bool IsReleased => gameVersion.Major > 0;
 
         public string Version
         {
             get
             {
-                if (DebugUtils.IsDebugBuild)
-                    return "dev-local";
+                var version = Assembly.GetEntryAssembly().GetName().Version;
 
-                var version = AssemblyVersion;
+                if (!IsReleased)
+                    return $"local-" + (DebugUtils.IsDebugBuild ? "debug" : "release");
 
-                return $"v{version.Major}.{version.Minor}.{version.Build}";
+                return $"{version.Major}.{version.Minor}.{version.Build}";
             }
         }
     }

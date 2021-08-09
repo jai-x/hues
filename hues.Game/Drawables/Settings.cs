@@ -51,21 +51,21 @@ namespace hues.Game.Drawables
                 },
                 new SpriteText
                 {
-                    Text = "by jai_",
+                    Text = (game.IsReleased ? "v" : "") + game.Version,
                     Colour = Colour4.Black,
                     Anchor = Anchor.TopCentre,
                     Origin = Anchor.Centre,
                     Font = FontUsage.Default.With(size: 12),
-                    Y = 70,
+                    Y = 50,
                 },
                 new SpriteText
                 {
-                    Text = game.Version,
+                    Text = $"running on osu-framework v{game.FrameworkVersion}",
                     Colour = Colour4.Black,
                     Anchor = Anchor.TopCentre,
                     Origin = Anchor.Centre,
                     Font = FontUsage.Default.With(size: 12),
-                    Y = 110,
+                    Y = 65,
                 },
                 new SpriteText
                 {
@@ -82,7 +82,7 @@ namespace hues.Game.Drawables
                     Anchor = Anchor.BottomCentre,
                     Origin = Anchor.BottomRight,
                     Font = FontUsage.Default.With(size: 12),
-                    Y = -95,
+                    Y = -100,
                 },
                 new SpriteText
                 {
@@ -91,7 +91,7 @@ namespace hues.Game.Drawables
                     Anchor = Anchor.BottomCentre,
                     Origin = Anchor.BottomLeft,
                     Font = FontUsage.Default.With(size: 12),
-                    Y = -95,
+                    Y = -100,
                 },
                 new SpriteText
                 {
@@ -100,7 +100,7 @@ namespace hues.Game.Drawables
                     Anchor = Anchor.BottomCentre,
                     Origin = Anchor.BottomRight,
                     Font = FontUsage.Default.With(size: 12),
-                    Y = -80,
+                    Y = -84,
                 },
                 new SpriteText
                 {
@@ -109,7 +109,7 @@ namespace hues.Game.Drawables
                     Anchor = Anchor.BottomCentre,
                     Origin = Anchor.BottomLeft,
                     Font = FontUsage.Default.With(size: 12),
-                    Y = -80,
+                    Y = -84,
                 },
                 new SpriteText
                 {
@@ -118,7 +118,7 @@ namespace hues.Game.Drawables
                     Anchor = Anchor.BottomCentre,
                     Origin = Anchor.BottomRight,
                     Font = FontUsage.Default.With(size: 12),
-                    Y = -65,
+                    Y = -68,
                 },
                 new SpriteText
                 {
@@ -127,7 +127,7 @@ namespace hues.Game.Drawables
                     Anchor = Anchor.BottomCentre,
                     Origin = Anchor.BottomLeft,
                     Font = FontUsage.Default.With(size: 12),
-                    Y = -65,
+                    Y = -68,
                 },
                 new SpriteText
                 {
@@ -136,7 +136,7 @@ namespace hues.Game.Drawables
                     Anchor = Anchor.BottomCentre,
                     Origin = Anchor.BottomRight,
                     Font = FontUsage.Default.With(size: 12),
-                    Y = -50,
+                    Y = -52,
                 },
                 new SpriteText
                 {
@@ -145,7 +145,7 @@ namespace hues.Game.Drawables
                     Anchor = Anchor.BottomCentre,
                     Origin = Anchor.BottomLeft,
                     Font = FontUsage.Default.With(size: 12),
-                    Y = -50,
+                    Y = -52,
                 },
                 new SpriteText
                 {
@@ -154,7 +154,7 @@ namespace hues.Game.Drawables
                     Anchor = Anchor.BottomCentre,
                     Origin = Anchor.BottomRight,
                     Font = FontUsage.Default.With(size: 12),
-                    Y = -35,
+                    Y = -36,
                 },
                 new SpriteText
                 {
@@ -163,7 +163,7 @@ namespace hues.Game.Drawables
                     Anchor = Anchor.BottomCentre,
                     Origin = Anchor.BottomLeft,
                     Font = FontUsage.Default.With(size: 12),
-                    Y = -35,
+                    Y = -36,
                 },
                 new SpriteText
                 {
