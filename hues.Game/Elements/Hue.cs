@@ -1,9 +1,10 @@
+using System;
 using System.Linq;
 using osu.Framework.Graphics;
 
 namespace hues.Game.Elements
 {
-    public class Hue : Element
+    public class Hue : Element, IEquatable<Hue>
     {
         public readonly Colour4 Colour4;
         public readonly string Name;
@@ -18,6 +19,19 @@ namespace hues.Game.Elements
             $"<{nameof(Hue)}> " +
             $"Name: {Name}, " +
             $"Hex: {Colour4.ToHex()}";
+
+        // We only really care about name as that is what the user sees
+        public bool Equals(Hue other) => this.Name == other.Name;
+
+        public override int GetHashCode() => this.Name.GetHashCode();
+
+        public override bool Equals(object other)
+        {
+            if (other is Hue)
+                return this.Equals(other as Hue);
+            else
+                return false;
+        }
 
         public static Hue Black => defaultSet.First();
 

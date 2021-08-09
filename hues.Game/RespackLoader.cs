@@ -59,16 +59,21 @@ namespace hues.Game
 
                 respack = new Respack(infoXml, songsXml, imagesXml);
 
-                addSongsToResourceStore(archive, respack.Songs);
-                addImagesToResourceStore(archive, respack.Images);
+                lock (respackLock)
+                {
+                    if (respacks.Contains(respack))
+                        throw new RespackAlreadyExistsException(respack.ToString());
+
+                    addImagesToResourceStore(archive, respack.Images);
+                    imageManager.Add(respack.Images);
+
+                    addSongsToResourceStore(archive, respack.Songs);
+                    songManager.Add(respack.Songs);
+
+                    respacks.Add(respack);
+                }
             }
 
-            lock (respackLock)
-            {
-                imageManager.Add(respack.Images);
-                songManager.Add(respack.Songs);
-                respacks.Add(respack);
-            }
         }
 
         public void Clear()
@@ -147,5 +152,12 @@ namespace hues.Game
         public RespackMissingFileException(string fileName) :
             base($"Unable to find file `{fileName}` in respack archive")
         { }
+    }
+
+    public class RespackAlreadyExistsException : Exception
+    {
+         public RespackAlreadyExistsException(string respackInfo) :
+            base($"Cannot add respack archive as it already exists: {respackInfo}")
+         { }
     }
 }

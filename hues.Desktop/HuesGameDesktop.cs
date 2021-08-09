@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using osu.Framework.Platform;
 using osu.Framework.Logging;
@@ -23,7 +24,17 @@ namespace hues.Desktop
             foreach (var path in filepaths)
             {
                 Logger.Log($"Importing respack file from path: {path}");
-                Task.Factory.StartNew(() => { respackLoader.LoadPath(path); });
+                Task.Factory.StartNew(() =>
+                {
+                    try
+                    {
+                        respackLoader.LoadPath(path);
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Error(e, $"Could not load respack file from path: {path}");
+                    }
+                });
             }
         }
     }

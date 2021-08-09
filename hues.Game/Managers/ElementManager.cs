@@ -49,10 +49,23 @@ namespace hues.Game.Managers
             }
         }
 
+        private bool canAdd(T el)
+        {
+            var exists = elements.Contains(el);
+
+            if (exists)
+                Logger.Log($"{this.GetType()} cannot add {el.ToString()} (already exists)");
+
+            return !exists;
+        }
+
         public void Add(T el)
         {
             lock (elementLock)
             {
+                if (!canAdd(el))
+                    return;
+
                 elements.Add(el);
                 resetRandomUnseen();
             }
@@ -62,7 +75,7 @@ namespace hues.Game.Managers
         {
             lock (elementLock)
             {
-                elements.AddRange(els);
+                elements.AddRange(els.Where(canAdd));
                 resetRandomUnseen();
             }
         }
@@ -108,7 +121,7 @@ namespace hues.Game.Managers
                 return;
 
             randomUnseenIndexes.Clear();
-            randomUnseenIndexes.UnionWith(Enumerable.Range(0, elements.Count));
+            randomUnseenIndexes.UnionWith(Enumerable.Range(0, elements?.Count ?? 0));
         }
 
         private void advanceRandom()
