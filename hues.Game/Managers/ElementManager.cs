@@ -22,10 +22,14 @@ namespace hues.Game.Managers
         [Resolved]
         private Bindable<T> current { get; set; }
 
+        private int currentIndex = -1;
+
         [Resolved]
         private BindableList<T> elements { get; set; }
 
         private readonly object elementLock = new object();
+
+        private readonly HashSet<int> randomUnseenIndexes = new HashSet<int>();
 
         private AdvanceMode mode = AdvanceMode.Ordered;
 
@@ -38,20 +42,29 @@ namespace hues.Game.Managers
                     return;
 
                 lock (elementLock)
+                {
                     mode = value;
+                    resetRandomUnseen();
+                }
             }
         }
 
         public void Add(T el)
         {
             lock (elementLock)
+            {
                 elements.Add(el);
+                resetRandomUnseen();
+            }
         }
 
         public void Add(IEnumerable<T> els)
         {
             lock (elementLock)
+            {
                 elements.AddRange(els);
+                resetRandomUnseen();
+            }
         }
 
         private bool canProgress()
@@ -61,7 +74,8 @@ namespace hues.Game.Managers
 
             if (current.Value == null)
             {
-                current.Value = elements.First();
+                currentIndex = 0;
+                current.Value = elements[currentIndex];
                 return false;
             }
 
@@ -70,29 +84,43 @@ namespace hues.Game.Managers
 
         private void advanceNext()
         {
-            var oldItem = current.Value;
-            current.Value = elements.SkipWhile(obj => obj != oldItem)
-                                    .Skip(1)
-                                    .DefaultIfEmpty(elements.First())
-                                    .First();
+            currentIndex++;
+
+            if (currentIndex == elements.Count)
+                currentIndex = 0;
+
+            current.Value = elements[currentIndex];
         }
 
         private void advancePrevious()
         {
-            var oldItem = current.Value;
-            current.Value = elements.TakeWhile(obj => obj != oldItem)
-                                    .DefaultIfEmpty(elements.Last())
-                                    .Last();
+            currentIndex--;
+
+            if (currentIndex == -1)
+                currentIndex = elements.Count - 1;
+
+            current.Value = elements[currentIndex];
+        }
+
+        private void resetRandomUnseen()
+        {
+            if (mode != AdvanceMode.Random)
+                return;
+
+            randomUnseenIndexes.Clear();
+            randomUnseenIndexes.UnionWith(Enumerable.Range(0, elements.Count));
         }
 
         private void advanceRandom()
         {
-            var idx = RNG.Next(elements.Count);
-            var next = elements[idx];
-            if (current.Value == next)
-                advanceNext();
-            else
-                current.Value = next;
+            if (randomUnseenIndexes.Count == 0)
+                resetRandomUnseen();
+
+            var idx = randomUnseenIndexes.ElementAt(RNG.Next(randomUnseenIndexes.Count));
+            randomUnseenIndexes.Remove(idx);
+
+            currentIndex = idx;
+            current.Value = elements[currentIndex];
         }
 
         public void Next(bool force = false)
@@ -168,8 +196,10 @@ namespace hues.Game.Managers
         {
             lock (elementLock)
             {
+                currentIndex = -1;
                 current.Value = null;
                 elements.Clear();
+                resetRandomUnseen();
             }
 
             Logger.Log($"{this.GetType()} cleared!", level: LogLevel.Debug);
