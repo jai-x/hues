@@ -80,26 +80,13 @@ namespace hues.Game.Managers
             }
         }
 
-        private bool canProgress()
-        {
-            if (elements.Count == 0)
-                return false;
-
-            if (current.Value == null)
-            {
-                currentIndex = 0;
-                current.Value = elements[currentIndex];
-                return false;
-            }
-
-            return true;
-        }
+        private bool canProgress() => elements.Count > 0;
 
         private void advanceNext()
         {
             currentIndex++;
 
-            if (currentIndex == elements.Count)
+            if (currentIndex > elements.Count - 1)
                 currentIndex = 0;
 
             current.Value = elements[currentIndex];
@@ -109,7 +96,7 @@ namespace hues.Game.Managers
         {
             currentIndex--;
 
-            if (currentIndex == -1)
+            if (currentIndex < 0)
                 currentIndex = elements.Count - 1;
 
             current.Value = elements[currentIndex];
@@ -117,11 +104,10 @@ namespace hues.Game.Managers
 
         private void resetRandomUnseen()
         {
-            if (mode != AdvanceMode.Random)
-                return;
-
             randomUnseenIndexes.Clear();
-            randomUnseenIndexes.UnionWith(Enumerable.Range(0, elements?.Count ?? 0));
+
+            var newIndexes = Enumerable.Range(0, elements?.Count ?? 0);
+            randomUnseenIndexes.UnionWith(newIndexes);
         }
 
         private void advanceRandom()
