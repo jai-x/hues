@@ -15,9 +15,7 @@ namespace hues.Game.Test.NonVisual.Managers
     {
         private class Foo : Element { }
 
-        private class FooManager : ElementManager<Foo>
-        {
-        }
+        private class FooManager : ElementManager<Foo> { }
 
         [Cached]
         private readonly Bindable<Foo> currentObject = new Bindable<Foo>();
@@ -77,29 +75,29 @@ namespace hues.Game.Test.NonVisual.Managers
         [Test]
         public void TestNextChangesBindableToFirst()
         {
-            var firstObject = new Foo();
+            var objects = new Foo[] { new Foo(), new Foo() };
 
-            AddStep("Add single object", () => { manager.Add(firstObject); });
+            AddStep("Add objects", () => { manager.Add(objects); });
 
             AddAssert("Bindable is null", () => currentObject.Value == null);
 
             AddStep("Call Next", () => { manager.Next(); });
 
-            AddAssert("Bindable is first object", () => currentObject.Value == firstObject);
+            AddAssert("Bindable is first object", () => currentObject.Value == objects[0]);
         }
 
         [Test]
         public void TestPreviousChangesBindableToFirst()
         {
-            var firstObject = new Foo();
+            var objects = new Foo[] { new Foo(), new Foo() };
 
-            AddStep("Add single object", () => { manager.Add(firstObject); });
+            AddStep("Add objects", () => { manager.Add(objects); });
 
             AddAssert("Bindable is null", () => currentObject.Value == null);
 
             AddStep("Call Previous", () => { manager.Previous(); });
 
-            AddAssert("Bindable is first object", () => currentObject.Value == firstObject);
+            AddAssert("Bindable is last object", () => currentObject.Value == objects[1]);
         }
 
         [Test]
@@ -139,15 +137,19 @@ namespace hues.Game.Test.NonVisual.Managers
 
             AddStep("Call Previous", () => { manager.Previous(); });
 
-            AddAssert("Bindable is first object", () => currentObject.Value == threeObjects[0]);
-
-            AddStep("Call Previous", () => { manager.Previous(); });
-
-            AddAssert("Bindable loops to last object", () => currentObject.Value == threeObjects[2]);
+            AddAssert("Bindable is third object", () => currentObject.Value == threeObjects[2]);
 
             AddStep("Call Previous", () => { manager.Previous(); });
 
             AddAssert("Bindable is second object", () => currentObject.Value == threeObjects[1]);
+
+            AddStep("Call Previous", () => { manager.Previous(); });
+
+            AddAssert("Bindable is first object", () => currentObject.Value == threeObjects[0]);
+
+            AddStep("Call Previous", () => { manager.Previous(); });
+
+            AddAssert("Bindable is third object", () => currentObject.Value == threeObjects[2]);
         }
 
         [Test]
