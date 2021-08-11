@@ -2,8 +2,7 @@
 
 ## ⚠️  This project is a work in progress ⚠️
 
-A desktop implementation of 0x40 Hues from the [0x40 Hues project](https://0x40hues.blogspot.com/).
-
+A desktop implementation of 0x40 Hues from the [0x40 Hues project](https://0x40hues.blogspot.com/)  
 Inspired by [mon's Webhues](https://0x40.mon.im/)
 
 ## how to use
@@ -141,3 +140,16 @@ An example format of a `images.xml` is as follows:
       to indicate this image is part of an animated set
       * NOTE: Support to handle this element and animated images is currently
         not implemented
+
+## license and copyright
+
+The source code for this software is licensed under the MIT license.  
+See `LICENSE.txt` file in this repo for more information.
+
+The file `hues.Game.Tests/Resources/Tracks/sample.mp3` is copyright of Kevin
+MacLeod and is licensed under the Creative Commons Attribution License 4.0.
+
+The following files are copyright of The 0x40 Hues Team:
+- `hues.Game.Tests/Resources/Respacks/DefaultImages.zip`
+- `hues.Game.Tests/Resources/Respacks/DefaultsHQ.zip`
+
