@@ -1,8 +1,44 @@
 # hues
 
-A desktop implementation of 0x40 Hues from the [0X40 Hues project](https://0x40hues.blogspot.com/).
+## ⚠️  This project is a work in progress ⚠️
+
+A desktop implementation of 0x40 Hues from the [0x40 Hues project](https://0x40hues.blogspot.com/).
 
 Inspired by [mon's Webhues](https://0x40.mon.im/)
+
+## how to use
+
+Go to the release page for this repo and download the version for your OS.  
+Extract the file and run the `hues` executable, no need to install anything.
+
+## troubleshooting/FAQ
+
+- *Help I changed the screen mode and now it's broken!*  
+  Delete the `framework.ini` file in the base folder to reset to default
+  settings.
+
+- *How do I import a Respack?*  
+  Drag a `respack.zip` file into the window and it will be automatically
+  imported.
+
+- *Where are the imported Respacks stored?*  
+  (For now) They are not stored anywhere and only exist in-memory while the
+  program is running which means you will have to re-import them every time
+  (sorry :/).
+
+## missing features
+- Respack management
+- Remote respack loading
+- Editor
+- Hue visuals options (blur, blur decay, colours palette)
+- Program settings (fps, device management etc.)
+- Animated images
+- Image alignment
+- Beatchar effects
+  - Fade colour (`~`, `=`)
+  - Slicing (`s`, `S`, `v`, `V`, `#`, `@`)
+  - Trippy circles (`)`, `(`)
+- Clickable source links
 
 ## respack
 
@@ -98,8 +134,6 @@ An example format of a `images.xml` is as follows:
     * The `<image>` element MUST include a `<source>` element
     * The `<image>` element MUST include a `<fullname>` element
     * The `<image>` element may OPTIONALLY include a `<source_other>` element
-      * NOTE: Support to handle this element is currently not implemented
-    * The `<image>` element may OPTIONALLY include a `<align>` element
       * NOTE: Support to handle this element is currently not implemented
     * The `<image>` element may OPTIONALLY include a `<align>` element
       * NOTE: Support to handle this element is currently not implemented
