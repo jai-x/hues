@@ -47,7 +47,7 @@ This is the specification for which this hues will interpret respack files.
 
 * A respack is a zip archive file.
 * A respack MUST include an `info.xml` file
-* A respack MUST include either a `songs.xml` file or a `images.xml` file`
+* A respack MUST include either a `songs.xml` file or a `images.xml` file
 * A respack may OPTIONALLY include both `songs.xml` and a `images.xml` file
 
 ### respack `info.xml` file
