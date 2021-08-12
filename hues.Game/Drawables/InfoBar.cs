@@ -86,15 +86,15 @@ namespace hues.Game.Drawables
                 {
                     Anchor = Anchor.CentreLeft,
                     Origin = Anchor.CentreLeft,
-                    Size = new Vector2(100, 32),
+                    Size = new Vector2(100, 35),
                     X = 40,
                 },
                 new SettingsButton
                 {
                     Anchor = Anchor.CentreLeft,
                     Origin = Anchor.CentreLeft,
-                    Size = new Vector2(25),
-                    X = 5,
+                    Size = new Vector2(20),
+                    X = 10,
                 },
             };
         }

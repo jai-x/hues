@@ -21,7 +21,7 @@ namespace hues.Game.Drawables
                     Anchor = Anchor.TopCentre,
                     Origin = Anchor.TopCentre,
                     Text = "VOLUME",
-                    Font = FontUsage.Default.With(size: 11),
+                    Font = FontUsage.Default.With(size: 9),
                     Y = 3,
                 },
                 new VolumeSlider
