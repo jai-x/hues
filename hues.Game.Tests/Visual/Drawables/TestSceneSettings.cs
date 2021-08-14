@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Shapes;
 using hues.Game.Drawables;
 
 namespace hues.Game.Tests.Visual.Drawables
@@ -13,10 +14,17 @@ namespace hues.Game.Tests.Visual.Drawables
         [BackgroundDependencyLoader]
         private void load()
         {
-            Child = settings = new Settings
+            Children = new Drawable[]
             {
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
+                new Box
+                {
+                    RelativeSizeAxes = Axes.Both,
+                },
+                settings = new Settings
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                },
             };
         }
 
