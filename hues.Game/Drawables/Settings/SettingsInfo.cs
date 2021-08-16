@@ -20,7 +20,7 @@ namespace hues.Game.Drawables.Settings
             Origin = Anchor.TopCentre;
             RelativeSizeAxes = Axes.X;
             AutoSizeAxes = Axes.Y;
-            Padding = new MarginPadding { Vertical = 10, Horizontal = 150 };
+            Width = 0.6f;
             Spacing = new Vector2(0, 10);
         }
 

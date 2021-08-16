@@ -61,6 +61,7 @@ namespace hues.Game.Drawables.Settings
                             Origin = Anchor.TopCentre,
                             RelativeSizeAxes = Axes.X,
                             AutoSizeAxes = Axes.Y,
+                            Padding = new MarginPadding(10),
                         },
                     },
                 },
