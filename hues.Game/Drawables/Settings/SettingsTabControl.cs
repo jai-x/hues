@@ -6,7 +6,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 
-namespace hues.Game.Drawables
+namespace hues.Game.Drawables.Settings
 {
     public enum SettingsTabOption
     {

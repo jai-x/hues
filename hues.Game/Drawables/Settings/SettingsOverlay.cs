@@ -4,9 +4,9 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 
-namespace hues.Game.Drawables
+namespace hues.Game.Drawables.Settings
 {
-    public class Settings : VisibilityContainer
+    public class SettingsOverlay : VisibilityContainer
     {
         protected override void PopIn()
             => this.FadeIn(200);
@@ -14,7 +14,7 @@ namespace hues.Game.Drawables
         protected override void PopOut()
             => this.FadeOut(200);
 
-        public Settings()
+        public SettingsOverlay()
         {
             AutoSizeAxes = Axes.Y;
             Width = 800;

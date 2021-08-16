@@ -2,15 +2,13 @@ using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
-using hues.Game.Drawables;
+using hues.Game.Drawables.Settings;
 
 namespace hues.Game.Tests.Visual.Drawables
 {
     [TestFixture]
-    public class TestSceneSettings : HuesRespackLoadedTestScene
+    public class TestSceneSettingsTabControl : HuesTestScene
     {
-        private Settings settings;
-
         [BackgroundDependencyLoader]
         private void load()
         {
@@ -19,20 +17,16 @@ namespace hues.Game.Tests.Visual.Drawables
                 new Box
                 {
                     RelativeSizeAxes = Axes.Both,
+                    Colour = Colour4.Gray,
                 },
-                settings = new Settings
+                new SettingsTabControl
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
+                    Width = 900,
+                    Height = 50,
                 },
             };
-        }
-
-        [Test]
-        public void TestVisual()
-        {
-            AddStep("Show", () => { settings.Show(); });
-            AddStep("Hide", () => { settings.Hide(); });
         }
     }
 }

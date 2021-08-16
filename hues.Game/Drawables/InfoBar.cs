@@ -6,6 +6,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osuTK;
 using hues.Game.Elements;
+using hues.Game.Drawables.Settings;
 
 namespace hues.Game.Drawables
 {
@@ -21,7 +22,7 @@ namespace hues.Game.Drawables
         private Bindable<Song> currentSong { get; set; }
 
         [Resolved(CanBeNull = true)]
-        private Settings settings { get; set; }
+        private SettingsOverlay settings { get; set; }
 
         private LabelBar imageLabel;
         private LabelBar hueLabel;

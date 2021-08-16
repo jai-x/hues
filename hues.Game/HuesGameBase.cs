@@ -31,7 +31,6 @@ namespace hues.Game
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent) =>
             dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
 
-
         #region cached attributes
 
         // Backing in memory resources
