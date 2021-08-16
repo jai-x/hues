@@ -3,6 +3,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.Sprites;
 using osuTK;
 using hues.Game.Elements;
 
@@ -18,6 +19,9 @@ namespace hues.Game.Drawables
 
         [Resolved]
         private Bindable<Song> currentSong { get; set; }
+
+        [Resolved(CanBeNull = true)]
+        private Settings settings { get; set; }
 
         private LabelBar imageLabel;
         private LabelBar hueLabel;
@@ -89,12 +93,20 @@ namespace hues.Game.Drawables
                     Size = new Vector2(100, 35),
                     X = 40,
                 },
-                new SettingsButton
+                new ClickableContainer
                 {
                     Anchor = Anchor.CentreLeft,
                     Origin = Anchor.CentreLeft,
                     Size = new Vector2(20),
                     X = 10,
+                    Action = () => { settings?.ToggleVisibility(); },
+                    Child = new SpriteIcon
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        Origin = Anchor.Centre,
+                        Anchor = Anchor.Centre,
+                        Icon = FontAwesome.Solid.Cog,
+                    },
                 },
             };
         }
