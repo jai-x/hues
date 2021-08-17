@@ -87,6 +87,14 @@ namespace hues.Game.Drawables.Settings
                         }, settingsFlow.Add);
                         break;
 
+                    case SettingsTabOption.Options:
+                        LoadComponentAsync(new SettingsOptions
+                        {
+                            Anchor = Anchor.TopCentre,
+                            Origin = Anchor.TopCentre,
+                        }, settingsFlow.Add);
+                        break;
+
                     default:
                         LoadComponentAsync(new SpriteText
                         {
