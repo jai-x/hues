@@ -4,7 +4,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
 using hues.Game.Drawables.Settings;
 
-namespace hues.Game.Tests.Visual.Drawables
+namespace hues.Game.Tests.Visual.Drawables.Settings
 {
     [TestFixture]
     public class TestSceneSettingsTabControl : HuesTestScene
@@ -28,5 +28,9 @@ namespace hues.Game.Tests.Visual.Drawables
                 },
             };
         }
+
+        [Test]
+        public void TestVisual()
+        { }
     }
 }
