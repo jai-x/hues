@@ -7,7 +7,7 @@ using hues.Game.Elements;
 
 namespace hues.Game.Drawables
 {
-    public class BeatSyncedCompositeDrawable : CompositeDrawable
+    public abstract class BeatSyncedCompositeDrawable : CompositeDrawable
     {
         protected string BuildupBeatchars => playableSong.Value?.Song.BuildupBeatchars ?? String.Empty;
         protected string LoopBeatchars => playableSong.Value?.Song.LoopBeatchars ?? String.Empty;
