@@ -24,6 +24,7 @@ namespace hues.Game.Tests.Visual.Drawables.Settings
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
+                    Width = 0.5f,
                     Label = "Some Label",
                     Items = new string[]
                     {
