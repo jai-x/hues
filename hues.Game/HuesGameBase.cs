@@ -6,12 +6,14 @@ using osu.Framework.Development;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.IO.Stores;
+using osu.Framework.Platform;
 using osuTK;
 using hues.Game.Managers;
 using hues.Game.Stores;
 using hues.Game.Elements;
 using hues.Game.ResourceStores;
 using hues.Game.Resources;
+using hues.Game.Configuration;
 
 namespace hues.Game
 {
@@ -59,7 +61,11 @@ namespace hues.Game
         // Respack loader
         protected RespackLoader respackLoader;
 
+        // Song player
         protected SongPlayer songPlayer;
+
+        // Config
+        protected HuesConfigManager configManager;
 
         #endregion
 
@@ -96,6 +102,7 @@ namespace hues.Game
             dependencies.CacheAs(hueManager = new HueManager());
             dependencies.CacheAs(respackLoader = new RespackLoader());
             dependencies.CacheAs(songPlayer = new SongPlayer());
+            dependencies.CacheAs(configManager);
 
             // Cache self :)
             dependencies.CacheAs(this);
@@ -110,6 +117,13 @@ namespace hues.Game
             // All game content is child of the DrawSizePreservingFillContainer
             content = new DrawSizePreservingFillContainer { TargetDrawSize = new Vector2(1366, 768) };
             base.Content.Add(content);
+        }
+
+        public override void SetHost(GameHost host)
+        {
+            base.SetHost(host);
+
+            configManager = new HuesConfigManager(host.Storage);
         }
 
         public string FrameworkVersion
@@ -136,6 +150,22 @@ namespace hues.Game
 
                 return $"{version.Major}.{version.Minor}.{version.Build}";
             }
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            base.Dispose(isDisposing);
+
+            configManager?.Dispose();
+            songPlayer?.Dispose();
+            respackLoader?.Dispose();
+            songManager?.Dispose();
+            imageManager?.Dispose();
+            hueManager?.Dispose();
+            trackStore?.Dispose();
+            textureStore?.Dispose();
+            trackResources?.Dispose();
+            textureResources?.Dispose();
         }
     }
 }

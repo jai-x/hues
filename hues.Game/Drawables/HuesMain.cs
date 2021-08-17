@@ -5,7 +5,9 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Logging;
 using osuTK;
+using hues.Game.Configuration;
 using hues.Game.Elements;
 using hues.Game.Managers;
 using hues.Game.Stores;
@@ -32,9 +34,16 @@ namespace hues.Game.Drawables
         [Resolved]
         private Bindable<Song> currentSong { get; set; }
 
+        [Resolved]
+        private HuesConfigManager config { get; set; }
+
         private BufferedContainer buffer;
         private Sprite image;
         private Box blackout;
+
+        private readonly Bindable<float> blurSigmaBindable = new Bindable<float>();
+        private readonly Bindable<double> blurTimeBindable = new Bindable<double>();
+        private readonly Bindable<double> blackoutTimeBindable = new Bindable<double>();
 
         [BackgroundDependencyLoader]
         private void load()
@@ -94,33 +103,44 @@ namespace hues.Game.Drawables
                 isInvert = false;
                 buffer.EffectBlending = normalBlend;
             });
+
+            config.BindWith(HuesSetting.BlurSigma, blurSigmaBindable);
+            config.BindWith(HuesSetting.BlurTimeMs, blurTimeBindable);
+            config.BindWith(HuesSetting.BlackoutTimeMs, blackoutTimeBindable);
+
+            blurSigmaBindable.BindValueChanged(change =>
+            {
+                setBlurAmount(change.NewValue);
+                Logger.Log($"Blur Sigma Changed: {change.NewValue}", level: LogLevel.Debug);
+            }, true);
+
+            blurTimeBindable.BindValueChanged(change =>
+            {
+                blurTimeMs = change.NewValue;
+                Logger.Log($"Blur Time Changed: {change.NewValue}", level: LogLevel.Debug);
+            }, true);
+
+            blackoutTimeBindable.BindValueChanged(change =>
+            {
+                blackoutTimeMs = change.NewValue;
+                Logger.Log($"Blackout Time Changed: {change.NewValue}", level: LogLevel.Debug);
+            }, true);
         }
 
         // Timings
-        // Original hues flash was 30fps, frame time in ms
-        private const double flashFrame          = 1000 / 30;
-        private const double blurTimeMs          = flashFrame;
-        private const double blackoutTime        = flashFrame * 2;
-        private const double shortBlackoutFactor = 1 / 1.7;
+        private double blurTimeMs;
+        private double blackoutTimeMs;
+        private const double shortBlackoutFactor = 1d / 1.7d;
 
-        // Blur amounts
-        private const float blurLow    = 48f;
-        private const float blurMedium = 96f;
-        private const float blurHight  = 384f;
-
-        // Blur decays
-        private const double blurDecaySlow     = 7.8;
-        private const double blurDecayMedium   = 14.1;
-        private const double blurDecayFast     = 20.8;
-        private const double blurDecayVeryFast = 28.7;
-
-        // Medium blur params hardcoded for now
-        private const float blurAmount = blurMedium;
-        private const double blurDecay = blurDecayMedium;
+        private void setBlurAmount(float amount)
+        {
+            horizontalBlur = new Vector2(0, amount);
+            verticalBlur = new Vector2(amount, 0);
+        }
 
         // Blurs
-        private readonly Vector2 horizontalBlur = new Vector2(0, blurAmount);
-        private readonly Vector2 verticalBlur = new Vector2(blurAmount, 0);
+        private Vector2 horizontalBlur;
+        private Vector2 verticalBlur;
         private readonly Vector2 resetBlur = Vector2.Zero;
 
         // Blending
@@ -163,11 +183,11 @@ namespace hues.Game.Drawables
 
             // Vertical blur
             if (verticalBlurChars.Contains(beatChar))
-                buffer.BlurTo(verticalBlur).BlurTo(resetBlur, blurTimeMs * blurDecay, Easing.OutExpo);
+                buffer.BlurTo(verticalBlur).BlurTo(resetBlur, blurTimeMs, Easing.OutExpo);
 
             // Horizonal blur
             if (horizontalBlurChars.Contains(beatChar))
-                buffer.BlurTo(horizontalBlur).BlurTo(resetBlur, blurTimeMs * blurDecay, Easing.OutExpo);
+                buffer.BlurTo(horizontalBlur).BlurTo(resetBlur, blurTimeMs, Easing.OutExpo);
 
             // Hue
             if (colourChangeChars.Contains(beatChar))
@@ -198,7 +218,7 @@ namespace hues.Game.Drawables
                 if (isInvert)
                     blackout.Colour = Colour4.White;
 
-                blackout.FadeIn(blackoutTime);
+                blackout.FadeIn(blackoutTimeMs);
             }
 
             // Short blackout
@@ -218,7 +238,7 @@ namespace hues.Game.Drawables
                 else
                     blackout.Colour = Colour4.White;
 
-                blackout.FadeIn(blackoutTime);
+                blackout.FadeIn(blackoutTimeMs);
             }
         }
     }
