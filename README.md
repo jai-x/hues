@@ -149,6 +149,11 @@ See `LICENSE.txt` file in this repo for more information.
 The file `hues.Game.Tests/Resources/Tracks/sample.mp3` is copyright of Kevin
 MacLeod and is licensed under the Creative Commons Attribution License 4.0.
 
+The font `PetMe64` and its derivative files found in
+`hues.Game/Resources/Fonts/PetMe64` are licensed under the Kreative Software
+Relay Fonts Free Use License.  
+See `hues.Game/Resources/Fonts/PetMe64/PetMe64License.txt` for more information.
+
 The following files are copyright of The 0x40 Hues Team:
 - `hues.Game.Tests/Resources/Respacks/DefaultImages.zip`
 - `hues.Game.Tests/Resources/Respacks/DefaultsHQ.zip`
