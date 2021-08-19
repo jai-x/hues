@@ -68,8 +68,16 @@ namespace hues.Game.Drawables
             {
                 beatLength = track.Length / beatchars.Length;
 
-                // TODO: Find out why this sometimes creates an index that is 1 larger than number of beatchars
-                currentBeatIndex = Math.Min((int)(track.CurrentTime / beatLength), beatchars.Length - 1);
+                // TODO: Find out why this sometimes creates an index that goes out of bounds..
+                currentBeatIndex = (int)(track.CurrentTime / beatLength);
+
+                // TODO: ...which created the need for this check...
+                if (currentBeatIndex > beatchars.Length - 1)
+                    currentBeatIndex = beatchars.Length - 1;
+
+                // TODO: ...and this check.
+                if (currentBeatIndex < 0)
+                    currentBeatIndex = 0;
 
                 beatChar = beatchars[currentBeatIndex];
             }
