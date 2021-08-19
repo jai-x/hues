@@ -161,6 +161,7 @@ namespace hues.Game.Drawables.Settings
                 {
                     var val = float.Parse(newText);
                     huesConfig.SetValue(HuesSetting.BlurSigma, val);
+                    blurSigmaOptions.TextBox.FlashConfirm();
                 }
                 catch
                 {
@@ -176,6 +177,7 @@ namespace hues.Game.Drawables.Settings
                 {
                     var val = double.Parse(newText);
                     huesConfig.SetValue(HuesSetting.BlurTimeMs, val);
+                    blurTimeOptions.TextBox.FlashConfirm();
                 }
                 catch
                 {
@@ -191,6 +193,7 @@ namespace hues.Game.Drawables.Settings
                 {
                     var val = double.Parse(newText);
                     huesConfig.SetValue(HuesSetting.BlackoutTimeMs, val);
+                    blackoutTimeOptions.TextBox.FlashConfirm();
                 }
                 catch
                 {

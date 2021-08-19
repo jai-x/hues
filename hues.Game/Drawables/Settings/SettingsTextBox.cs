@@ -83,8 +83,9 @@ namespace hues.Game.Drawables.Settings
         public Action<string> TextCommitted;
 
         private Colour4 error_colour => Colour4.Red;
+        private Colour4 confirm_colour => Colour4.DimGray;
         private Colour4 active_colour => Colour4.White;
-        private Colour4 inactive_colour => Colour4.DimGray;
+        private Colour4 inactive_colour => Colour4.White;
         private Colour4 text_colour => Colour4.Black;
 
         public SettingsTextBox()
@@ -113,6 +114,9 @@ namespace hues.Game.Drawables.Settings
         }
 
         public void FlashError() => NotifyInputError();
+
+        public void FlashConfirm()
+            => background.FlashColour(confirm_colour, 200);
 
         protected override void NotifyInputError()
             => background.FlashColour(error_colour, 200);
