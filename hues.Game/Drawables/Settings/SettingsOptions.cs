@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Audio;
 using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
@@ -25,9 +27,13 @@ namespace hues.Game.Drawables.Settings
         [Resolved]
         private HuesConfigManager huesConfig { get; set; }
 
+        [Resolved]
+        private AudioManager audio { get; set; }
+
         private SettingsMultiOptionWithLabel<WindowMode> windowOptions;
         private SettingsMultiOptionWithLabel<FrameSync> fpsOptions;
         private SettingsMultiOptionWithLabel<ExecutionMode> threadOptions;
+        private SettingsDropdownWithLabel<string> audioOptions;
 
         private SettingsTextBoxWithLabel blurSigmaOptions;
         private SettingsTextBoxWithLabel blurTimeOptions;
@@ -84,6 +90,13 @@ namespace hues.Game.Drawables.Settings
                             Anchor = Anchor.TopLeft,
                             Origin = Anchor.TopLeft,
                         },
+                        audioOptions = new SettingsDropdownWithLabel<string>
+                        {
+                            Label = "Audio Device",
+                            Anchor = Anchor.TopLeft,
+                            Origin = Anchor.TopLeft,
+                            DropdownWidth = 300,
+                        }
                     },
                 },
                 new FillFlowContainer
@@ -137,6 +150,23 @@ namespace hues.Game.Drawables.Settings
             };
         }
 
+        // https://github.com/ppy/osu/blob/master/osu.Game/Overlays/Settings/Sections/Audio/AudioDevicesSettings.cs
+        private void updateAudioItems()
+        {
+            var deviceItems = new List<string> { string.Empty };
+            deviceItems.AddRange(audio.AudioDeviceNames);
+
+            var preferredDeviceName = audio.AudioDevice.Value;
+            if (deviceItems.All(kv => kv != preferredDeviceName))
+                deviceItems.Add(preferredDeviceName);
+
+            audioOptions.Dropdown.Items = deviceItems.Distinct()
+                                                     .Where(name => !String.IsNullOrEmpty(name))
+                                                     .ToArray();
+        }
+
+        private void onAudioDeviceChanged(string name) => updateAudioItems();
+
         protected override void LoadComplete()
         {
             base.LoadComplete();
@@ -144,6 +174,11 @@ namespace hues.Game.Drawables.Settings
             frameworkConfig.BindWith(FrameworkSetting.WindowMode, windowOptions.Current);
             frameworkConfig.BindWith(FrameworkSetting.FrameSync, fpsOptions.Current);
             frameworkConfig.BindWith(FrameworkSetting.ExecutionMode, threadOptions.Current);
+
+            audio.OnNewDevice += onAudioDeviceChanged;
+            audio.OnLostDevice += onAudioDeviceChanged;
+            audioOptions.Dropdown.Current = audio.AudioDevice;
+            updateAudioItems();
 
             huesConfig.BindWith(HuesSetting.BlurSigma, blurSigmaBindable);
             huesConfig.BindWith(HuesSetting.BlurTimeMs, blurTimeBindable);
@@ -212,6 +247,17 @@ namespace hues.Game.Drawables.Settings
                     blackoutTimeOptions.TextBox.Text = blackoutTimeBindable.Value.ToString();
                 }
             };
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            base.Dispose(isDisposing);
+
+            if (audio != null)
+            {
+                audio.OnNewDevice -= onAudioDeviceChanged;
+                audio.OnLostDevice -= onAudioDeviceChanged;
+            }
         }
     }
 }
