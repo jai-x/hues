@@ -31,6 +31,7 @@ namespace hues.Game.Drawables.Settings
 
         private SettingsTextBoxWithLabel blurSigmaOptions;
         private SettingsTextBoxWithLabel blurTimeOptions;
+        private SettingsDropdownWithLabel<Easing> blurEasingOptions;
         private SettingsTextBoxWithLabel blackoutTimeOptions;
 
         private readonly Bindable<float> blurSigmaBindable = new Bindable<float>();
@@ -117,6 +118,13 @@ namespace hues.Game.Drawables.Settings
                             Anchor = Anchor.TopLeft,
                             Origin = Anchor.TopLeft,
                         },
+                        blurEasingOptions = new SettingsDropdownWithLabel<Easing>
+                        {
+                            Label = "Blur Easing",
+                            Items = Enum.GetValues(typeof(Easing)).Cast<Easing>().ToArray(),
+                            Anchor = Anchor.TopLeft,
+                            Origin = Anchor.TopLeft,
+                        },
                         blackoutTimeOptions = new SettingsTextBoxWithLabel
                         {
                             Label = "Blackout Time (ms)",
@@ -138,6 +146,7 @@ namespace hues.Game.Drawables.Settings
 
             huesConfig.BindWith(HuesSetting.BlurSigma, blurSigmaBindable);
             huesConfig.BindWith(HuesSetting.BlurTimeMs, blurTimeBindable);
+            huesConfig.BindWith(HuesSetting.BlurEasing, blurEasingOptions.Current);
             huesConfig.BindWith(HuesSetting.BlackoutTimeMs, blackoutTimeBindable);
 
             blurSigmaBindable.BindValueChanged(change =>
