@@ -14,7 +14,9 @@ namespace hues.Game.Drawables.Settings
         public string Label { get; init; }
         public T[] Items { get; init; }
         public Bindable<T> Current => dropdown.Current;
+        public float DropdownWidth { get; init; }
 
+        public SettingsDropdown<T> Dropdown => dropdown;
         private SettingsDropdown<T> dropdown;
 
         public SettingsDropdownWithLabel()
@@ -50,7 +52,7 @@ namespace hues.Game.Drawables.Settings
                         Items = Items,
                         Anchor = Anchor.CentreLeft,
                         Origin = Anchor.CentreLeft,
-                        Width = 150,
+                        Width = DropdownWidth,
                     },
                 },
             };

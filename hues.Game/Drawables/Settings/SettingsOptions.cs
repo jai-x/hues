@@ -122,6 +122,7 @@ namespace hues.Game.Drawables.Settings
                         {
                             Label = "Blur Easing",
                             Items = Enum.GetValues(typeof(Easing)).Cast<Easing>().ToArray(),
+                            DropdownWidth = 175,
                             Anchor = Anchor.TopLeft,
                             Origin = Anchor.TopLeft,
                         },
