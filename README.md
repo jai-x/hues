@@ -29,8 +29,7 @@ Extract the file and run the `hues` executable, no need to install anything.
 - Respack management
 - Remote respack loading
 - Editor
-- Hue visuals options (blur, blur decay, colours palette)
-- Program settings (fps, device management etc.)
+- Hue visuals options (colour palette, image align, etc.)
 - Animated images
 - Image alignment
 - Beatchar effects
