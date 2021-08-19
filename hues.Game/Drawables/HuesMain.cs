@@ -43,6 +43,7 @@ namespace hues.Game.Drawables
 
         private readonly Bindable<float> blurSigmaBindable = new Bindable<float>();
         private readonly Bindable<double> blurTimeBindable = new Bindable<double>();
+        private readonly Bindable<Easing> blurEasingBindable = new Bindable<Easing>();
         private readonly Bindable<double> blackoutTimeBindable = new Bindable<double>();
 
         [BackgroundDependencyLoader]
@@ -104,8 +105,10 @@ namespace hues.Game.Drawables
                 buffer.EffectBlending = normalBlend;
             });
 
+            // Bind local bindables with the config
             config.BindWith(HuesSetting.BlurSigma, blurSigmaBindable);
             config.BindWith(HuesSetting.BlurTimeMs, blurTimeBindable);
+            config.BindWith(HuesSetting.BlurEasing, blurEasingBindable);
             config.BindWith(HuesSetting.BlackoutTimeMs, blackoutTimeBindable);
 
             blurSigmaBindable.BindValueChanged(change =>
@@ -118,6 +121,12 @@ namespace hues.Game.Drawables
             {
                 blurTimeMs = change.NewValue;
                 Logger.Log($"Blur Time Changed: {change.NewValue}", level: LogLevel.Debug);
+            }, true);
+
+            blurEasingBindable.BindValueChanged(change =>
+            {
+                blurEasing = change.NewValue;
+                Logger.Log($"Blur Easing Changed: {change.NewValue}", level: LogLevel.Debug);
             }, true);
 
             blackoutTimeBindable.BindValueChanged(change =>
@@ -142,6 +151,7 @@ namespace hues.Game.Drawables
         private Vector2 horizontalBlur;
         private Vector2 verticalBlur;
         private readonly Vector2 resetBlur = Vector2.Zero;
+        private Easing blurEasing;
 
         // Blending
         private readonly BlendingParameters normalBlend = BlendingParameters.Inherit;
@@ -183,11 +193,11 @@ namespace hues.Game.Drawables
 
             // Vertical blur
             if (verticalBlurChars.Contains(beatChar))
-                buffer.BlurTo(verticalBlur).BlurTo(resetBlur, blurTimeMs, Easing.OutExpo);
+                buffer.BlurTo(verticalBlur).BlurTo(resetBlur, blurTimeMs, blurEasing);
 
             // Horizonal blur
             if (horizontalBlurChars.Contains(beatChar))
-                buffer.BlurTo(horizontalBlur).BlurTo(resetBlur, blurTimeMs, Easing.OutExpo);
+                buffer.BlurTo(horizontalBlur).BlurTo(resetBlur, blurTimeMs, blurEasing);
 
             // Hue
             if (colourChangeChars.Contains(beatChar))
