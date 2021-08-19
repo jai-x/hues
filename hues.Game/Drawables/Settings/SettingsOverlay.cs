@@ -62,6 +62,8 @@ namespace hues.Game.Drawables.Settings
                             RelativeSizeAxes = Axes.X,
                             AutoSizeAxes = Axes.Y,
                             Padding = new MarginPadding(10),
+                            LayoutDuration = 250,
+                            LayoutEasing = Easing.OutCirc,
                         },
                     },
                 },
