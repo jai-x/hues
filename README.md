@@ -145,15 +145,20 @@ An example format of a `images.xml` is as follows:
 The source code for this software is licensed under the MIT license.  
 See `LICENSE.txt` file in this repo for more information.
 
-The file `hues.Game.Tests/Resources/Tracks/sample.mp3` is copyright of Kevin
-MacLeod and is licensed under the Creative Commons Attribution License 4.0.
+The following files are copyright of Kevin MacLeod and licensed under the
+Creative Commons Attribution License 4.0.
+- `hues.Game.Tests/Resources/Tracks/sample.mp3`
 
-The font `PetMe64` and its derivative files found in
-`hues.Game/Resources/Fonts/PetMe64` are licensed under the Kreative Software
-Relay Fonts Free Use License.  
-See `hues.Game/Resources/Fonts/PetMe64/PetMe64License.txt` for more information.
+The font `PetMe64` and its derivative files are licensed under the Kreative
+Software Relay Fonts Free Use License. See
+`hues.Game/Resources/Fonts/PetMe64/PetMe64License.txt` for more information.
+- `hues.Game/Resources/Fonts/PetMe64`
 
-The following files are copyright of The 0x40 Hues Team:
+The font `Silver` and its derivative files are copyright of Poppy Works and
+licensed under the Creative Commons Attribution 4.0 International license.
+- `hues.Game/Resources/Fonts/Silver`
+
+The Respacks `DefaultsHQ` and `DefaultImages` are copyright of The 0x40 Hues
+Team and are used for testing purposes.
 - `hues.Game.Tests/Resources/Respacks/DefaultImages.zip`
 - `hues.Game.Tests/Resources/Respacks/DefaultsHQ.zip`
-
