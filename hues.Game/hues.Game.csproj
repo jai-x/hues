@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ppy.osu.Framework" Version="2021.811.0" />
+    <PackageReference Include="ppy.osu.Framework" Version="2021.819.0" />
   </ItemGroup>
 
   <Target Name="PostClean" AfterTargets="Clean">
