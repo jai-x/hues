@@ -154,9 +154,10 @@ Software Relay Fonts Free Use License. See
 `hues.Game/Resources/Fonts/PetMe64/PetMe64License.txt` for more information.
 - `hues.Game/Resources/Fonts/PetMe64`
 
-The font `Silver` and its derivative files are copyright of Poppy Works and
-licensed under the Creative Commons Attribution 4.0 International license.
-- `hues.Game/Resources/Fonts/Silver`
+The font `Silver-Jai-Mod` is a modification of the font `Silver` which is
+copyright of Poppy Works and licensed under the Creative Commons Attribution 4.0
+International license.
+- `hues.Game/Resources/Fonts/Silver-Jai-Mod`
 
 The Respacks `DefaultsHQ` and `DefaultImages` are copyright of The 0x40 Hues
 Team and are used for testing purposes.
