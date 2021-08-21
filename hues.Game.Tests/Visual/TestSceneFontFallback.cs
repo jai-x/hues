@@ -59,6 +59,7 @@ namespace hues.Game.Tests.Visual
                     Text = $"Size {i}:{text}",
                     Colour = Colour4.Black,
                     Font = FontUsage.Default.With(size: i),
+                    Margin = new MarginPadding(3),
                 }
             },
         };
