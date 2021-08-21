@@ -93,8 +93,7 @@ namespace hues.Game.Drawables
                         Origin = Anchor.CentreLeft,
                         Text = text,
                         Colour = Colour4.Black,
-                        Font = new FontUsage("Silver", size: 18),
-                        Y = 3,
+                        Font = FontUsage.Default.With(size: 9),
                         X = 3,
                     },
                 };

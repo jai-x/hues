@@ -48,7 +48,7 @@ namespace hues.Game.Tests.Visual
         {
             Text = $"{i}:{text}",
             Colour = Colour4.Black,
-            Font = new FontUsage("Silver", size: i),
+            Font = FontUsage.Default.With(size: i),
         };
 
         protected override void LoadComplete()

@@ -19,7 +19,7 @@ namespace hues.Game.Drawables
                 labelSpriteText.Text = text;
         }
 
-        public int LabelTextSize = 22;
+        public int LabelTextSize = 12;
 
         private SpriteText labelSpriteText;
 
@@ -43,8 +43,7 @@ namespace hues.Game.Drawables
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
-                            Font = new FontUsage("Silver", size: LabelTextSize),
-                            Y = 3,
+                            Font = FontUsage.Default.With(size: LabelTextSize),
                         },
                     },
                 },

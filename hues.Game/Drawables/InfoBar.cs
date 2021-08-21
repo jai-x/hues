@@ -50,7 +50,7 @@ namespace hues.Game.Drawables
                 imageLabel = new LabelBar
                 {
                     Name = "Image Label Bar",
-                    LabelTextSize = 20,
+                    LabelTextSize = 11,
                     Anchor = Anchor.TopCentre,
                     Origin = Anchor.TopCentre,
                     Size = new Vector2(320, 17),
@@ -60,7 +60,7 @@ namespace hues.Game.Drawables
                 hueLabel = new LabelBar
                 {
                     Name = "Hue Label Bar",
-                    LabelTextSize = 20,
+                    LabelTextSize = 11,
                     Anchor = Anchor.TopCentre,
                     Origin = Anchor.TopCentre,
                     Size = new Vector2(175, 17),
@@ -70,7 +70,7 @@ namespace hues.Game.Drawables
                 songLabel = new LabelBar
                 {
                     Name = "Song Label Bar",
-                    LabelTextSize = 22,
+                    LabelTextSize = 12,
                     Anchor = Anchor.BottomCentre,
                     Origin = Anchor.BottomCentre,
                     Size = new Vector2(500, 20),
