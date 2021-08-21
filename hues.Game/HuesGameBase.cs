@@ -79,10 +79,10 @@ namespace hues.Game
             AddFont(Resources, "Resources/Fonts/PetMe64/PetMe64");
 
             // TODO: Maybe not do this when CSS/Em-square aware font sizing is added to o!f
-            // Font Silver is stored in a nested font store at scale 75 to better fit with the line height of PetMe64
-            var fallback = new FontStore(null, 75);
+            // Font Silver is stored in a nested font store at scale 6 to better fit with the line height of PetMe64
+            var fallback = new FontStore(null, 60);
             Fonts.AddStore(fallback);
-            AddFont(Resources, "Resources/Fonts/Silver/Silver", fallback);
+            AddFont(Resources, "Resources/Fonts/Silver-Jai-Mod/Silver-Jai-Mod", fallback);
 
             // Init and cache backing resources
             dependencies.CacheAs(trackResources = new RespackTrackResourceStore());
