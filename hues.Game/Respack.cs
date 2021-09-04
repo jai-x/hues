@@ -78,6 +78,25 @@ namespace hues.Game
                             .AsReadOnly();
         }
 
+        private ImageAlign stringToAlignment(string align)
+        {
+            switch (align)
+            {
+                case "center":
+                case "centre":
+                    return ImageAlign.Centre;
+
+                case "left":
+                    return ImageAlign.Left;
+
+                case "right":
+                    return ImageAlign.Right;
+
+                default:
+                    return ImageAlign.Centre;
+            }
+        }
+
         private IReadOnlyCollection<Image> parseImages(string imagesXml)
         {
             if (imagesXml == null)
@@ -92,6 +111,7 @@ namespace hues.Game
                                 Name = imageElement.Element("fullname").Value,
                                 Source = imageElement.Element("source").Value,
                                 TexturePath = imageElement.Attribute("name").Value,
+                                Align = stringToAlignment(imageElement.Element("align")?.Value),
                                 Respack = this,
                             })
                             .ToList()

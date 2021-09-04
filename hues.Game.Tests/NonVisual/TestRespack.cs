@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System;
 using System.Linq;
+using hues.Game.Elements;
 
 namespace hues.Game.Tests.NonVisual
 {
@@ -33,6 +34,7 @@ namespace hues.Game.Tests.NonVisual
           <image name=""image_path_1"">
             <source>https://image.link/1</source>
             <fullname>Test Image Name 1</fullname>
+            <align>left</align>
           </image>
         </images>
         ";
@@ -100,6 +102,7 @@ namespace hues.Game.Tests.NonVisual
                 Assert.AreEqual(firstImage.Name, "Test Image Name 1");
                 Assert.AreEqual(firstImage.Source, "https://image.link/1");
                 Assert.AreEqual(firstImage.TexturePath, "image_path_1");
+                Assert.AreEqual(firstImage.Align, ImageAlign.Left);
                 Assert.AreEqual(firstImage.Respack, respack);
             });
         }

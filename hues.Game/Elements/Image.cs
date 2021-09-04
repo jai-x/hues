@@ -1,4 +1,5 @@
 using System;
+using osu.Framework.Graphics;
 
 namespace hues.Game.Elements
 {
@@ -7,6 +8,7 @@ namespace hues.Game.Elements
         public string Name { get; init; }
         public string Source { get; init; }
         public string TexturePath { get; init; }
+        public ImageAlign Align { get; init; }
         public Respack Respack { get; init; }
 
         public override string ToString() =>
@@ -27,5 +29,30 @@ namespace hues.Game.Elements
             else
                 return false;
         }
+
+        public static Anchor AlignToOrigin(ImageAlign align)
+        {
+            switch (align)
+            {
+                case ImageAlign.Centre:
+                    return Anchor.Centre;
+
+                case ImageAlign.Left:
+                    return Anchor.CentreLeft;
+
+                case ImageAlign.Right:
+                    return Anchor.CentreRight;
+
+                default:
+                    return Anchor.Centre;
+            }
+        }
+    }
+
+    public enum ImageAlign
+    {
+        Centre,
+        Left,
+        Right,
     }
 }

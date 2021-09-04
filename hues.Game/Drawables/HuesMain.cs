@@ -63,6 +63,9 @@ namespace hues.Game.Drawables
                     Child = image = new Sprite
                     {
                         RelativeSizeAxes = Axes.Both,
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        FillMode = FillMode.Fill,
                     },
                 },
                 blackout = new Box
@@ -95,7 +98,11 @@ namespace hues.Game.Drawables
                 if (newImage == null)
                     image.Texture = null;
                 else
+                {
                     image.Texture = textureStore.Get(newImage.TexturePath);
+                    image.Anchor = Elements.Image.AlignToOrigin(newImage.Align);
+                    image.Origin = Elements.Image.AlignToOrigin(newImage.Align);
+                }
             });
 
             // Reset invert on song change

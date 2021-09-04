@@ -115,6 +115,7 @@ An example format of a `images.xml` is as follows:
   <image name="image_src">
     <source>https://image.link/</source>
     <fullname>Image Fullname</fullname>
+    <align>center</align>
   </image>
 
   <image>
@@ -131,9 +132,10 @@ An example format of a `images.xml` is as follows:
         respack archive, either in the root of the archive or in a nested directory
     * The `<image>` element MUST include a `<source>` element
     * The `<image>` element MUST include a `<fullname>` element
-    * The `<image>` element may OPTIONALLY include a `<source_other>` element
-      * NOTE: Support to handle this element is currently not implemented
     * The `<image>` element may OPTIONALLY include a `<align>` element
+      * If present, this element may OPTIONALLY have one of the values `centre,
+        `left`, `right`. Will default to `centre`.
+    * The `<image>` element may OPTIONALLY include a `<source_other>` element
       * NOTE: Support to handle this element is currently not implemented
     * The `<image>` element may OPTIONALLY include a `<frameDuration>` element
       to indicate this image is part of an animated set
