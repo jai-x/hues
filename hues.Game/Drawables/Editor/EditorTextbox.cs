@@ -8,7 +8,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input;
-using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Framework.Platform;
 using osuTK;
@@ -119,7 +118,7 @@ namespace hues.Game.Drawables.Editor
     {
     }
 
-    public class EditorTextbox : CompositeDrawable, IKeyBindingHandler<PlatformAction>
+    public class EditorTextbox : CompositeDrawable
     {
         private readonly EditorHighlight highlight;
         private readonly EditorFlow flow;
@@ -146,7 +145,7 @@ namespace hues.Game.Drawables.Editor
         private int cursorPosition = 0;
 
         private string beatchars = string.Empty;
-        private readonly char[] validBeatchars = new char[] { '.', 'x', 'X', 'o', 'O', 'i', 'I', '+', '-', '*', '=', ':', '|', '¤'};
+        private readonly char[] validBeatchars = new char[] { '.', 'x', 'X', 'o', 'O', 'i', 'I', '+', '-', '*', '=', ':', '|', '¤' };
 
         private Vector2 flowTopRight => new Vector2(flow.Padding.Left, flow.Padding.Top);
         private Vector2 flowBottomLeft => new Vector2(flow.DrawWidth - flow.Padding.Right, flow.DrawHeight - flow.Padding.Bottom);

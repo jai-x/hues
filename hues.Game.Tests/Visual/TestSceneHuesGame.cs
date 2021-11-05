@@ -15,7 +15,7 @@ namespace hues.Game.Tests.Visual
         {
             var game = new HuesGame();
             game.SetHost(host);
-            Child = game;
+            AddGame(game);
         }
     }
 }
