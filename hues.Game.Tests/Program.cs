@@ -7,7 +7,7 @@ namespace hues.Game.Tests
     {
         public static void Main(string[] args)
         {
-            using (GameHost host = Host.GetSuitableHost("hues-visual-test"))
+            using (DesktopGameHost host = Host.GetSuitableDesktopHost("hues-visual-test"))
             using (var game = new HuesTestBrowser())
                 host.Run(game);
         }

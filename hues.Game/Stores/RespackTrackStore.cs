@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Track;
@@ -24,7 +25,8 @@ namespace hues.Game.Stores
 
         #region IResourceStore<Track>
         public Track Get(string name) => backing.Get(name);
-        public Task<Track> GetAsync(string name) => backing.GetAsync(name);
+        public Task<Track> GetAsync(string name, CancellationToken cancellationToken = default)
+            => backing.GetAsync(name, cancellationToken);
         public Stream GetStream(string name) => backing.GetStream(name);
         public IEnumerable<string> GetAvailableResources() => backing.GetAvailableResources();
         #endregion

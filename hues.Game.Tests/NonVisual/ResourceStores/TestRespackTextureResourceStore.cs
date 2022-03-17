@@ -49,7 +49,7 @@ namespace hues.Game.Tests.NonVisual.ResourceStores
 
             AddStep("Add texture file to resources", () =>
             {
-                textureResources.Add("sample-texture", textureStream, textureStream.Length);
+                textureResources.Add("sample-texture", textureStream);
             });
 
             AddAssert("Texture file has been added", () =>

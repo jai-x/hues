@@ -94,7 +94,7 @@ namespace hues.Game
                     throw new RespackMissingFileException(song.LoopSource);
 
                 using (var stream = loopEntry.Open())
-                    trackResources.Add(song.LoopSource, stream, loopEntry.Length);
+                    trackResources.Add(song.LoopSource, stream);
 
                 if (String.IsNullOrEmpty(song.BuildupSource))
                     continue;
@@ -105,7 +105,7 @@ namespace hues.Game
                     throw new RespackMissingFileException(song.BuildupSource);
 
                 using (var stream = buildupEntry.Open())
-                    trackResources.Add(song.BuildupSource, stream, loopEntry.Length);
+                    trackResources.Add(song.BuildupSource, stream);
             }
         }
 
@@ -119,8 +119,7 @@ namespace hues.Game
                     throw new RespackMissingFileException(image.TexturePath);
 
                 using (var stream = imageEntry.Open())
-                    textureResources.Add(image.TexturePath, stream, imageEntry.Length);
-
+                    textureResources.Add(image.TexturePath, stream);
             }
         }
 

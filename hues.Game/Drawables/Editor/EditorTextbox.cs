@@ -131,7 +131,9 @@ namespace hues.Game.Drawables.Editor
         private readonly Cached highlightCache = new Cached();
         private readonly Cached cursorCache = new Cached();
 
-        private ITextInputSource textInput;
+        [Resolved]
+        private TextInputSource textInput { get; set; }
+
         private Clipboard clipboard;
 
         private const int defaultBeatcharSize = 12;
@@ -179,8 +181,14 @@ namespace hues.Game.Drawables.Editor
         [BackgroundDependencyLoader]
         private void load(GameHost gameHost)
         {
-            textInput = gameHost.GetTextInput();
             clipboard = gameHost.GetClipboard();
+        }
+
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+
+            textInput.OnTextInput += text => insertString(text);
         }
 
         public int BeatcharSize { get; init; } = defaultBeatcharSize;
@@ -240,7 +248,7 @@ namespace hues.Game.Drawables.Editor
         {
             base.OnFocus(e);
 
-            textInput?.Activate();
+            textInput?.Activate(false);
             BorderThickness = 3;
         }
 
@@ -329,10 +337,6 @@ namespace hues.Game.Drawables.Editor
                     killFocus();
                     return true;
             }
-
-            var result = insertString(textInput?.GetPendingText());
-            if (result)
-                return true;
 
             return base.OnKeyDown(e);
         }

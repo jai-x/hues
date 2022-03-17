@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using osu.Framework.IO.Stores;
 using osu.Framework.Logging;
@@ -11,13 +12,13 @@ namespace hues.Game.ResourceStores
         protected readonly Dictionary<string, byte[]> store = new Dictionary<string, byte[]>();
         protected readonly object storeLock = new object();
 
-        public void Add(string name, Stream stream, long length)
+        public void Add(string name, Stream stream)
         {
             lock (storeLock)
             {
-                byte[] buffer = new byte[length];
-                stream.Read(buffer);
-                store[name] = buffer;
+                var ms = new MemoryStream();
+                stream.CopyTo(ms);
+                store[name] = ms.ToArray();
             }
         }
 
@@ -33,7 +34,8 @@ namespace hues.Game.ResourceStores
         }
 
         // TODO: Find out how C# async works and why this is cursed
-        public Task<byte[]> GetAsync(string name) => Task.Run(() => Get(name));
+        public Task<byte[]> GetAsync(string name, CancellationToken cancellationToken = default)
+            => Task.Run(() => Get(name), cancellationToken);
 
         public Stream GetStream(string name)
         {
