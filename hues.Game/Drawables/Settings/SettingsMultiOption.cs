@@ -17,17 +17,14 @@ namespace hues.Game.Drawables.Settings
 
         private SettingsMultiOption<T> options;
 
-        public SettingsMultiOptionWithLabel()
+        [BackgroundDependencyLoader]
+        private void load()
         {
             Direction = FillDirection.Vertical;
             AutoSizeAxes = Axes.Y;
             RelativeSizeAxes = Axes.X;
             Margin = new MarginPadding { Vertical = 2 };
-        }
 
-        [BackgroundDependencyLoader]
-        private void load()
-        {
             Children = new Drawable[]
             {
                 new SpriteText

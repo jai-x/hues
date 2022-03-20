@@ -14,6 +14,7 @@ namespace hues.Game.Drawables.Settings
     {
         public string Label { get; init; }
         public SettingsTextBox TextBox => textbox;
+
         private SettingsTextBox textbox;
         private SpriteText flash;
 
@@ -26,17 +27,14 @@ namespace hues.Game.Drawables.Settings
             flash.FadeOut(2000, Easing.InExpo);
         }
 
-        public SettingsTextBoxWithLabel()
+        [BackgroundDependencyLoader]
+        private void load()
         {
             Direction = FillDirection.Vertical;
             AutoSizeAxes = Axes.Y;
             RelativeSizeAxes = Axes.X;
             Margin = new MarginPadding { Vertical = 2 };
-        }
 
-        [BackgroundDependencyLoader]
-        private void load()
-        {
             Children = new Drawable[]
             {
                 new SpriteText
@@ -87,57 +85,46 @@ namespace hues.Game.Drawables.Settings
         private Colour4 active_colour => Colour4.White;
         private Colour4 inactive_colour => Colour4.White;
         private Colour4 text_colour => Colour4.Black;
-
-        public SettingsTextBox()
-        {
-            Masking = true;
-            BorderThickness = 2f;
-            BorderColour = Colour4.Black;
-        }
-
-        protected override SpriteText CreatePlaceholder()
-            => new SpriteText();
-
-        protected override Caret CreateCaret()
-            => new SettingsCaret();
-
-        protected override Drawable GetDrawableCharacter(char c)
-        {
-            return new SpriteText
-            {
-                Text = c.ToString(),
-                Font = FontUsage.Default.With(size: 9),
-                Anchor = Anchor.CentreLeft,
-                Origin = Anchor.CentreLeft,
-                Colour = text_colour,
-            };
-        }
-
-        public void FlashError() => NotifyInputError();
-
-        public void FlashConfirm()
-            => background.FlashColour(confirm_colour, 200);
-
-        protected override void NotifyInputError()
-            => background.FlashColour(error_colour, 200);
-
-        protected override void OnTextCommitted(bool newText)
-        {
-            base.OnTextCommitted(newText);
-            TextCommitted?.Invoke(this.Text);
-        }
-
         private Box background;
 
         [BackgroundDependencyLoader]
         private void load()
         {
+            Masking = true;
+            BorderThickness = 2f;
+            BorderColour = Colour4.Black;
+
             Add(background = new Box
             {
                 RelativeSizeAxes = Axes.Both,
                 Colour = inactive_colour,
                 Depth = 1,
             });
+        }
+
+        public void FlashError() => NotifyInputError();
+
+        public void FlashConfirm() => background.FlashColour(confirm_colour, 200);
+
+        protected override SpriteText CreatePlaceholder() => new SpriteText();
+
+        protected override Caret CreateCaret() => new SettingsCaret();
+
+        protected override Drawable GetDrawableCharacter(char c) => new SpriteText
+        {
+            Text = c.ToString(),
+            Font = FontUsage.Default.With(size: 9),
+            Anchor = Anchor.CentreLeft,
+            Origin = Anchor.CentreLeft,
+            Colour = text_colour,
+        };
+
+        protected override void NotifyInputError() => background.FlashColour(error_colour, 200);
+
+        protected override void OnTextCommitted(bool newText)
+        {
+            base.OnTextCommitted(newText);
+            TextCommitted?.Invoke(this.Text);
         }
 
         protected override void OnFocus(FocusEvent e)
@@ -160,18 +147,15 @@ namespace hues.Game.Drawables.Settings
         private const float alpha_normal = 0.7f;
         private const float alpha_select = 0.4f;
 
-        public SettingsCaret()
+        [BackgroundDependencyLoader]
+        private void load()
         {
             RelativeSizeAxes = Axes.Y;
             Width = caret_width;
             Height = 0.9f;
             Anchor = Anchor.CentreLeft;
             Origin = Anchor.CentreLeft;
-        }
 
-        [BackgroundDependencyLoader]
-        private void load()
-        {
             InternalChild = new Box
             {
                 RelativeSizeAxes = Axes.Both,

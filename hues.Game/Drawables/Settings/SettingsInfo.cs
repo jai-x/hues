@@ -13,7 +13,8 @@ namespace hues.Game.Drawables.Settings
         [Resolved]
         private HuesGameBase game { get; set; }
 
-        public SettingsInfo()
+        [BackgroundDependencyLoader]
+        private void load()
         {
             Direction = FillDirection.Vertical;
             Anchor = Anchor.TopCentre;
@@ -22,11 +23,7 @@ namespace hues.Game.Drawables.Settings
             AutoSizeAxes = Axes.Y;
             Width = 0.6f;
             Spacing = new Vector2(0, 10);
-        }
 
-        [BackgroundDependencyLoader]
-        private void load()
-        {
             Children = new Drawable[]
             {
                 new SpriteText
@@ -52,7 +49,6 @@ namespace hues.Game.Drawables.Settings
                     Anchor = Anchor.TopCentre,
                     Origin = Anchor.Centre,
                     Font = FontUsage.Default.With(size: 12),
-                    Y = 65,
                 },
                 new Box
                 {
@@ -102,17 +98,14 @@ namespace hues.Game.Drawables.Settings
         public string Title { get; init; }
         public string[] Contents { get; init; }
 
-        public InfoListing()
+        [BackgroundDependencyLoader]
+        private void load()
         {
             Masking = true;
             CornerRadius = 15;
             AutoSizeAxes = Axes.Y;
             RelativeSizeAxes = Axes.X;
-        }
 
-        [BackgroundDependencyLoader]
-        private void load()
-        {
             Children = new Drawable[]
             {
                 new Box

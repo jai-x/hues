@@ -37,13 +37,14 @@ namespace hues.Game.Drawables.Settings
             public SettingsTabItem(SettingsTabOption option) : base(option)
             {
                 text = option.ToString().ToUpper();
-                RelativeSizeAxes = Axes.Both;
-                Masking = true;
             }
 
             [BackgroundDependencyLoader]
             private void load()
             {
+                RelativeSizeAxes = Axes.Both;
+                Masking = true;
+
                 Children = new Drawable[]
                 {
                     new Box

@@ -8,27 +8,18 @@ namespace hues.Game.Drawables.Settings
 {
     public class SettingsOverlay : VisibilityContainer
     {
-        protected override void PopIn()
-            => this.FadeIn(200);
-
-        protected override void PopOut()
-            => this.FadeOut(200);
-
-        public SettingsOverlay()
-        {
-            AutoSizeAxes = Axes.Y;
-            Width = 800;
-            Masking = true;
-            BorderColour = Colour4.Black;
-            BorderThickness = 3;
-        }
-
         private SettingsTabControl tabControl;
         private FillFlowContainer settingsFlow;
 
         [BackgroundDependencyLoader]
         private void load()
         {
+            AutoSizeAxes = Axes.Y;
+            Width = 800;
+            Masking = true;
+            BorderColour = Colour4.Black;
+            BorderThickness = 3;
+
             Children = new Drawable[]
             {
                 new Box
@@ -110,5 +101,11 @@ namespace hues.Game.Drawables.Settings
                 }
             }, true);
         }
+
+        protected override void PopIn()
+            => this.FadeIn(200);
+
+        protected override void PopOut()
+            => this.FadeOut(200);
     }
 }

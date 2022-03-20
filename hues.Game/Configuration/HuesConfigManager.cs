@@ -17,7 +17,6 @@ namespace hues.Game.Configuration
 
         protected override void InitialiseDefaults()
         {
-
             SetDefault(HuesSetting.BlurSigma, 100f, 0f, 1000f);
             SetDefault(HuesSetting.BlurTimeMs, defaultBlurTime, 0d, 5000d);
             SetDefault(HuesSetting.BlackoutTimeMs, defaultBlackoutTime, 0d, 5000d);

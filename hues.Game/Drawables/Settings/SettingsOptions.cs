@@ -15,12 +15,6 @@ namespace hues.Game.Drawables.Settings
 {
     public class SettingsOptions : Container
     {
-        public SettingsOptions()
-        {
-            AutoSizeAxes = Axes.Y;
-            RelativeSizeAxes = Axes.X;
-        }
-
         [Resolved]
         private FrameworkConfigManager frameworkConfig { get; set; }
 
@@ -47,6 +41,9 @@ namespace hues.Game.Drawables.Settings
         [BackgroundDependencyLoader]
         private void load()
         {
+            AutoSizeAxes = Axes.Y;
+            RelativeSizeAxes = Axes.X;
+
             Children = new Drawable[]
             {
                 new FillFlowContainer
@@ -149,24 +146,6 @@ namespace hues.Game.Drawables.Settings
                 },
             };
         }
-
-        // https://github.com/ppy/osu/blob/master/osu.Game/Overlays/Settings/Sections/Audio/AudioDevicesSettings.cs
-        private void updateAudioItems()
-        {
-            var deviceItems = new List<string> { string.Empty };
-            deviceItems.AddRange(audio.AudioDeviceNames);
-
-            var preferredDeviceName = audio.AudioDevice.Value;
-            if (deviceItems.All(kv => kv != preferredDeviceName))
-                deviceItems.Add(preferredDeviceName);
-
-            audioOptions.Dropdown.Items = deviceItems.Distinct()
-                                                     .Where(name => !String.IsNullOrEmpty(name))
-                                                     .ToArray();
-        }
-
-        private void onAudioDeviceChanged(string name) => updateAudioItems();
-
         protected override void LoadComplete()
         {
             base.LoadComplete();
@@ -248,6 +227,23 @@ namespace hues.Game.Drawables.Settings
                 }
             };
         }
+
+        // https://github.com/ppy/osu/blob/master/osu.Game/Overlays/Settings/Sections/Audio/AudioDevicesSettings.cs
+        private void updateAudioItems()
+        {
+            var deviceItems = new List<string> { string.Empty };
+            deviceItems.AddRange(audio.AudioDeviceNames);
+
+            var preferredDeviceName = audio.AudioDevice.Value;
+            if (deviceItems.All(kv => kv != preferredDeviceName))
+                deviceItems.Add(preferredDeviceName);
+
+            audioOptions.Dropdown.Items = deviceItems.Distinct()
+                                                     .Where(name => !String.IsNullOrEmpty(name))
+                                                     .ToArray();
+        }
+
+        private void onAudioDeviceChanged(string name) => updateAudioItems();
 
         protected override void Dispose(bool isDisposing)
         {
