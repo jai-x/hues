@@ -11,9 +11,10 @@ namespace hues.Game.Drawables
         [Resolved]
         private Bindable<Hue> currentHue { get; set; }
 
-        [BackgroundDependencyLoader]
-        private void load()
+        protected override void LoadComplete()
         {
+            base.LoadComplete();
+
             currentHue.BindValueChanged(hueChange =>
             {
                 var hue = hueChange.NewValue;

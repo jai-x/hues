@@ -16,6 +16,7 @@ namespace hues.Game.Drawables
             get => centreIcon.Icon;
             set => centreIcon.Icon = value;
         }
+
         protected virtual string LabelText { get; }
 
         protected virtual Action LabelClick { get; }

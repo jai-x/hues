@@ -14,9 +14,12 @@ namespace hues.Game.Drawables
 
     public class BeatLine : BeatSyncedCompositeDrawable
     {
-        public int MaxChars = 40;
-        public int CharSize = 20;
-        public BeatlineDirection Direction = BeatlineDirection.Left;
+        public int MaxChars { get; init; } = 40;
+        public int CharSize { get; init; } = 20;
+        public BeatlineDirection Direction { get; init; } = BeatlineDirection.Left;
+
+        private FixedWidthSpriteText displayBeatchars;
+        private List<char> builder = new List<char>();
 
         [BackgroundDependencyLoader]
         private void load()
@@ -49,14 +52,11 @@ namespace hues.Game.Drawables
             displayText(0, SongSection.Buildup);
         }
 
-        private class FixedWidthSpriteText : SpriteText
+        protected override void OnNewBeat(int beatIndex, SongSection songSection, char beatChar, double beatLength)
         {
-            protected override char[] FixedWidthExcludeCharacters => Array.Empty<char>();
+            base.OnNewBeat(beatIndex, songSection, beatChar, beatLength);
+            displayText(beatIndex, songSection);
         }
-
-        private FixedWidthSpriteText displayBeatchars;
-
-        private List<char> builder = new List<char>();
 
         private void displayText(int beatIndex, SongSection songSection)
         {
@@ -124,10 +124,9 @@ namespace hues.Game.Drawables
             }
         }
 
-        protected override void OnNewBeat(int beatIndex, SongSection songSection, char beatChar, double beatLength)
+        private class FixedWidthSpriteText : SpriteText
         {
-            base.OnNewBeat(beatIndex, songSection, beatChar, beatLength);
-            displayText(beatIndex, songSection);
+            protected override char[] FixedWidthExcludeCharacters => Array.Empty<char>();
         }
     }
 }

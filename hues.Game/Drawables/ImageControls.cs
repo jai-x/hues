@@ -23,6 +23,7 @@ namespace hues.Game.Drawables
             imageList?.ToggleVisibility();
             songList?.Hide();
         };
+
         protected override Action PreviousClick => () => { imageManager.Previous(true); };
         protected override Action NextClick => () => { imageManager.Next(true); };
         protected override Action CentreClick => () =>
@@ -42,6 +43,12 @@ namespace hues.Game.Drawables
             updateIcon();
         };
 
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+            updateIcon();
+        }
+
         private void updateIcon()
         {
             switch (imageManager.Mode)
@@ -56,12 +63,6 @@ namespace hues.Game.Drawables
                     CentreIcon = FontAwesome.Solid.Random;
                     break;
             }
-        }
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-            updateIcon();
         }
     }
 }

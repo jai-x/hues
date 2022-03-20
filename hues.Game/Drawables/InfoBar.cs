@@ -28,17 +28,14 @@ namespace hues.Game.Drawables
         private LabelBar hueLabel;
         private LabelBar songLabel;
 
-        public InfoBar()
+        [BackgroundDependencyLoader]
+        private void load()
         {
             Size = new Vector2(800, 50);
             Masking = true;
             BorderColour = Colour4.DimGray;
             BorderThickness = 3;
-        }
 
-        [BackgroundDependencyLoader]
-        private void load()
-        {
             InternalChildren = new Drawable[]
             {
                 new Box

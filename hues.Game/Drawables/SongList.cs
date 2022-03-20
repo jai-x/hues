@@ -12,10 +12,17 @@ namespace hues.Game.Drawables
         [Resolved]
         private Bindable<Song> currentSong { get; set; }
 
-        public SongList()
+        [BackgroundDependencyLoader]
+        private void load()
         {
             Height = 150;
             Width = 435;
+        }
+
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+            allSongs.BindCollectionChanged((_,_) => { Schedule(updateSongs); }, true);
         }
 
         private void updateSongs()
@@ -30,18 +37,7 @@ namespace hues.Game.Drawables
             }
 
             foreach (var song in allSongs)
-            {
                 AddToFlow(song.Title, () => { currentSong.Value = song; });
-            }
-        }
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-
-            updateSongs();
-
-            allSongs.BindCollectionChanged((_,_) => { Schedule(updateSongs); });
         }
     }
 }

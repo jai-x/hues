@@ -12,10 +12,6 @@ namespace hues.Game.Drawables
 
         private SpriteText centreBeatchar;
 
-        public BeatCircle()
-        {
-        }
-
         [BackgroundDependencyLoader]
         private void load()
         {

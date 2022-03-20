@@ -11,10 +11,17 @@ namespace hues.Game.Drawables
         [Resolved]
         private Bindable<Elements.Image> currentImage { get; set; }
 
-        public ImageList()
+        [BackgroundDependencyLoader]
+        private void load()
         {
             Height = 150;
             Width = 300;
+        }
+
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+            allImages.BindCollectionChanged((_,_) => { Schedule(updateImages); }, true);
         }
 
         private void updateImages()
@@ -28,18 +35,7 @@ namespace hues.Game.Drawables
             }
 
             foreach (var image in allImages)
-            {
                 AddToFlow(image.Name, () => { currentImage.Value = image; });
-            }
-        }
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-
-            updateImages();
-
-            allImages.BindCollectionChanged((_,_) => { Schedule(updateImages); });
         }
     }
 }

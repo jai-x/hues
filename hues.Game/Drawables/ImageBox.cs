@@ -14,9 +14,10 @@ namespace hues.Game.Drawables
         [Resolved]
         private Bindable<Image> currentImage { get; set; }
 
-        [BackgroundDependencyLoader]
-        private void load()
+        protected override void LoadComplete()
         {
+            base.LoadComplete();
+
             currentImage.BindValueChanged(imageChange =>
             {
                 var image = imageChange.NewValue;

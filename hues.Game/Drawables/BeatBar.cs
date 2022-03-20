@@ -8,17 +8,14 @@ namespace hues.Game.Drawables
 {
     public class BeatBar : CompositeDrawable
     {
-        public BeatBar()
+        [BackgroundDependencyLoader]
+        private void load()
         {
             Size = new Vector2(800, 30);
             Masking = true;
             BorderColour = Colour4.DimGray;
             BorderThickness = 3;
-        }
 
-        [BackgroundDependencyLoader]
-        private void load()
-        {
             InternalChildren = new Drawable[]
             {
                 new Box

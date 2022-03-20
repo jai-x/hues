@@ -36,7 +36,7 @@ namespace hues.Game.Drawables.Settings
                 },
                 new SpriteText
                 {
-                    Text = (game.IsReleased ? "v" : "") + game.Version,
+                    Text = game.ReadableVersion,
                     Colour = Colour4.Black,
                     Anchor = Anchor.TopCentre,
                     Origin = Anchor.Centre,
