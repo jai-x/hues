@@ -8,6 +8,8 @@ namespace hues.Game
 {
     public class SongPlayer : Component
     {
+        public bool AutoPlay = true;
+
         [Resolved]
         private Bindable<Song> currentSong { get; set; }
 
@@ -16,8 +18,6 @@ namespace hues.Game
 
         [Resolved]
         private RespackTrackStore trackStore { get; set; }
-
-        public bool AutoPlay = true;
 
         protected override void LoadComplete()
         {

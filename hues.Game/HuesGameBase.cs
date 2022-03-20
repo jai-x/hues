@@ -19,10 +19,16 @@ namespace hues.Game
 {
     public class HuesGameBase : osu.Framework.Game
     {
-        public HuesGameBase()
-        {
-            Name = "hues";
-        }
+        public Version FrameworkVersion => typeof(osu.Framework.Game).Assembly.GetName().Version;
+
+        public Version Version => Assembly.GetEntryAssembly().GetName().Version;
+
+        public bool IsReleased => Version.Major > 0;
+
+        public string ReadableVersion
+            => IsReleased
+            ? $"v{Version.Major}.{Version.Minor}.{Version.Build}"
+            : $"local-" + (DebugUtils.IsDebugBuild ? "debug" : "release");
 
         // Main content
         private Container<Drawable> content;
@@ -68,6 +74,11 @@ namespace hues.Game
         protected HuesConfigManager configManager;
 
         #endregion
+
+        public HuesGameBase()
+        {
+            Name = "hues";
+        }
 
         [BackgroundDependencyLoader]
         private void load()
@@ -132,31 +143,6 @@ namespace hues.Game
             configManager = new HuesConfigManager(host.Storage);
         }
 
-        public string FrameworkVersion
-        {
-            get
-            {
-                var version = typeof(osu.Framework.Game).Assembly.GetName().Version;
-                return $"{version.Major}.{version.Minor}.{version.Build}";
-            }
-        }
-
-        private Version gameVersion => Assembly.GetEntryAssembly().GetName().Version;
-
-        public bool IsReleased => gameVersion.Major > 0;
-
-        public string Version
-        {
-            get
-            {
-                var version = Assembly.GetEntryAssembly().GetName().Version;
-
-                if (!IsReleased)
-                    return $"local-" + (DebugUtils.IsDebugBuild ? "debug" : "release");
-
-                return $"{version.Major}.{version.Minor}.{version.Build}";
-            }
-        }
 
         protected override void Dispose(bool isDisposing)
         {

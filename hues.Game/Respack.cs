@@ -13,19 +13,19 @@ namespace hues.Game
         public readonly IReadOnlyCollection<Song> Songs;
         public readonly IReadOnlyCollection<Image> Images;
 
-        public override string ToString() =>
-            $"<{nameof(Respack)}> " +
-            $"Name: {Info.Name}, " +
-            $"Author: {Info.Author}, " +
-            $"Songs: {Songs.Count}, " +
-            $"Images: {Images.Count}";
-
         public Respack(string infoXml, string songsXml, string imagesXml)
         {
             Info = parseInfo(infoXml);
             Songs = parseSongs(songsXml);
             Images = parseImages(imagesXml);
         }
+
+        public override string ToString() =>
+            $"<{nameof(Respack)}> " +
+            $"Name: {Info.Name}, " +
+            $"Author: {Info.Author}, " +
+            $"Songs: {Songs.Count}, " +
+            $"Images: {Images.Count}";
 
         // We only really care about name and author as that is what the user sees
         public bool Equals(Respack other) => (this.Info.Name == other.Info.Name) && (this.Info.Author == other.Info.Author);

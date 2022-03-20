@@ -16,6 +16,8 @@ namespace hues.Game
 {
     public class RespackLoader : Component
     {
+        public IReadOnlyCollection<Respack> Respacks => respacks;
+
         [Resolved]
         private RespackTrackResourceStore trackResources { get; set; }
 
@@ -34,8 +36,6 @@ namespace hues.Game
         [Resolved]
         private BindableList<Respack> respacks { get; set; }
         private readonly object respackLock = new object();
-
-        public IReadOnlyCollection<Respack> Respacks => respacks;
 
         public void LoadPath(string path)
         {
